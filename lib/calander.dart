@@ -1,104 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:custom_calender_picker/custom_calender_picker.dart';
 
-class CustomCalenderPickerExample extends StatefulWidget {
-  const CustomCalenderPickerExample({super.key});
+class CustomCalendarWidget extends StatefulWidget {
+  final ReturnDateType returnDateType;
+  final List<DateTime>? initialDateList;
+  final DateTimeRange? initialDateRange;
+  final CalenderThema calenderThema;
+  final Color? rangeColor;
+  final BorderRadius? borderRadius;
+
+  const CustomCalendarWidget({
+    super.key,
+    required this.returnDateType,
+    this.initialDateList,
+    this.initialDateRange,
+    this.calenderThema = CalenderThema.white,
+    this.rangeColor,
+    this.borderRadius,
+  });
 
   @override
-  State<CustomCalenderPickerExample> createState() => _DatePickerPageState();
+  State<CustomCalendarWidget> createState() => _CustomCalendarWidgetState();
 }
 
-class _DatePickerPageState extends State<CustomCalenderPickerExample> {
-  List<DateTime> eachDateTime = [];
-  DateTimeRange? rangeDateTime;
-
+class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(title: const Text('Custom Date Picker')),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ElevatedButton(
-              onPressed: () async {
-                var result = await showDialog(
-                  context: context,
-                  builder:
-                      (context) => Dialog(
-                        insetPadding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                        ),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: CustomCalenderPicker(
-                          returnDateType: ReturnDateType.list,
-                          initialDateList: eachDateTime,
-                          calenderThema: CalenderThema.white,
-                        ),
-                      ),
-                );
-                if (result != null) {
-                  if (result is List<DateTime>) {
-                    setState(() {
-                      eachDateTime.clear();
-                      eachDateTime.addAll(result);
-                    });
-                  }
-                }
-              },
-              child: const Text('Dialog Example'),
-            ),
-            ...List.generate(
-              eachDateTime.length,
-              (index) => Text(eachDateTime[index].toString().substring(0, 10)),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                var result = await showModalBottomSheet(
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
-                      bottom: Radius.zero,
-                    ),
-                  ),
-                  context: context,
-                  builder:
-                      (context) => CustomCalenderPicker(
-                        returnDateType: ReturnDateType.range,
-                        initialDateRange: rangeDateTime,
-                        calenderThema: CalenderThema.dark,
-                        rangeColor: Colors.grey.withOpacity(.3),
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(20),
-                          bottom: Radius.zero,
-                        ),
-                      ),
-                );
-                if (result != null) {
-                  if (result is DateTimeRange) {
-                    setState(() {
-                      rangeDateTime = result;
-                    });
-                  }
-                }
-              },
-              child: const Text('Bottom Sheet Example'),
-            ),
-            Text(
-              rangeDateTime == null
-                  ? ''
-                  : '${rangeDateTime!.start.toString().substring(0, 10)} ~ ${rangeDateTime!.end.toString().substring(0, 10)}',
-            ),
-          ],
-        ),
-      ),
+    return CustomCalenderPicker(
+      returnDateType: widget.returnDateType,
+      initialDateList: widget.initialDateList ?? [],
+      initialDateRange: widget.initialDateRange,
+      calenderThema: widget.calenderThema,
+      rangeColor: widget.rangeColor ?? Colors.grey.withAlpha(125),
+      borderRadius: widget.borderRadius ?? BorderRadius.circular(20),
     );
   }
 }
