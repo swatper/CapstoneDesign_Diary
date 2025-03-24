@@ -4,7 +4,6 @@ class DiaryItem extends StatefulWidget {
   final String title;
   final String date;
   final String summary;
-  final int tags;
   final List<String> emotios;
 
   const DiaryItem({
@@ -12,7 +11,6 @@ class DiaryItem extends StatefulWidget {
     required this.title,
     required this.date,
     required this.summary,
-    required this.tags,
     required this.emotios,
   });
 
@@ -50,13 +48,15 @@ class _DiaryItemState extends State<DiaryItem> {
             Text(widget.summary, style: TextStyle(fontSize: 20)),
             SizedBox(height: 10),
             Row(
-              children: [
-                EmotionTag("감정1"),
-                SizedBox(width: 5),
-                EmotionTag("감정2"),
-                SizedBox(width: 5),
-                EmotionTag("장소장소"),
-              ],
+              children:
+                  widget.emotios
+                      .map(
+                        (emotion) => Padding(
+                          padding: const EdgeInsets.only(right: 5), // 태그 간 간격
+                          child: emotionTag(emotion),
+                        ),
+                      )
+                      .toList(),
             ),
           ],
         ),
@@ -66,7 +66,7 @@ class _DiaryItemState extends State<DiaryItem> {
 }
 
 //감정 태그
-Container EmotionTag(String emotion) {
+Container emotionTag(String emotion) {
   return Container(
     padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
     decoration: BoxDecoration(

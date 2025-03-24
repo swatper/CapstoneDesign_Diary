@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Customcalender extends StatefulWidget {
-  final Color? backgroundColor; // 배경 색상 매개변수 추가
+  final Color? backgroundColor;
+  final Function(DateTime) getSelectedDate;
 
-  const Customcalender({super.key, this.backgroundColor});
+  const Customcalender({
+    super.key,
+    this.backgroundColor,
+    required this.getSelectedDate,
+  });
 
   @override
   _CustomcalenderState createState() => _CustomcalenderState();
@@ -18,9 +23,10 @@ class _CustomcalenderState extends State<Customcalender> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: TableCalendar(
         firstDay: DateTime.utc(2010, 10, 16),
@@ -35,6 +41,8 @@ class _CustomcalenderState extends State<Customcalender> {
             _selectedDay = selectedDay;
             _focusedDay = focusedDay;
           });
+          //선택한 날짜 넘겨주기
+          widget.getSelectedDate(selectedDay);
         },
         onFormatChanged: (format) {
           setState(() {
@@ -44,16 +52,16 @@ class _CustomcalenderState extends State<Customcalender> {
         onPageChanged: (focusedDay) {
           _focusedDay = focusedDay;
         },
-        //꾸미기 builder
+        //꾸미기
         calendarBuilders: CalendarBuilders(
           selectedBuilder: (context, day, focusedDay) {
-            return DateBox(day, Colors.white, Colors.black);
+            return dateBox(day, Colors.white, Colors.black);
           },
           todayBuilder: (context, day, focusedDay) {
-            return DateBox(day, Colors.white, Colors.amberAccent);
+            return dateBox(day, Colors.white, Colors.amberAccent);
           },
           defaultBuilder: (context, day, focusedDay) {
-            return DateBox(day, Colors.black, Colors.white);
+            return dateBox(day, Colors.black, Colors.white);
           },
         ),
         headerStyle: HeaderStyle(
@@ -64,12 +72,19 @@ class _CustomcalenderState extends State<Customcalender> {
           leftChevronIcon: Icon(Icons.chevron_left),
           rightChevronIcon: Icon(Icons.chevron_right),
         ),
+        daysOfWeekStyle: DaysOfWeekStyle(
+          weekendStyle: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+          weekdayStyle: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
 
   //날짜
-  Container DateBox(DateTime day, Color textcolor, Color bgcolor) {
+  Container dateBox(DateTime day, Color textcolor, Color bgcolor) {
     return Container(
       //배경
       decoration: BoxDecoration(color: bgcolor, shape: BoxShape.rectangle),
@@ -81,14 +96,14 @@ class _CustomcalenderState extends State<Customcalender> {
         children: [
           Text(
             day.day.toString(),
-            style: TextStyle(color: textcolor, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: textcolor,
+              fontWeight: FontWeight.bold,
+              fontSize: 17,
+            ),
           ),
         ],
       ),
     );
-  }
-
-  Container Diarys(bool hasDiary) {
-    return Container();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:capstone_diary/homewindow.dart';
+import 'package:capstone_diary/HomeWindow/homewindow.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -37,11 +37,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
       //네비게이션 바 구성
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          CreateBottomNavigationBarItem(Icons.home, "홈"),
-          CreateBottomNavigationBarItem(Icons.description, "통계"),
-          CreateBottomNavigationBarItem(Icons.book, "일기"),
-          CreateBottomNavigationBarItem(Icons.remove_red_eye, "들춰보기"),
-          CreateBottomNavigationBarItem(Icons.flag, "도전과제제"),
+          createBottomNavigationBarItem(Icons.home, "홈"),
+          createBottomNavigationBarItem(Icons.description, "통계"),
+          createBottomNavigationBarItem(Icons.book, "일기"),
+          createBottomNavigationBarItem(Icons.remove_red_eye, "들춰보기"),
+          createBottomNavigationBarItem(Icons.flag, "도전과제제"),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
@@ -55,7 +55,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 }
 
 //네비 아이템 생성 메서드
-BottomNavigationBarItem CreateBottomNavigationBarItem(
+BottomNavigationBarItem createBottomNavigationBarItem(
   IconData icon,
   String label,
 ) {
