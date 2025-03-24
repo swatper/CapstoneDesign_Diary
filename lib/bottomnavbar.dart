@@ -54,7 +54,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 }
 
-//네비 아이템 생성 메서드드
+//네비 아이템 생성 메서드
 BottomNavigationBarItem CreateBottomNavigationBarItem(
   IconData icon,
   String label,
