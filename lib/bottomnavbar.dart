@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/HomeWindow/homewindow.dart';
+import 'package:capstone_diary/challenge/challengewindow.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -21,7 +22,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     Text('통계', style: optionStyle),
     Text('일기 목록', style: optionStyle),
     Text('들춰보기 (공유 일기 목록)', style: optionStyle),
-    Text('도전 과제 목록', style: optionStyle),
+    Challengewindow(),
   ];
 
   void _onItemTapped(int index) {
