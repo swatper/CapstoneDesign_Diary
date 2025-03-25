@@ -31,7 +31,12 @@ class _ChallengewindowState extends State<Challengewindow> {
               ),
               Divider(color: Color(0xffFC8650), thickness: 1),
               SizedBox(height: 30),
-              ChallengeItem(),
+              ChallengeItem(
+                title: "도전과제",
+                description: "달성조건",
+                currentProgress: 0,
+                maxProgress: 1,
+              ),
             ],
           ),
         ),
