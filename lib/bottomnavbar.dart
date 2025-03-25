@@ -1,71 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:capstone_diary/HomeWindow/homewindow.dart';
-import 'package:capstone_diary/challenge/challengewindow.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+class BottomNavBar extends StatelessWidget {
+  final int selectedIndex;
+  final Function(int) itemTapEvent;
 
-  @override
-  State<BottomNavBar> createState() => _BottomNavBarState();
-}
-
-class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.bold,
-  );
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomeWindow(),
-    //TODO (만든 화면 불러오기)
-    Text('통계', style: optionStyle),
-    Text('일기 목록', style: optionStyle),
-    Text('들춰보기 (공유 일기 목록)', style: optionStyle),
-    Challengewindow(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  const BottomNavBar({
+    super.key,
+    required this.selectedIndex,
+    required this.itemTapEvent,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
-      //네비게이션 바 구성
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          createBottomNavigationBarItem(Icons.home, "홈"),
-          createBottomNavigationBarItem(Icons.description, "통계"),
-          createBottomNavigationBarItem(Icons.book, "일기"),
-          createBottomNavigationBarItem(Icons.remove_red_eye, "들춰보기"),
-          createBottomNavigationBarItem(Icons.flag, "도전과제제"),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.black,
-        //fixed를 통해 글자 검은색은 되지만, 선택 애니메이션은 사라짐
-        type: BottomNavigationBarType.fixed,
-        onTap: _onItemTapped,
-      ),
+    return BottomNavigationBar(
+      //네이게이션 바 아이템
+      items: <BottomNavigationBarItem>[
+        createBottomNavigationBarItem(Icons.home, "홈"),
+        createBottomNavigationBarItem(Icons.description, "통계"),
+        createBottomNavigationBarItem(Icons.book, "일기"),
+        createBottomNavigationBarItem(Icons.remove_red_eye, "들춰보기"),
+        createBottomNavigationBarItem(Icons.flag, "도전과제"),
+      ],
+      currentIndex: selectedIndex,
+      selectedItemColor: Colors.amber[800],
+      unselectedItemColor: Colors.black,
+      type: BottomNavigationBarType.fixed,
+      onTap: itemTapEvent,
     );
   }
 }
 
-//네비 아이템 생성 메서드
 BottomNavigationBarItem createBottomNavigationBarItem(
   IconData icon,
   String label,
 ) {
-  return BottomNavigationBarItem(
-    icon: Icon(icon, size: 40),
-    label: label,
-    backgroundColor: Colors.white,
-  );
+  return BottomNavigationBarItem(icon: Icon(icon, size: 40), label: label);
 }
-
-//참고자료
-//https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html
