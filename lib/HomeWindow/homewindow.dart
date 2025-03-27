@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:capstone_diary/HomeWindow/customcalender.dart';
 import 'package:capstone_diary/DiaryItem/diaryitem.dart';
 import 'package:capstone_diary/HomeWindow/menuwidget.dart';
+import 'package:capstone_diary/toastmessage.dart';
 
 class HomeWindow extends StatefulWidget {
   const HomeWindow({super.key});
@@ -35,7 +36,9 @@ class _HomeWindowState extends State<HomeWindow> {
   }
 
   //검색 버튼
-  void searchDiray() {}
+  void searchDiray() {
+    showToastMessage("아직 미구현");
+  }
 
   //메뉴 버튼
   void showMenu() {
@@ -53,6 +56,10 @@ class _HomeWindowState extends State<HomeWindow> {
         },
       ),
     );
+  }
+
+  void writeDiary() {
+    showToastMessage("아직 미구현");
   }
 
   @override
@@ -118,6 +125,14 @@ class _HomeWindowState extends State<HomeWindow> {
             ],
           ),
         ),
+      ),
+      //일기쓰기 버튼
+      floatingActionButton: FloatingActionButton(
+        onPressed: writeDiary,
+        backgroundColor: Colors.black,
+        heroTag: "writeDiary",
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)),
+        child: Icon(Icons.border_color_sharp, size: 30, color: Colors.white),
       ),
     );
   }
