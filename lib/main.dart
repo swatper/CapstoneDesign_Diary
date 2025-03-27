@@ -1,3 +1,4 @@
+import 'package:capstone_diary/KGB/writewindow.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
 import 'package:capstone_diary/HomeWindow/homewindow.dart';
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _screens = <Widget>[
     HomeWindow(),
     Text('통계', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-    Text('일기 목록', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+    WriteWindow(), //일기목록 버튼에 임시로 사용
     Text(
       '들춰보기 (공유 일기 목록)',
       style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
