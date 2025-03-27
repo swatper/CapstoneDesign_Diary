@@ -27,6 +27,7 @@ class _HomeWindowState extends State<HomeWindow> {
 
   //서버에서 일기 데이터를 받아오는 함수
   void fetchDiaryData(DateTime date) async {
+    //"YYYY-MM-DD"
     String formattedDate =
         "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
     print("서버 요청: $formattedDate");

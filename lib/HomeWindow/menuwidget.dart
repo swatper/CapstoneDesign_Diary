@@ -1,5 +1,7 @@
+import 'package:capstone_diary/toastmessage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Menuwidget extends StatefulWidget {
   const Menuwidget({super.key});
@@ -26,18 +28,22 @@ class _Menuwidget extends State<Menuwidget> {
 
     void nickNameReset() {
       //닉네임 재설정
+      showToastMessage("아직 미구현");
     }
 
     void alarmSetting() {
       //알람 설정
+      showToastMessage("아직 미구현");
     }
 
     void showInfo() {
       //이용 정보
+      showToastMessage("아직 미구현");
     }
 
     void withdrawMembership() {
       //회원 탈퇴
+      showToastMessage("아직 미구현");
     }
 
     return Stack(
