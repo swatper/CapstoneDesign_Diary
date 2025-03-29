@@ -26,27 +26,8 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
     double infoSize = 16.0;
     FontWeight fontWeightSet = FontWeight.w300;
 
-    void nickNameReset() {
-      //닉네임 재설정
-      widget.sideMenuSelectedIndex(5);
-      showToastMessage("아직 미구현");
-      Navigator.pop(context);
-    }
-
-    void alarmSetting() {
-      //알람 설정
-      showToastMessage("아직 미구현");
-      Navigator.pop(context);
-    }
-
-    void showInfo() {
-      //이용 정보
-      showToastMessage("아직 미구현");
-      Navigator.pop(context);
-    }
-
-    void withdrawMembership() {
-      //회원 탈퇴
+    void selectSideMenu(int index) {
+      widget.sideMenuSelectedIndex(index);
       showToastMessage("아직 미구현");
       Navigator.pop(context);
     }
@@ -140,7 +121,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                           ),
                         ),
                         IconButton(
-                          onPressed: nickNameReset,
+                          onPressed: () => selectSideMenu(5),
                           icon: Icon(Icons.chevron_right_sharp),
                         ),
                       ],
@@ -166,7 +147,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                           ),
                         ),
                         IconButton(
-                          onPressed: alarmSetting,
+                          onPressed: () => selectSideMenu(6),
                           icon: Icon(Icons.chevron_right_sharp),
                         ),
                       ],
@@ -192,7 +173,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                           ),
                         ),
                         IconButton(
-                          onPressed: showInfo,
+                          onPressed: () => selectSideMenu(7),
                           icon: Icon(Icons.chevron_right_sharp),
                         ),
                       ],
@@ -209,7 +190,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                           ),
                         ),
                         IconButton(
-                          onPressed: withdrawMembership,
+                          onPressed: () => selectSideMenu(8),
                           icon: Icon(Icons.chevron_right_sharp),
                         ),
                       ],
@@ -236,6 +217,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                     ),
                     SizedBox(height: 300),
                     Divider(color: Color(0xff919572), thickness: lineThickness),
+                    //기타 정보
                     Row(
                       children: [
                         Icon(

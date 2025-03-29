@@ -75,7 +75,7 @@ class _HomeWindowState extends State<HomeWindow> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 40),
+              SizedBox(height: 20),
               //검색, 더보기 아이콘
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

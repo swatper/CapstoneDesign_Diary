@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
 import 'package:capstone_diary/HomeWindow/homewindow.dart';
 import 'package:capstone_diary/challenge/challengewindow.dart';
+import 'package:capstone_diary/profilewindow.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,8 +55,21 @@ class _HomeScreenState extends State<HomeScreen> {
         '들춰보기 (공유 일기 목록)',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
       ),
+      //Sidemenu에서 선택한 화면
       Challengewindow(),
-      Text('프로필', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+      ProfileWindow(backButtonEvent: updateSelectedIndex),
+      Text(
+        '알람 설정',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
+      Text(
+        '약관 및 정책',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
+      Text(
+        '회원 탈퇴',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
     ];
     currentScreen = _screens[0];
   }
@@ -65,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color(0xffFFE4B5),
       //메인 화면
-      body: Center(child: currentScreen),
+      body: currentScreen,
       //하단 네비게이션 바
       bottomNavigationBar: BottomNavBar(
         selectedIndex: _selectedIndex,
