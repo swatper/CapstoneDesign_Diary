@@ -2,13 +2,13 @@ import 'package:capstone_diary/toastmessage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class Menuwidget extends StatefulWidget {
-  const Menuwidget({super.key});
+class SideMenuWidget extends StatefulWidget {
+  const SideMenuWidget({super.key});
   @override
-  State<Menuwidget> createState() => _Menuwidget();
+  State<SideMenuWidget> createState() => _SideMenuWidgetState();
 }
 
-class _Menuwidget extends State<Menuwidget> {
+class _SideMenuWidgetState extends State<SideMenuWidget> {
   @override
   void initState() {
     super.initState();
