@@ -5,7 +5,8 @@ import 'package:capstone_diary/HomeWindow/sidemenuwidget.dart';
 import 'package:capstone_diary/toastmessage.dart';
 
 class HomeWindow extends StatefulWidget {
-  const HomeWindow({super.key});
+  final Function(int) sideMenuToHomeWindowIndex;
+  const HomeWindow({super.key, required this.sideMenuToHomeWindowIndex});
   @override
   State<HomeWindow> createState() => _HomeWindowState();
 }
@@ -51,7 +52,9 @@ class _HomeWindowState extends State<HomeWindow> {
               begin: Offset(1.0, 0),
               end: Offset(0, 0),
             ).animate(animation),
-            child: SideMenuWidget(),
+            child: SideMenuWidget(
+              sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
+            ),
           );
         },
       ),

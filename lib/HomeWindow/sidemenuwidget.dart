@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SideMenuWidget extends StatefulWidget {
-  const SideMenuWidget({super.key});
+  final Function(int) sideMenuSelectedIndex;
+  const SideMenuWidget({super.key, required this.sideMenuSelectedIndex});
   @override
   State<SideMenuWidget> createState() => _SideMenuWidgetState();
 }
@@ -27,22 +28,27 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
     void nickNameReset() {
       //닉네임 재설정
+      widget.sideMenuSelectedIndex(5);
       showToastMessage("아직 미구현");
+      Navigator.pop(context);
     }
 
     void alarmSetting() {
       //알람 설정
       showToastMessage("아직 미구현");
+      Navigator.pop(context);
     }
 
     void showInfo() {
       //이용 정보
       showToastMessage("아직 미구현");
+      Navigator.pop(context);
     }
 
     void withdrawMembership() {
       //회원 탈퇴
       showToastMessage("아직 미구현");
+      Navigator.pop(context);
     }
 
     return Stack(

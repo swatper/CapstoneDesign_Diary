@@ -26,23 +26,38 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-
   //메인 화면 리스트
-  static const List<Widget> _screens = <Widget>[
-    HomeWindow(),
-    Text('통계', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-    Text('일기 목록', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-    Text(
-      '들춰보기 (공유 일기 목록)',
-      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-    ),
-    Challengewindow(),
-  ];
+  late List<Widget> _screens;
+  //현재 보고 있는 화면
+  late Widget currentScreen;
 
   void updateSelectedIndex(int index) {
     setState(() {
-      _selectedIndex = index;
+      if (index < 5) {
+        _selectedIndex = index;
+      }
+      currentScreen = _screens[index];
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      HomeWindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
+      Text('통계', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+      Text(
+        '일기 목록',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
+      Text(
+        '들춰보기 (공유 일기 목록)',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
+      Challengewindow(),
+      Text('프로필', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+    ];
+    currentScreen = _screens[0];
   }
 
   @override
@@ -50,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color(0xffFFE4B5),
       //메인 화면
-      body: Center(child: _screens.elementAt(_selectedIndex)),
+      body: Center(child: currentScreen),
       //하단 네비게이션 바
       bottomNavigationBar: BottomNavBar(
         selectedIndex: _selectedIndex,
