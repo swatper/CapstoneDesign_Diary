@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:capstone_diary/DataModels/diarymodel.dart';
 
 class DiaryItem extends StatefulWidget {
-  final String title;
   final String date;
-  final String summary;
-  final List<String> emotios;
+  final DirayModel diaryModel;
 
-  const DiaryItem({
-    super.key,
-    required this.title,
-    required this.date,
-    required this.summary,
-    required this.emotios,
-  });
+  const DiaryItem({super.key, required this.date, required this.diaryModel});
 
   @override
   State<DiaryItem> createState() => _DiaryItemState();
@@ -26,7 +19,7 @@ class _DiaryItemState extends State<DiaryItem> {
       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
       decoration: BoxDecoration(
         color: Color(0xffFFCB6C),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(25),
       ),
       //내용
       child: Container(
@@ -37,22 +30,35 @@ class _DiaryItemState extends State<DiaryItem> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  widget.title,
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
+                //제목
+                Expanded(
+                  child: Text(
+                    widget.diaryModel.title,
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
+                //날짜
                 Text(widget.date, style: TextStyle(fontSize: 15)),
               ],
             ),
             SizedBox(height: 5),
-            Text(widget.summary, style: TextStyle(fontSize: 20)),
+            //내용
+            Text(
+              widget.diaryModel.content,
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              softWrap: false,
+            ),
             SizedBox(height: 10),
+            //태그
             Row(
               children:
-                  widget.emotios
+                  widget.diaryModel.tags
                       .map(
                         (emotion) => Padding(
-                          padding: const EdgeInsets.only(right: 5), // 태그 간 간격
+                          padding: const EdgeInsets.only(right: 5),
                           child: emotionTag(emotion),
                         ),
                       )

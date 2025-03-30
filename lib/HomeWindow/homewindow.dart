@@ -3,6 +3,7 @@ import 'package:capstone_diary/HomeWindow/customcalender.dart';
 import 'package:capstone_diary/DiaryItem/diaryitem.dart';
 import 'package:capstone_diary/HomeWindow/sidemenuwidget.dart';
 import 'package:capstone_diary/toastmessage.dart';
+import 'package:capstone_diary/DataModels/diarymodel.dart';
 
 class HomeWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
@@ -104,25 +105,32 @@ class _HomeWindowState extends State<HomeWindow> {
                 //일기장 아이템
                 children: [
                   DiaryItem(
-                    title: "Test",
                     date: "날짜",
-                    summary: "실험중입니다.",
-                    emotios: ["감정1", "감정2", "감정3"],
+                    diaryModel: DirayModel(
+                      1,
+                      false,
+                      0,
+                      0,
+                      title: "title",
+                      content: "content",
+                      tags: List<String>.from(["감정1", "감정2", "감정3"]),
+                    ),
                   ),
                   SizedBox(height: 5),
+                  //
                   DiaryItem(
-                    title: "title",
-                    date: "date",
-                    summary: "summary",
-                    emotios: ["emotios"],
+                    date: "3월30일",
+                    diaryModel: DirayModel(
+                      1,
+                      false,
+                      0,
+                      0,
+                      title: "개미는 뚠뚠 오늘도 뚠뚠",
+                      content: "열심히 일을 하네 뚠뚠 개미는 아무말도 하지않지만",
+                      tags: List<String>.from(["노예", "개발", "행복"]),
+                    ),
                   ),
                   SizedBox(height: 5),
-                  DiaryItem(
-                    title: "title",
-                    date: "date",
-                    summary: "summary",
-                    emotios: ["emotios1", "location"],
-                  ),
                 ],
               ),
             ],
