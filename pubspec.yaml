@@ -60,6 +60,12 @@ flutter:
     - assets/images/default.png
     - assets/images/newbie.png
     - assets/images/share.png
+    - assets/images/weatherBack.png
+    - assets/images/wd_rain.png
+    - assets/images/wd_sun.png
+    - assets/images/wd_snow.png
+    - assets/images/wd_wind.png
+    - assets/images/wd_cloud.png
 
 
   # The following line ensures that the Material Icons font is
