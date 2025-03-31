@@ -63,7 +63,7 @@ class _HomeWindowState extends State<HomeWindow> {
   }
 
   void writeDiary() {
-    showToastMessage("아직 미구현");
+    widget.sideMenuToHomeWindowIndex(9);
   }
 
   @override

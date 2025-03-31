@@ -3,6 +3,7 @@ import 'package:capstone_diary/bottomnavbar.dart';
 import 'package:capstone_diary/HomeWindow/homewindow.dart';
 import 'package:capstone_diary/challenge/challengewindow.dart';
 import 'package:capstone_diary/profilewindow.dart';
+import 'package:capstone_diary/KGB/writewindow.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,7 +71,10 @@ class _HomeScreenState extends State<HomeScreen> {
         '회원 탈퇴',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
       ),
+      WriteWindow(backButtonCallback: updateSelectedIndex),
     ];
+
+    //처음에 보여줄 화면
     currentScreen = _screens[0];
   }
 

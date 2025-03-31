@@ -2,12 +2,13 @@ import 'package:capstone_diary/KGB/weatherButton.dart';
 import 'package:flutter/material.dart';
 
 class WriteWindow extends StatefulWidget {
-  const WriteWindow({super.key});
+  final Function(int) backButtonCallback;
+  const WriteWindow({super.key, required this.backButtonCallback});
+
   @override
   State<WriteWindow> createState() => _WriteWindow();
 }
 
-void onClickedBackButton() {}
 void onClickedNestButton() {}
 void onClickedCalanderButton() {}
 
@@ -18,6 +19,10 @@ class _WriteWindow extends State<WriteWindow> {
     setState(() {
       selectedWeatherIndex = index;
     });
+  }
+
+  void onClickedBackButton() {
+    widget.backButtonCallback(0); // 0은 홈 화면으로 돌아가는 인덱스
   }
 
   @override
