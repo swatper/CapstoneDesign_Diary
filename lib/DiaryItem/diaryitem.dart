@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 
 class DiaryItem extends StatefulWidget {
-  final String date;
   final DirayModel diaryModel;
 
-  const DiaryItem({super.key, required this.date, required this.diaryModel});
+  const DiaryItem({super.key, required this.diaryModel});
 
   @override
   State<DiaryItem> createState() => _DiaryItemState();
@@ -39,7 +38,7 @@ class _DiaryItemState extends State<DiaryItem> {
                   ),
                 ),
                 //날짜
-                Text(widget.date, style: TextStyle(fontSize: 15)),
+                Text(widget.diaryModel.date, style: TextStyle(fontSize: 15)),
               ],
             ),
             SizedBox(height: 5),

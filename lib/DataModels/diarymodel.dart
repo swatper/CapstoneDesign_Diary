@@ -1,6 +1,7 @@
 //일기 데이터 모델
 class DirayModel {
   //일기 관련 데이터
+  final String date;
   final String title;
   final String content;
   final int weather;
@@ -13,6 +14,7 @@ class DirayModel {
 
   //테스트용 생성자
   DirayModel(
+    this.date,
     this.weather,
     this.isPublic,
     this.lat,
@@ -24,7 +26,8 @@ class DirayModel {
 
   //json to object
   DirayModel.fromJson(Map<String, dynamic> json)
-    : title = json['title'],
+    : date = json['date'],
+      title = json['title'],
       content = json['content'],
       weather = json['weather'],
       tags = List<String>.from(json['tags']),

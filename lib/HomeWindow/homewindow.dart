@@ -105,8 +105,8 @@ class _HomeWindowState extends State<HomeWindow> {
                 //일기장 아이템
                 children: [
                   DiaryItem(
-                    date: "날짜",
                     diaryModel: DirayModel(
+                      "날짜",
                       1,
                       false,
                       0,
@@ -119,8 +119,8 @@ class _HomeWindowState extends State<HomeWindow> {
                   SizedBox(height: 5),
                   //
                   DiaryItem(
-                    date: "3월30일",
                     diaryModel: DirayModel(
+                      "3월30일",
                       1,
                       false,
                       0,
