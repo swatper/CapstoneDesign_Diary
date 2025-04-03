@@ -9,6 +9,7 @@ class ProfileWindow extends StatefulWidget {
 }
 
 class _ProfileWindowState extends State<ProfileWindow> {
+  bool isEditMode = false;
   TextStyle titleStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w600,
@@ -25,7 +26,19 @@ class _ProfileWindowState extends State<ProfileWindow> {
     widget.backButtonEvent(0); //메인 화면으로 돌아가기
   }
 
-  void editProfile() {}
+  void editProfile() {
+    setState(() {
+      isEditMode = true;
+    });
+  }
+
+  void saveProfile() {
+    setState(() {
+      isEditMode = false;
+    });
+  }
+
+  void chanagePassword() {}
 
   @override
   void initState() {
@@ -60,8 +73,11 @@ class _ProfileWindowState extends State<ProfileWindow> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                onPressed: editProfile,
-                icon: Icon(Icons.border_color_sharp, color: Colors.grey),
+                onPressed: isEditMode ? saveProfile : editProfile,
+                icon:
+                    isEditMode
+                        ? Icon(Icons.save, color: Colors.grey)
+                        : Icon(Icons.border_color_sharp, color: Colors.grey),
               ),
             ],
           ),
@@ -78,13 +94,40 @@ class _ProfileWindowState extends State<ProfileWindow> {
               children: [
                 Divider(color: Color(0xff919572), thickness: 2),
                 //닉네임 설정
-                infomationSet("닉네임", "tester"),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
+                  child: Row(
+                    children: [
+                      Text("닉네임", style: titleStyle),
+                      SizedBox(width: 20),
+                      Text("tester"),
+                    ],
+                  ),
+                ),
                 Divider(color: Color(0xff919572), thickness: 2),
                 //이메일
                 infomationSet("이메일", "abcd@gmail.com"),
                 Divider(color: Color(0xff919572), thickness: 2),
                 //비밀번호
-                infomationSet("비밀번호", "********"),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
+                  child: Row(
+                    children: [
+                      Text("비밀번호", style: titleStyle),
+                      SizedBox(width: 50),
+                      FilledButton(
+                        onPressed: chanagePassword,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Color(0xffFFF6E7),
+                        ),
+                        child: Text(
+                          "비밀번호 변경",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Divider(color: Color(0xff919572), thickness: 2),
                 //뱃지
                 Column(
