@@ -10,6 +10,8 @@ class ProfileWindow extends StatefulWidget {
 
 class _ProfileWindowState extends State<ProfileWindow> {
   bool isEditMode = false;
+  String nickname = "닉네임";
+
   TextStyle titleStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w600,
@@ -39,6 +41,12 @@ class _ProfileWindowState extends State<ProfileWindow> {
   }
 
   void chanagePassword() {}
+
+  void saveNewNickname(String newNickname) {
+    setState(() {
+      nickname = newNickname;
+    });
+  }
 
   @override
   void initState() {
@@ -100,7 +108,32 @@ class _ProfileWindowState extends State<ProfileWindow> {
                     children: [
                       Text("닉네임", style: titleStyle),
                       SizedBox(width: 20),
-                      Text("tester"),
+                      //닉네임 입력창
+                      SizedBox(
+                        height: 40,
+                        width: 200,
+                        child: Expanded(
+                          child: TextField(
+                            readOnly: !isEditMode,
+                            decoration: InputDecoration(
+                              hintText: nickname,
+                              hintStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              border: InputBorder.none,
+                              filled: isEditMode,
+                              fillColor: Color(0xffFFF6E7),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                            ),
+                            onChanged: saveNewNickname,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -137,11 +170,22 @@ class _ProfileWindowState extends State<ProfileWindow> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/default.png",
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromRGBO(
+                              255,
+                              246,
+                              231,
+                              isEditMode ? 1 : 0,
+                            ),
+                          ),
+                          child: Image.asset(
+                            "assets/images/default.png",
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ],
                     ),
