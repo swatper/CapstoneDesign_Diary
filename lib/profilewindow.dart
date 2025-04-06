@@ -11,6 +11,7 @@ class ProfileWindow extends StatefulWidget {
 class _ProfileWindowState extends State<ProfileWindow> {
   bool isEditMode = false;
   String nickname = "닉네임";
+  String userPrifileImage = "assets/images/default.png";
 
   TextStyle titleStyle = TextStyle(
     fontSize: 20,
@@ -89,11 +90,21 @@ class _ProfileWindowState extends State<ProfileWindow> {
               ),
             ],
           ),
-          Image.asset(
-            "assets/images/default.png",
-            width: 130,
-            height: 130,
-            fit: BoxFit.cover,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color.fromRGBO(255, 246, 231, isEditMode ? 1 : 0),
+            ),
+            child: Stack(
+              children: [
+                Image.asset(
+                  userPrifileImage,
+                  width: 130,
+                  height: 130,
+                  fit: BoxFit.cover,
+                ),
+              ],
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5),
@@ -112,26 +123,24 @@ class _ProfileWindowState extends State<ProfileWindow> {
                       SizedBox(
                         height: 40,
                         width: 200,
-                        child: Expanded(
-                          child: TextField(
-                            readOnly: !isEditMode,
-                            decoration: InputDecoration(
-                              hintText: nickname,
-                              hintStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              border: InputBorder.none,
-                              filled: isEditMode,
-                              fillColor: Color(0xffFFF6E7),
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 10,
-                              ),
+                        child: TextField(
+                          readOnly: !isEditMode,
+                          decoration: InputDecoration(
+                            hintText: nickname,
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
                             ),
-                            onChanged: saveNewNickname,
+                            border: InputBorder.none,
+                            filled: isEditMode,
+                            fillColor: Color(0xffFFF6E7),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 10,
+                            ),
                           ),
+                          onChanged: saveNewNickname,
                         ),
                       ),
                     ],
