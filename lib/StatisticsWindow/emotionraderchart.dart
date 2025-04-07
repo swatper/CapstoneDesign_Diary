@@ -8,28 +8,39 @@ class EmotionRadarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> labels = emotionData.keys.toList();
-    List<RadarDataSet> dataSets = [
-      RadarDataSet(
-        fillColor: Color.fromRGBO(0, 0, 255, 0.3),
-        borderColor: Colors.blue,
-        entryRadius: 3,
-        dataEntries:
-            emotionData.values
-                .map((value) => RadarEntry(value: value.toDouble()))
-                .toList(),
-      ),
-    ];
-
     return RadarChart(
       RadarChartData(
         radarShape: RadarShape.polygon,
-        dataSets: dataSets,
-        radarBackgroundColor: Colors.transparent,
-        borderData: FlBorderData(show: false),
-        tickCount: 5, // 눈금 개수
+        //radarBackgroundColor: Colors.white,
+        //선 색깔 지정
+        gridBorderData: BorderSide(color: Colors.grey, width: 1.5), //각 항목 구분선
+        radarBorderData: BorderSide(color: Colors.grey, width: 2), //태두리 선
+        tickBorderData: BorderSide(color: Colors.grey, width: 2), //영역 선
+        //항목 수
+        tickCount: 2,
         titlePositionPercentageOffset: 0.15,
-        getTitle: (index, _) => RadarChartTitle(text: labels[index]),
+        //항목 글자(제목) 스타일
+        titleTextStyle: TextStyle(
+          color: Colors.black,
+          fontSize: 17,
+          fontWeight: FontWeight.w500,
+        ),
+        //항목 글자 가져오기
+        getTitle:
+            (index, _) =>
+                RadarChartTitle(text: emotionData.keys.elementAt(index)),
+        //각 항목 데이터 설정(그래프 그리기)
+        dataSets: [
+          RadarDataSet(
+            fillColor: Color.fromRGBO(0, 0, 255, 0.3),
+            borderColor: Colors.blue,
+            //각 항목의 데이터들 중에서 가장 큰 값으로 정규화 -> 0~1사이의 값으로 변환
+            dataEntries:
+                emotionData.values
+                    .map((value) => RadarEntry(value: value.toDouble()))
+                    .toList(),
+          ),
+        ],
       ),
     );
   }
