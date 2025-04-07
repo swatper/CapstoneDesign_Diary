@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
 import 'package:capstone_diary/HomeWindow/homewindow.dart';
-import 'package:capstone_diary/challenge/challengewindow.dart';
+import 'package:capstone_diary/ChallengeWindow/challengewindow.dart';
 import 'package:capstone_diary/profilewindow.dart';
 import 'package:capstone_diary/KGB/writewindow.dart';
+import 'package:capstone_diary/StatisticsWindow/statisticswindow.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _screens = [
       HomeWindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
-      Text('통계', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+      Statisticswindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
       Text(
         '일기 목록',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
