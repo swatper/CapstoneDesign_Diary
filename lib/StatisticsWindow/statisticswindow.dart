@@ -88,29 +88,48 @@ class _StatisticswindowState extends State<Statisticswindow> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
             //통계 보여줄 Tab
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: TabContainer(
-                color: Color(0xffFFF6E7),
-                selectedTextStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+            Stack(
+              children: [
+                //선택 안한 tab 배경
+                Container(
+                  transform: Matrix4.translationValues(21, 0, 0),
+                  width: 184,
+                  height: 1000,
+                  decoration: BoxDecoration(
+                    color: Color(0xffEDE8DF),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-                unselectedTextStyle: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
+                //tab container 관련 설정
+                SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: TabContainer(
+                    color: Color(0xffFFF6E7),
+                    selectedTextStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      decoration: TextDecoration.underline,
+                    ),
+                    unselectedTextStyle: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    //tab 관련 설정 (위치, tab 안에 내용)
+                    tabsStart: 0.05,
+                    tabsEnd: 0.5,
+                    tabs: [Tab(text: "감정"), Tab(text: "요약")],
+                    children: [
+                      //감정 차트 tab
+                      createChart("이번달 주요 감정"),
+                      //요약 차트 tab
+                      createChart("이번달 주요 이벤트"),
+                    ],
+                  ),
                 ),
-                tabs: [const Tab(text: "감정"), const Tab(text: "요약")],
-                children: [
-                  //감정 차트 tab
-                  createChart("이번달 주요 감정"),
-                  //요약 차트 tab
-                  createChart("이번달 주요 이벤트"),
-                ],
-              ),
+              ],
             ),
           ],
         ),
@@ -131,7 +150,7 @@ class _StatisticswindowState extends State<Statisticswindow> {
               children: [
                 Text(
                   title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
                 IconButton(
                   onPressed: () {},
