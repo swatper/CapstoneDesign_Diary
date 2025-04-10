@@ -1,4 +1,5 @@
 import 'package:capstone_diary/KGB/weatherButton.dart';
+import 'package:capstone_diary/KGB/writewindowNext.dart';
 import 'package:flutter/material.dart';
 
 class WriteWindow extends StatefulWidget {
@@ -8,16 +9,41 @@ class WriteWindow extends StatefulWidget {
 }
 
 void onClickedBackButton() {}
-void onClickedNestButton() {}
+
 void onClickedCalanderButton() {}
 
 class _WriteWindow extends State<WriteWindow> {
+  PageController pageController = PageController();
+  TextEditingController diaryController = TextEditingController();
+  TextEditingController titleController = TextEditingController(); // 제목 입력 컨트롤러
   int selectedWeatherIndex = 1; // 1~5 사이의 숫자 (기본값 1)
-
+  //날짜 정보
+  int year = 2025;
+  int month = 10;
+  int day = 12;
   void onWeatherSelected(int index) {
     setState(() {
       selectedWeatherIndex = index;
     });
+  }
+
+  void onClickedNextButton() {
+    final diaryContent = diaryController.text; // 입력된 일기 내용 가져오기
+    final dirayTitle = titleController.text;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) => WriteeWindowNext(
+              diaryContent: diaryContent,
+              year: year,
+              month: month,
+              day: day,
+              weatherIndex: selectedWeatherIndex,
+              title: dirayTitle,
+            ),
+      ),
+    );
   }
 
   @override
@@ -50,7 +76,7 @@ class _WriteWindow extends State<WriteWindow> {
                       ),
                       minimumSize: Size(80, 35),
                     ),
-                    onPressed: onClickedNestButton,
+                    onPressed: onClickedNextButton,
                     child: Text('다음', style: TextStyle(color: Colors.black)),
                   ),
                 ],
@@ -90,6 +116,7 @@ class _WriteWindow extends State<WriteWindow> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
+                  controller: titleController,
                   style: TextStyle(fontSize: 25),
                   decoration: InputDecoration(
                     labelText: '제목',
@@ -105,6 +132,7 @@ class _WriteWindow extends State<WriteWindow> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
+                  controller: diaryController,
                   style: TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     labelText: '내용을 입력하세요.',
