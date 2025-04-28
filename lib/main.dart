@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
-import 'package:capstone_diary/HomeWindow/homewindow.dart';
-import 'package:capstone_diary/ChallengeWindow/challengewindow.dart';
-import 'package:capstone_diary/profilewindow.dart';
 import 'package:capstone_diary/KGB/writewindow.dart';
-import 'package:capstone_diary/StatisticsWindow/statisticswindow.dart';
+//메인 화면
+import 'package:capstone_diary/HomeWindow/homewindow.dart'; //메인
+import 'package:capstone_diary/StatisticsWindow/statisticswindow.dart'; //통계
+import 'package:capstone_diary/ArchiveWindow/archivewibdow.dart'; //일기 목록
+import 'package:capstone_diary/ChallengeWindow/challengewindow.dart'; //도전과제
+//사이드 메뉴 관련
+import 'package:capstone_diary/profilewindow.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,17 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _screens = [
       HomeWindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
-      Statisticswindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
-      Text(
-        '일기 목록',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-      ),
+      StatisticsWindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
+      ArchiveWindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
       Text(
         '들춰보기 (공유 일기 목록)',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
       ),
       //Sidemenu에서 선택한 화면
-      Challengewindow(),
+      ChallengeWindow(),
       ProfileWindow(backButtonEvent: updateSelectedIndex),
       Text(
         '알람 설정',

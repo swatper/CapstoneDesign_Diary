@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/ChallengeWindow/challengeitem.dart';
 
-class Challengewindow extends StatefulWidget {
-  const Challengewindow({super.key});
+class ChallengeWindow extends StatefulWidget {
+  const ChallengeWindow({super.key});
   @override
-  State<Challengewindow> createState() => _ChallengewindowState();
+  State<ChallengeWindow> createState() => _ChallengeWindowState();
 }
 
-class _ChallengewindowState extends State<Challengewindow> {
+class _ChallengeWindowState extends State<ChallengeWindow> {
   @override
   void initState() {
     super.initState();

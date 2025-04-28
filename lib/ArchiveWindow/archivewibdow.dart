@@ -2,33 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/HomeWindow/sidemenuwidget.dart';
-import 'package:capstone_diary/StatisticsWindow/emotionraderchart.dart';
 
-class StatisticsWindow extends StatefulWidget {
+class ArchiveWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
-  const StatisticsWindow({super.key, required this.sideMenuToHomeWindowIndex});
+  const ArchiveWindow({super.key, required this.sideMenuToHomeWindowIndex});
+
   @override
-  State<StatisticsWindow> createState() => _StatisticsWindowState();
+  State<ArchiveWindow> createState() => __ArchiveWindowwState();
 }
 
-class _StatisticsWindowState extends State<StatisticsWindow> {
-  final Map<String, int> emotionData = {
-    '기쁨': 1,
-    '행복': 2,
-    '설렘': 3,
-    '화남': 4,
-    '우울함': 5,
-    '슬픔': 6,
-    '지루함': 7,
-    '놀람': 8,
-    '불안': 9,
-    '부끄러움': 10,
-  };
-
+class __ArchiveWindowwState extends State<ArchiveWindow> {
   @override
   void initState() {
     super.initState();
-    //감정 통계 값 가져오기
+    //일기 목록 가져오기
   }
 
   void handleDateSelected(DateTime date) {
@@ -88,7 +75,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
                 ],
               ),
             ),
-            //통계 보여줄 Tab
+            //Tabs
             Stack(
               children: [
                 //선택 안한 tab 배경
@@ -121,51 +108,26 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
                     //tab 관련 설정 (위치, tab 안에 내용)
                     tabsStart: 0.05,
                     tabsEnd: 0.5,
-                    tabs: [Tab(text: "감정"), Tab(text: "요약")],
+                    tabs: [Tab(text: "일자별"), Tab(text: "장소")],
                     children: [
-                      //감정 차트 tab
-                      createChart("이번달 주요 감정"),
-                      //요약 차트 tab
-                      createChart("이번달 주요 이벤트"),
+                      Text(
+                        '일기 목록',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '지도 넣기',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Center createChart(String title) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            //제목
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.calendar_month, size: 40),
-                ),
-              ],
-            ),
-            Divider(color: Color(0xff919572), thickness: 1),
-            SizedBox(height: 30),
-            //차트
-            SizedBox(
-              width: 380,
-              height: 380,
-              child: EmotionRadarChart(emotionData: emotionData),
             ),
           ],
         ),
