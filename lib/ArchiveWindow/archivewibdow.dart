@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/HomeWindow/sidemenuwidget.dart';
+import 'package:capstone_diary/ArchiveWindow/googlemap.dart';
+import 'package:capstone_diary/diaryItem/diaryitem.dart';
 
 class ArchiveWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
@@ -82,7 +84,7 @@ class __ArchiveWindowwState extends State<ArchiveWindow> {
                 Container(
                   transform: Matrix4.translationValues(21, 0, 0),
                   width: 184,
-                  height: 1000,
+                  height: 50,
                   decoration: BoxDecoration(
                     color: Color(0xffEDE8DF),
                     borderRadius: BorderRadius.circular(10),
@@ -90,7 +92,7 @@ class __ArchiveWindowwState extends State<ArchiveWindow> {
                 ),
                 //tab container 관련 설정
                 SizedBox(
-                  height: MediaQuery.of(context).size.height,
+                  height: MediaQuery.of(context).size.height - 169,
                   width: MediaQuery.of(context).size.width,
                   child: TabContainer(
                     color: Color(0xffFFF6E7),
@@ -118,12 +120,13 @@ class __ArchiveWindowwState extends State<ArchiveWindow> {
                         ),
                       ),
                       Text(
-                        '지도 넣기',
+                        '장소',
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      //DiaryMap(),
                     ],
                   ),
                 ),
