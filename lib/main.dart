@@ -6,7 +6,7 @@ import 'package:capstone_diary/HomeWindow/homewindow.dart'; //메인
 import 'package:capstone_diary/StatisticsWindow/statisticswindow.dart'; //통계
 import 'package:capstone_diary/ArchiveWindow/archivewibdow.dart'; //일기 목록
 import 'package:capstone_diary/ChallengeWindow/challengewindow.dart'; //도전과제
-//사이드 메뉴 관련
+//사이드 메뉴 관련 화면
 import 'package:capstone_diary/profilewindow.dart';
 
 void main() {

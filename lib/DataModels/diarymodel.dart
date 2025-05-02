@@ -1,5 +1,5 @@
 //일기 데이터 모델
-class DirayModel {
+class DiaryModel {
   //일기 관련 데이터
   final String date;
   final String title;
@@ -9,11 +9,11 @@ class DirayModel {
   //공개 여부
   final bool isPublic;
   //위치 정보
-  final int lat;
-  final int lng;
+  final double lat;
+  final double lng;
 
   //테스트용 생성자
-  DirayModel(
+  DiaryModel(
     this.date,
     this.weather,
     this.isPublic,
@@ -25,7 +25,7 @@ class DirayModel {
   });
 
   //json to object
-  DirayModel.fromJson(Map<String, dynamic> json)
+  DiaryModel.fromJson(Map<String, dynamic> json)
     : date = json['date'],
       title = json['title'],
       content = json['content'],

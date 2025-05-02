@@ -3,17 +3,18 @@ import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/HomeWindow/sidemenuwidget.dart';
 import 'package:capstone_diary/ArchiveWindow/googlemap.dart';
-import 'package:capstone_diary/diaryItem/diaryitem.dart';
+import 'package:capstone_diary/DataModels/diarymodel.dart';
+import 'package:capstone_diary/DiaryItem/diaryitem.dart';
 
 class ArchiveWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
   const ArchiveWindow({super.key, required this.sideMenuToHomeWindowIndex});
 
   @override
-  State<ArchiveWindow> createState() => __ArchiveWindowwState();
+  State<ArchiveWindow> createState() => _ArchiveWindowwState();
 }
 
-class __ArchiveWindowwState extends State<ArchiveWindow> {
+class _ArchiveWindowwState extends State<ArchiveWindow> {
   @override
   void initState() {
     super.initState();
@@ -119,14 +120,22 @@ class __ArchiveWindowwState extends State<ArchiveWindow> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        '장소',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       //DiaryMap(),
+                      DiaryMap(
+                        /*
+                        diaryList: [
+                          DiaryModel(
+                            '2025-04-30',
+                            1,
+                            false,
+                            37.5665,
+                            126.9780,
+                            title: "test",
+                            content: 'empty',
+                            tags: List<String>.from(["감정1", "감정2", "감정3"]),
+                          ),
+                        ],*/
+                      ),
                     ],
                   ),
                 ),

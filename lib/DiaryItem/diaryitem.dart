@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 
 class DiaryItem extends StatefulWidget {
-  final DirayModel diaryModel;
+  final DiaryModel diaryModel;
 
   const DiaryItem({super.key, required this.diaryModel});
 

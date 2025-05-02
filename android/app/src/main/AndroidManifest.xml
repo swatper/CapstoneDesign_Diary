@@ -31,10 +31,9 @@
             android:name="flutterEmbedding"
             android:value="2" />
         
-        <!--구글 지도
+        <!--구글 지도 -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="구글 클라우드에서 발급받은 API키 입력"/>
-        -->
+               android:value="API키 넣기"/>
 
     <!-- 카카오 로그인 커스텀 URL 스킴 설정 
     <activity 
@@ -49,7 +48,8 @@
             카카오 로그인 Redirect URI 
             <data android:scheme="kakao${YOUR_NATIVE_APP_KEY}" android:host="oauth"/>
         </intent-filter>
-    </activity>-->
+    </activity>
+    -->
 
     </application>
     <!-- Required to query activities that can process text, see:
