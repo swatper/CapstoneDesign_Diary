@@ -120,7 +120,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => selectSideMenu(5),
+                          onPressed: () => selectSideMenu(0),
                           icon: Icon(Icons.chevron_right_sharp),
                         ),
                       ],
@@ -146,7 +146,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => selectSideMenu(6),
+                          onPressed: () => selectSideMenu(1),
                           icon: Icon(Icons.chevron_right_sharp),
                         ),
                       ],
@@ -172,7 +172,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => selectSideMenu(7),
+                          onPressed: () => selectSideMenu(2),
                           icon: Icon(Icons.chevron_right_sharp),
                         ),
                       ],
@@ -189,7 +189,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => selectSideMenu(8),
+                          onPressed: () => selectSideMenu(3),
                           icon: Icon(Icons.chevron_right_sharp),
                         ),
                       ],

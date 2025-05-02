@@ -7,7 +7,12 @@ import 'package:capstone_diary/DataModels/diarymodel.dart';
 
 class HomeWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
-  const HomeWindow({super.key, required this.sideMenuToHomeWindowIndex});
+  final Function(int) WriteWindowIndex;
+  const HomeWindow({
+    super.key,
+    required this.sideMenuToHomeWindowIndex,
+    required this.WriteWindowIndex,
+  });
   @override
   State<HomeWindow> createState() => _HomeWindowState();
 }
@@ -63,7 +68,7 @@ class _HomeWindowState extends State<HomeWindow> {
   }
 
   void writeDiary() {
-    widget.sideMenuToHomeWindowIndex(9);
+    widget.WriteWindowIndex(0);
   }
 
   @override

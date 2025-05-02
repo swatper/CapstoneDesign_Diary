@@ -21,6 +21,7 @@ class _WriteWindow extends State<WriteWindow> {
   int year = 2025;
   int month = 10;
   int day = 12;
+
   void onWeatherSelected(int index) {
     setState(() {
       selectedWeatherIndex = index;

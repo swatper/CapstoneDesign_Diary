@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
-import 'package:capstone_diary/KGB/writewindow.dart';
 //메인 화면
 import 'package:capstone_diary/HomeWindow/homewindow.dart'; //메인
 import 'package:capstone_diary/StatisticsWindow/statisticswindow.dart'; //통계
@@ -8,6 +7,9 @@ import 'package:capstone_diary/ArchiveWindow/archivewibdow.dart'; //일기 목�
 import 'package:capstone_diary/ChallengeWindow/challengewindow.dart'; //도전과제
 //사이드 메뉴 관련 화면
 import 'package:capstone_diary/profilewindow.dart';
+//일기쓰기 관련 화면
+import 'package:capstone_diary/KGB/writewindow.dart';
+import 'package:capstone_diary/KGB/writewindowNext.dart'; //일기장
 
 void main() {
   runApp(const MyApp());
@@ -31,34 +33,57 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  final int _selectedIndex = 0;
+
   //메인 화면 리스트
-  late List<Widget> _screens;
+  late List<Widget> mainScreens;
+  //사이드 메뉴 화면 리스트
+  late List<Widget> sideScreens;
+  //글쓰기 화면 리스트
+  late List<Widget> writeScreens;
+
   //현재 보고 있는 화면
   late Widget currentScreen;
 
   void updateSelectedIndex(int index) {
     setState(() {
-      if (index < 5) {
-        _selectedIndex = index;
-      }
-      currentScreen = _screens[index];
+      currentScreen = mainScreens[index];
+    });
+  }
+
+  void updateSideMenuSelectedIndex(int index) {
+    setState(() {
+      currentScreen = sideScreens[index];
+    });
+  }
+
+  void updateWriteSelectedIndex(int index) {
+    setState(() {
+      currentScreen = writeScreens[index];
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _screens = [
-      HomeWindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
-      StatisticsWindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
-      ArchiveWindow(sideMenuToHomeWindowIndex: updateSelectedIndex),
+
+    //메인 화면 리스트 초기화
+    mainScreens = [
+      HomeWindow(
+        sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
+        WriteWindowIndex: updateWriteSelectedIndex,
+      ),
+      StatisticsWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
+      ArchiveWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
       Text(
         '들춰보기 (공유 일기 목록)',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-      ),
-      //Sidemenu에서 선택한 화면
+      ), //Sidemenu에서 선택한 화면
       ChallengeWindow(),
+    ];
+
+    //사이드 메뉴 화면 리스트 초기화
+    sideScreens = [
       ProfileWindow(backButtonEvent: updateSelectedIndex),
       Text(
         '알람 설정',
@@ -72,11 +97,23 @@ class _HomeScreenState extends State<HomeScreen> {
         '회원 탈퇴',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
       ),
-      WriteWindow(),
     ];
 
-    //처음에 보여줄 화면
-    currentScreen = _screens[0];
+    //글쓰기 화면 리스트 초기화
+    writeScreens = [
+      WriteWindow(),
+      Text(
+        '일기장 선택',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
+      Text(
+        '일기장 선택',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
+    ];
+
+    //초기 화면 설정
+    currentScreen = mainScreens[0];
   }
 
   @override
