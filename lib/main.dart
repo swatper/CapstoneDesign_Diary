@@ -102,14 +102,14 @@ class _HomeScreenState extends State<HomeScreen> {
     //글쓰기 화면 리스트 초기화
     writeScreens = [
       WriteWindow(),
-      Text(
-        '일기장 선택',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-      ),
-      Text(
-        '일기장 선택',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-      ),
+      /*WriteWindowNext(
+        diaryContent: '일기 내용',
+        year: 2023,
+        month: 10,
+        day: 1,
+        weatherIndex: 0,
+        title: '일기 제목',
+      ),*/
     ];
 
     //초기 화면 설정

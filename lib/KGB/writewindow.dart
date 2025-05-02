@@ -35,7 +35,7 @@ class _WriteWindow extends State<WriteWindow> {
       context,
       MaterialPageRoute(
         builder:
-            (context) => WriteeWindowNext(
+            (context) => WriteWindowNext(
               diaryContent: diaryContent,
               year: year,
               month: month,

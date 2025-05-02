@@ -1,7 +1,7 @@
 import 'package:capstone_diary/KGB/weatherButton.dart';
 import 'package:flutter/material.dart';
 
-class WriteeWindowNext extends StatefulWidget {
+class WriteWindowNext extends StatefulWidget {
   final int year;
   final int month;
   final int day;
@@ -9,7 +9,7 @@ class WriteeWindowNext extends StatefulWidget {
   final String title;
   final String diaryContent;
 
-  const WriteeWindowNext({
+  const WriteWindowNext({
     super.key,
     required this.year,
     required this.month,
@@ -20,10 +20,10 @@ class WriteeWindowNext extends StatefulWidget {
   });
 
   @override
-  State<WriteeWindowNext> createState() => _WriteeWindowNextState();
+  State<WriteWindowNext> createState() => _WriteeWindowNextState();
 }
 
-class _WriteeWindowNextState extends State<WriteeWindowNext> {
+class _WriteeWindowNextState extends State<WriteWindowNext> {
   void onClickedBackButton() {
     Navigator.pop(context); // 이전 화면으로 돌아가기
   }
