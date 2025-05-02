@@ -3,7 +3,8 @@ import 'package:capstone_diary/KGB/writewindowNext.dart';
 import 'package:flutter/material.dart';
 
 class WriteWindow extends StatefulWidget {
-  const WriteWindow({super.key});
+  final Function(Widget) setWriteWindowNext; //글쓰기 화면간 데이터 전달을 위한 변수
+  const WriteWindow({super.key, required this.setWriteWindowNext});
   @override
   State<WriteWindow> createState() => _WriteWindow();
 }
@@ -14,7 +15,7 @@ void onClickedCalanderButton() {}
 
 class _WriteWindow extends State<WriteWindow> {
   PageController pageController = PageController();
-  TextEditingController diaryController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
   TextEditingController titleController = TextEditingController(); // 제목 입력 컨트롤러
   int selectedWeatherIndex = 1; // 1~5 사이의 숫자 (기본값 1)
   //날짜 정보
@@ -29,20 +30,14 @@ class _WriteWindow extends State<WriteWindow> {
   }
 
   void onClickedNextButton() {
-    final diaryContent = diaryController.text; // 입력된 일기 내용 가져오기
-    final dirayTitle = titleController.text;
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder:
-            (context) => WriteWindowNext(
-              diaryContent: diaryContent,
-              year: year,
-              month: month,
-              day: day,
-              weatherIndex: selectedWeatherIndex,
-              title: dirayTitle,
-            ),
+    widget.setWriteWindowNext(
+      WriteWindowNext(
+        diaryContent: contentController.text,
+        year: year,
+        month: month,
+        day: day,
+        weatherIndex: selectedWeatherIndex,
+        title: titleController.text,
       ),
     );
   }
@@ -133,7 +128,7 @@ class _WriteWindow extends State<WriteWindow> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
-                  controller: diaryController,
+                  controller: contentController,
                   style: TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     labelText: '내용을 입력하세요.',
