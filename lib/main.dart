@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         '회원 탈퇴',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
       ),
-      WriteWindow(backButtonCallback: updateSelectedIndex),
+      WriteWindow(),
     ];
 
     //처음에 보여줄 화면
