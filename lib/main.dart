@@ -33,7 +33,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final int _selectedIndex = 0;
+  int _selectedIndex = 0;
 
   //메인 화면 리스트
   late List<Widget> mainScreens;
@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void updateSelectedIndex(int index) {
     setState(() {
+      _selectedIndex = index;
       currentScreen = mainScreens[index];
     });
   }
