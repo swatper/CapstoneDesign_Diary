@@ -4,24 +4,55 @@ import 'package:flutter/material.dart';
 
 class WriteWindow extends StatefulWidget {
   final Function(Widget) setWriteWindowNext; //글쓰기 화면간 데이터 전달을 위한 변수
-  const WriteWindow({super.key, required this.setWriteWindowNext});
+  WriteWindow({
+    super.key,
+    required this.setWriteWindowNext,
+    this.initialYear,
+    this.initialMonth,
+    this.initialDay,
+    this.initialWeatherIndex,
+    this.initialTitle,
+    this.initialContent,
+  });
   @override
   State<WriteWindow> createState() => _WriteWindow();
+
+  int? initialYear;
+  int? initialMonth;
+  int? initialDay;
+  int? initialWeatherIndex;
+  String? initialTitle;
+  String? initialContent;
 }
 
-void onClickedBackButton() {}
+void onClickedBackButton() {
+  // 뒤로가기 버튼 클릭 시 이전 화면으로 이동
+}
 
 void onClickedCalanderButton() {}
 
 class _WriteWindow extends State<WriteWindow> {
   PageController pageController = PageController();
-  TextEditingController contentController = TextEditingController();
-  TextEditingController titleController = TextEditingController(); // 제목 입력 컨트롤러
-  int selectedWeatherIndex = 1; // 1~5 사이의 숫자 (기본값 1)
-  //날짜 정보
-  int year = 2025;
-  int month = 10;
-  int day = 12;
+  late TextEditingController contentController;
+  late TextEditingController titleController;
+  late int selectedWeatherIndex;
+  late int year;
+  late int month;
+  late int day;
+  DateTime today = DateTime.now();
+  @override
+  void initState() {
+    super.initState();
+    // 초기 데이터 적용 (널이면 기본값 사용)
+    contentController = TextEditingController(
+      text: widget.initialContent ?? '',
+    );
+    titleController = TextEditingController(text: widget.initialTitle ?? '');
+    selectedWeatherIndex = widget.initialWeatherIndex ?? 0;
+    year = widget.initialYear ?? today.year;
+    month = widget.initialMonth ?? today.month;
+    day = widget.initialDay ?? today.day;
+  }
 
   void onWeatherSelected(int index) {
     setState(() {
@@ -38,6 +69,19 @@ class _WriteWindow extends State<WriteWindow> {
         day: day,
         weatherIndex: selectedWeatherIndex,
         title: titleController.text,
+        onBackToWriteWindow: () {
+          widget.setWriteWindowNext(
+            WriteWindow(
+              setWriteWindowNext: widget.setWriteWindowNext,
+              initialContent: contentController.text,
+              initialTitle: titleController.text,
+              initialYear: year,
+              initialMonth: month,
+              initialDay: day,
+              initialWeatherIndex: selectedWeatherIndex,
+            ),
+          ); // 자신으로 다시 설정
+        },
       ),
     );
   }
@@ -88,14 +132,17 @@ class _WriteWindow extends State<WriteWindow> {
                           SizedBox(width: 20),
                           Transform.translate(
                             offset: Offset(0, 10),
-                            child: Text('2025', style: TextStyle(fontSize: 15)),
+                            child: Text(
+                              '$year',
+                              style: TextStyle(fontSize: 15),
+                            ),
                           ),
                         ],
                       ),
                       Row(
                         children: [
                           SizedBox(width: 20),
-                          Text('10월 12일', style: TextStyle(fontSize: 22)),
+                          Text('$month월 $day일', style: TextStyle(fontSize: 22)),
                           IconButton(
                             onPressed: onClickedCalanderButton,
                             icon: Icon(Icons.calendar_month_outlined),
@@ -106,7 +153,12 @@ class _WriteWindow extends State<WriteWindow> {
                     ],
                   ),
                   Spacer(),
-                  WeatherButton(),
+                  WeatherButton(
+                    weatherIndex: selectedWeatherIndex,
+                    onWeatherChanged: (index) {
+                      selectedWeatherIndex = index;
+                    },
+                  ),
                 ],
               ),
               Padding(
