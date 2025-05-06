@@ -24,6 +24,10 @@ class AssetManager {
     return Image.asset(weatherPath + imageName, width: width, height: height);
   }
 
+  AssetImage getWeatherImage2(String imageName) {
+    return AssetImage(weatherPath + imageName);
+  }
+
   Widget getIconImage(String imageName, double width, double height) {
     return Image.asset(iconPath + imageName, width: width, height: height);
   }

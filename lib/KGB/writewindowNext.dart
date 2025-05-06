@@ -85,14 +85,20 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                           SizedBox(width: 20),
                           Transform.translate(
                             offset: Offset(0, 10),
-                            child: Text('2025', style: TextStyle(fontSize: 15)),
+                            child: Text(
+                              widget.year.toString(),
+                              style: TextStyle(fontSize: 15),
+                            ),
                           ),
                         ],
                       ),
                       Row(
                         children: [
                           SizedBox(width: 20),
-                          Text('10월 12일', style: TextStyle(fontSize: 22)),
+                          Text(
+                            '${widget.month}월 ${widget.day}일',
+                            style: TextStyle(fontSize: 22),
+                          ),
                         ],
                       ),
                     ],
@@ -322,7 +328,6 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                             setState(() {
                               isPublic = value; // 상태 변경
                             });
-                            print('공개 여부: ${isPublic ? "공개" : "비공개"}');
                           },
                           activeColor: Colors.amber, // 활성 상태 색상
                           inactiveThumbColor: Colors.grey, // 비활성 상태 색상

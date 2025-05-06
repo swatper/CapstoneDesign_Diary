@@ -10,25 +10,13 @@ class WeatherButton extends StatefulWidget {
     this.isButtonActive,
     this.onWeatherChanged,
   });
-  final Function(int)? onWeatherChanged;
+  Function(int)? onWeatherChanged;
 
   @override
   State<WeatherButton> createState() => _WeatherButtonState();
 }
 
 class _WeatherButtonState extends State<WeatherButton> {
-  final String sunIconPath = 'assets/images/wd_sun.png';
-  final String cloudIconPath = 'assets/images/wd_cloud.png';
-  final String rainIconPath = 'assets/images/wd_rain.png';
-  final String windIconPath = 'assets/images/wd_wind.png';
-  final String snowIconPath = 'assets/images/wd_snow.png';
-  final List<String> weatherIconPaths = [
-    'assets/images/wd_sun.png',
-    'assets/images/wd_cloud.png',
-    'assets/images/wd_rain.png',
-    'assets/images/wd_wind.png',
-    'assets/images/wd_snow.png',
-  ];
   late int weatherIndex; // 날씨 아이콘 인덱스 (0: 맑음, 1: 흐림, 2: 비, 3: 바람, 4: 눈)
   late Widget selectedWeatherIcon;
   late bool isButtonActive;
@@ -37,11 +25,24 @@ class _WeatherButtonState extends State<WeatherButton> {
     super.initState();
     weatherIndex = widget.weatherIndex ?? 0;
     isButtonActive = widget.isButtonActive ?? true;
-    selectedWeatherIcon = Image.asset(
-      weatherIconPaths[weatherIndex], // 초기 이미지 설정
-      width: 50,
-      height: 50,
-    );
+    selectedWeatherIcon = getWeatherIcon();
+  }
+
+  Widget getWeatherIcon() {
+    switch (weatherIndex) {
+      case 0:
+        return AssetManager.instance.getWeatherImage("wd_sun.png", 45, 45);
+      case 1:
+        return AssetManager.instance.getWeatherImage("wd_cloud.png", 45, 45);
+      case 2:
+        return AssetManager.instance.getWeatherImage("wd_rain.png", 45, 45);
+      case 3:
+        return AssetManager.instance.getWeatherImage("wd_wind.png", 45, 45);
+      case 4:
+        return AssetManager.instance.getWeatherImage("wd_snow.png", 45, 45);
+      default:
+        return AssetManager.instance.getWeatherImage("wd_sun.png", 45, 45);
+    }
   }
 
   void onClickedWeatherButton() async {
@@ -67,7 +68,9 @@ class _WeatherButtonState extends State<WeatherButton> {
               //padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/weatherBack.png'),
+                  image: AssetManager.instance.getWeatherImage2(
+                    "weatherBack.png",
+                  ),
                   fit: BoxFit.contain,
                 ),
               ),
@@ -110,24 +113,44 @@ class _WeatherButtonState extends State<WeatherButton> {
             weatherIndex = 0;
             break;
           case 'cloud':
-            selectedWeatherIcon = Image.asset(cloudIconPath);
+            selectedWeatherIcon = AssetManager.instance.getWeatherImage(
+              "wd_cloud.png",
+              45,
+              45,
+            );
             weatherIndex = 1;
             break;
           case 'rain':
-            selectedWeatherIcon = Image.asset(rainIconPath);
+            selectedWeatherIcon = AssetManager.instance.getWeatherImage(
+              "wd_rain.png",
+              45,
+              45,
+            );
             weatherIndex = 2;
             break;
           case 'wind':
-            selectedWeatherIcon = Image.asset(windIconPath);
+            selectedWeatherIcon = AssetManager.instance.getWeatherImage(
+              "wd_wind.png",
+              45,
+              45,
+            );
             weatherIndex = 3;
             break;
           case 'snow':
-            selectedWeatherIcon = Image.asset(snowIconPath);
+            selectedWeatherIcon = AssetManager.instance.getWeatherImage(
+              "wd_snow.png",
+              45,
+              45,
+            );
             weatherIndex = 4;
             break;
           default:
             {
-              selectedWeatherIcon = Image.asset(sunIconPath);
+              selectedWeatherIcon = AssetManager.instance.getWeatherImage(
+                "wd_sun.png",
+                45,
+                45,
+              );
             } // 기본값 (예외처리)
         }
         widget.onWeatherChanged?.call(weatherIndex);
@@ -149,32 +172,27 @@ class WeatherIconButton extends StatelessWidget {
   final String weatherType;
   const WeatherIconButton({super.key, required this.weatherType});
 
-  String get weatherIconPath {
+  Widget get weatherIconImage {
     switch (weatherType) {
       case 'sun':
-        return 'assets/images/wd_sun.png';
+        return AssetManager.instance.getWeatherImage("wd_sun.png", 45, 45);
       case 'cloud':
-        return 'assets/images/wd_cloud.png';
+        return AssetManager.instance.getWeatherImage("wd_cloud.png", 45, 45);
       case 'rain':
-        return 'assets/images/wd_rain.png';
+        return AssetManager.instance.getWeatherImage("wd_rain.png", 45, 45);
       case 'wind':
-        return 'assets/images/wd_wind.png';
+        return AssetManager.instance.getWeatherImage("wd_wind.png", 45, 45);
       case 'snow':
-        return 'assets/images/wd_snow.png';
+        return AssetManager.instance.getWeatherImage("wd_snow.png", 45, 45);
       default:
-        return 'assets/images/wd_sun.png'; // 기본값 (예외처리)
+        return AssetManager.instance.getWeatherImage("wd_sun.png", 45, 45);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Image.asset(
-        weatherIconPath,
-        width: 45,
-        height: 45,
-        fit: BoxFit.contain,
-      ),
+      icon: weatherIconImage,
       onPressed:
           () => Navigator.pop(
             context,
