@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:capstone_diary/Utils/assetmanager.dart';
 
 class ProfileWindow extends StatefulWidget {
   final Function(int) backButtonEvent;
@@ -11,7 +12,6 @@ class ProfileWindow extends StatefulWidget {
 class _ProfileWindowState extends State<ProfileWindow> {
   bool isEditMode = false;
   String nickname = "닉네임";
-  String userPrifileImage = "assets/images/default.png";
 
   TextStyle titleStyle = TextStyle(
     fontSize: 20,
@@ -97,11 +97,10 @@ class _ProfileWindowState extends State<ProfileWindow> {
             ),
             child: Stack(
               children: [
-                Image.asset(
-                  userPrifileImage,
-                  width: 130,
-                  height: 130,
-                  fit: BoxFit.cover,
+                AssetManager.instance.getProfileImage(
+                  "defaultpro.png",
+                  130,
+                  130,
                 ),
               ],
             ),
@@ -189,11 +188,10 @@ class _ProfileWindowState extends State<ProfileWindow> {
                               isEditMode ? 1 : 0,
                             ),
                           ),
-                          child: Image.asset(
-                            "assets/images/default.png",
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
+                          child: AssetManager.instance.getChallengeImage(
+                            'default.png',
+                            80,
+                            80,
                           ),
                         ),
                       ],
