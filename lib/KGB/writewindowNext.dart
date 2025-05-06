@@ -1,7 +1,10 @@
 import 'package:capstone_diary/KGB/weatherButton.dart';
 import 'package:flutter/material.dart';
 
+import 'writewindow.dart';
+
 class WriteWindowNext extends StatefulWidget {
+  final VoidCallback onBackToWriteWindow;
   final int year;
   final int month;
   final int day;
@@ -17,6 +20,7 @@ class WriteWindowNext extends StatefulWidget {
     required this.weatherIndex,
     required this.title,
     required this.diaryContent,
+    required this.onBackToWriteWindow,
   });
 
   @override
@@ -25,7 +29,7 @@ class WriteWindowNext extends StatefulWidget {
 
 class _WriteeWindowNextState extends State<WriteWindowNext> {
   void onClickedBackButton() {
-    Navigator.pop(context); // 이전 화면으로 돌아가기
+    widget.onBackToWriteWindow();
   }
 
   bool isPublic = false; // 공개 여부 상태 변수
@@ -94,7 +98,10 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                     ],
                   ),
                   Spacer(),
-                  WeatherButton(),
+                  WeatherButton(
+                    weatherIndex: widget.weatherIndex,
+                    isButtonActive: false,
+                  ),
                 ],
               ),
               Padding(
