@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:capstone_diary/Utils/assetmanager.dart';
 
 class WeatherButton extends StatefulWidget {
   int? weatherIndex = 0; // 날씨 아이콘 인덱스 (0: 맑음, 1: 흐림, 2: 비, 3: 바람, 4: 눈)
@@ -101,7 +102,11 @@ class _WeatherButtonState extends State<WeatherButton> {
       setState(() {
         switch (newIcon) {
           case 'sun':
-            selectedWeatherIcon = Image.asset(sunIconPath);
+            selectedWeatherIcon = AssetManager.instance.getWeatherImage(
+              "wd_sun.png",
+              45,
+              45,
+            );
             weatherIndex = 0;
             break;
           case 'cloud':
