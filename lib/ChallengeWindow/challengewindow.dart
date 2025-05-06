@@ -34,6 +34,7 @@ class _ChallengeWindowState extends State<ChallengeWindow> {
               description: "달성조건",
               currentProgress: 0,
               maxProgress: 1,
+              imageName: "newbie.png",
             ),
           ],
         ),

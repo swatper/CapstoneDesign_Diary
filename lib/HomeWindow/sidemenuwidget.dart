@@ -1,4 +1,5 @@
 import 'package:capstone_diary/Utils/toastmessage.dart';
+import 'package:capstone_diary/Utils/assetmanager.dart';
 import 'package:flutter/material.dart';
 
 class SideMenuWidget extends StatefulWidget {
@@ -84,15 +85,15 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                         ),
                         Row(
                           children: [
-                            Image.asset(
-                              'assets/images/default.png',
-                              width: 52,
-                              height: 52,
+                            AssetManager.instance.getProfileImage(
+                              'defaultpro.png',
+                              52,
+                              52,
                             ),
-                            Image.asset(
-                              'assets/images/default.png',
-                              width: 52,
-                              height: 52,
+                            AssetManager.instance.getChallengeImage(
+                              'default.png',
+                              52,
+                              52,
                             ),
                           ],
                         ),

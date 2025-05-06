@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
-/*
-import 'package:capstone_diary/ArchiveWindow/diaryclusteritem.dart';
+//import 'package:capstone_diary/ArchiveWindow/diaryclusteritem.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
-*/
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DiaryMap extends StatefulWidget {
   //final List<DiaryModel> diaryList;

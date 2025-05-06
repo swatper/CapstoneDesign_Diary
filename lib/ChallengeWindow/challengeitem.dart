@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:capstone_diary/Utils/assetmanager.dart';
 
 class ChallengeItem extends StatelessWidget {
   final String title;
   final String description;
   final int currentProgress;
   final int maxProgress;
+  final String imageName;
 
   const ChallengeItem({
     super.key,
@@ -12,6 +14,7 @@ class ChallengeItem extends StatelessWidget {
     required this.description,
     required this.currentProgress,
     required this.maxProgress,
+    required this.imageName,
   });
 
   @override
@@ -26,7 +29,7 @@ class ChallengeItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.asset('assets/images/default.png', width: 100, height: 100),
+          AssetManager.instance.getChallengeImage(imageName, 100, 100),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

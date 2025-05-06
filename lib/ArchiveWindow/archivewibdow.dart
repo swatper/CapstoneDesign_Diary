@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/HomeWindow/sidemenuwidget.dart';
-import 'package:capstone_diary/ArchiveWindow/googlemap.dart';
+import 'package:capstone_diary/ArchiveWindow/diarymap.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/DiaryItem/diaryitem.dart';
 
