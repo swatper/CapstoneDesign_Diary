@@ -33,7 +33,7 @@
         
         <!--구글 지도 -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="API키 넣기"/>
+               android:value="AIzaSyD8xyS1jdL7NVkxbAR8xDSLo0Fc1avmbwM"/>
 
     <!-- 카카오 로그인 커스텀 URL 스킴 설정 
     <activity 

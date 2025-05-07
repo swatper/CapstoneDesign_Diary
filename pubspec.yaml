@@ -93,6 +93,8 @@ flutter:
     - assets/images/weather/wd_wind.png
     - assets/images/weather/wd_cloud.png
 
+    - assets/images/icons/marker.png
+
     - assets/images/default.png
     - assets/images/emotion_icon1.png
     - assets/images/book.png

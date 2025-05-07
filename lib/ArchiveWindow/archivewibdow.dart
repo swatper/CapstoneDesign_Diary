@@ -120,21 +120,29 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      //DiaryMap(),
                       DiaryMap(
-                        /*
                         diaryList: [
                           DiaryModel(
-                            '2025-04-30',
+                            '2025-05-01',
                             1,
                             false,
                             37.5665,
                             126.9780,
-                            title: "test",
-                            content: 'empty',
+                            title: "test1",
+                            content: 'empty1',
                             tags: List<String>.from(["감정1", "감정2", "감정3"]),
                           ),
-                        ],*/
+                          DiaryModel(
+                            '2025-05-01',
+                            1,
+                            false,
+                            38.0000,
+                            127.0000,
+                            title: "test1",
+                            content: 'empty1',
+                            tags: List<String>.from(["감정1", "감정2", "감정3"]),
+                          ),
+                        ],
                       ),
                     ],
                   ),
