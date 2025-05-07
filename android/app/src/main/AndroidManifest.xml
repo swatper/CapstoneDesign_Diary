@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--위치 권한-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:label="capstone_diary"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -33,7 +35,7 @@
         
         <!--구글 지도 -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyD8xyS1jdL7NVkxbAR8xDSLo0Fc1avmbwM"/>
+               android:value=""/>
 
     <!-- 카카오 로그인 커스텀 URL 스킴 설정 
     <activity 
