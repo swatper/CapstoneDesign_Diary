@@ -5,12 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CustomMarkerGenerator {
-  static final CustomMarkerGenerator _instance = CustomMarkerGenerator._internal();
+  static final CustomMarkerGenerator _instance =
+      CustomMarkerGenerator._internal();
   factory CustomMarkerGenerator() => _instance;
+  final String baseImagePath = "assets/images/icons/marker.png";
   CustomMarkerGenerator._internal();
 
   Future<BitmapDescriptor> createMarkerWithText({
-    required String baseImagePath = "assets/", // ex: "assets/marker_base.png"
     required String text,
     double textSize = 32,
     Color textColor = Colors.white,
@@ -18,18 +19,19 @@ class CustomMarkerGenerator {
   }) async {
     // Load base image (your custom marker background)
     final ByteData byteData = await rootBundle.load(baseImagePath);
-    final ui.Codec codec = await ui.instantiateImageCodec(byteData.buffer.asUint8List(),
-        targetWidth: imageSize.toInt(), targetHeight: imageSize.toInt());
+    final ui.Codec codec = await ui.instantiateImageCodec(
+      byteData.buffer.asUint8List(),
+      targetWidth: imageSize.toInt(),
+      targetHeight: imageSize.toInt(),
+    );
     final ui.FrameInfo frameInfo = await codec.getNextFrame();
     final ui.Image baseImage = frameInfo.image;
 
     final ui.PictureRecorder recorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(recorder);
 
-    // Draw base image
     canvas.drawImage(baseImage, Offset.zero, Paint());
 
-    // Draw text
     final textPainter = TextPainter(
       text: TextSpan(
         text: text,
@@ -51,12 +53,14 @@ class CustomMarkerGenerator {
     textPainter.paint(canvas, offset);
 
     final ui.Image finalImage = await recorder.endRecording().toImage(
-          imageSize.toInt(),
-          imageSize.toInt(),
-        );
-    final ByteData? pngBytes = await finalImage.toByteData(format: ui.ImageByteFormat.png);
+      imageSize.toInt(),
+      imageSize.toInt(),
+    );
+    final ByteData? pngBytes = await finalImage.toByteData(
+      format: ui.ImageByteFormat.png,
+    );
     final Uint8List data = pngBytes!.buffer.asUint8List();
 
-    return BitmapDescriptor.fromBytes(data);
+    return BitmapDescriptor.bytes(data);
   }
 }
