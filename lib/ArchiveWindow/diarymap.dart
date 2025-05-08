@@ -73,10 +73,11 @@ class _DiaryMapState extends State<DiaryMap> {
       return Marker(
         markerId: MarkerId(cluster.getId()),
         position: cluster.location,
+        anchor: Offset(0.5, 1.0),
         icon: await CustomMarkerGenerator().createMarkerWithText(
           text: cluster.count.toString(),
-          textSize: 32,
-          imageSize: 150,
+          textSize: 16,
+          imageSize: 60,
         ),
       );
     } else {
@@ -84,10 +85,11 @@ class _DiaryMapState extends State<DiaryMap> {
       return Marker(
         markerId: MarkerId(diary.date),
         position: LatLng(diary.lat, diary.lng),
+        anchor: Offset(0.5, 1.0),
         icon: await CustomMarkerGenerator().createMarkerWithText(
-          text: "일기제목",
-          textSize: 32,
-          imageSize: 150,
+          text: "1",
+          textSize: 16,
+          imageSize: 60,
         ),
       );
     }
@@ -110,6 +112,7 @@ class _DiaryMapState extends State<DiaryMap> {
       clusterItems,
       updateMarkers,
       levels: [1, 4.25, 6.75, 8.25, 11.5, 14.5, 16.0, 16.5, 20.0], //줌 레벨 설정
+      markerBuilder: markerBuilder,
     );
   }
 
