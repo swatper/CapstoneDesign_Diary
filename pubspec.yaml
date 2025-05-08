@@ -79,12 +79,6 @@ flutter:
 
     - assets/images/profile/defaultpro.png
 
-    - assets/images/weatherBack.png
-    - assets/images/wd_rain.png
-    - assets/images/wd_sun.png
-    - assets/images/wd_snow.png
-    - assets/images/wd_wind.png
-    - assets/images/wd_cloud.png
 
     - assets/images/weather/weatherBack.png
     - assets/images/weather/wd_rain.png

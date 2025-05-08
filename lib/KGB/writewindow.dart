@@ -1,4 +1,4 @@
-import 'package:capstone_diary/KGB/weatherButton.dart';
+import 'package:capstone_diary/KGB/weatherbutton.dart';
 import 'package:capstone_diary/KGB/writewindowNext.dart';
 import 'package:flutter/material.dart';
 
