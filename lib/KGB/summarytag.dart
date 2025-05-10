@@ -1,35 +1,21 @@
 import 'package:flutter/material.dart';
 
-class EmotionTag extends StatefulWidget {
-  final int emotionIndex;
+class SummaryTag extends StatefulWidget {
+  final String summary;
   final void Function()? onDelete;
 
-  const EmotionTag({super.key, required this.emotionIndex, this.onDelete});
+  const SummaryTag({super.key, required this.summary, this.onDelete});
 
   @override
-  State<EmotionTag> createState() => _EmotionTagState();
+  State<SummaryTag> createState() => _SummaryTagState();
 }
 
-class _EmotionTagState extends State<EmotionTag> {
+class _SummaryTagState extends State<SummaryTag> {
   bool _showDelete = false;
-
-  final List<String> emotions = [
-    '기쁨',
-    '행복',
-    '설렘',
-    '화남',
-    '우울함',
-    '슬픔',
-    '불안',
-    '놀람',
-    '부끄러움',
-    '지루함',
-  ];
 
   @override
   Widget build(BuildContext context) {
-    final String label =
-        '#${emotions[widget.emotionIndex.clamp(0, emotions.length - 1)]}';
+    final String label = '#${widget.summary}';
 
     return GestureDetector(
       onTap: () {
