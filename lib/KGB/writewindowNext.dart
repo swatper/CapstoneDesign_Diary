@@ -185,7 +185,8 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                     child: TextButton(
                       onPressed: () {
                         // 버튼 클릭 시 동작 추가
-                        print('텍스트 버튼 클릭됨');
+                        print('selectedEmotions: $selectedEmotions');
+                        print('selectedSummaries: $selectedSummaries');
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 10), // 내부 패딩
