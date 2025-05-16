@@ -1,12 +1,14 @@
-import 'package:capstone_diary/KGB/weatherButton.dart';
+import 'package:capstone_diary/KGB/weatherbutton.dart';
 import 'package:capstone_diary/KGB/writewindowNext.dart';
 import 'package:flutter/material.dart';
 
 class WriteWindow extends StatefulWidget {
-  final Function(Widget) setWriteWindowNext; //글쓰기 화면간 데이터 전달을 위한 변수
+  final Function(Widget) setWriteWindowNext;
+  final VoidCallback goBackToHome; //글쓰기 화면간 데이터 전달을 위한 변수
   WriteWindow({
     super.key,
     required this.setWriteWindowNext,
+    required this.goBackToHome,
     this.initialYear,
     this.initialMonth,
     this.initialDay,
@@ -23,10 +25,6 @@ class WriteWindow extends StatefulWidget {
   int? initialWeatherIndex;
   String? initialTitle;
   String? initialContent;
-}
-
-void onClickedBackButton() {
-  // 뒤로가기 버튼 클릭 시 이전 화면으로 이동
 }
 
 void onClickedCalanderButton() {}
@@ -54,6 +52,11 @@ class _WriteWindow extends State<WriteWindow> {
     day = widget.initialDay ?? today.day;
   }
 
+  void onClickedBackButton() {
+    // 뒤로가기 버튼 클릭 시 이전 화면으로 이동
+    widget.goBackToHome();
+  }
+
   void onWeatherSelected(int index) {
     setState(() {
       selectedWeatherIndex = index;
@@ -73,6 +76,7 @@ class _WriteWindow extends State<WriteWindow> {
           widget.setWriteWindowNext(
             WriteWindow(
               setWriteWindowNext: widget.setWriteWindowNext,
+              goBackToHome: widget.goBackToHome,
               initialContent: contentController.text,
               initialTitle: titleController.text,
               initialYear: year,

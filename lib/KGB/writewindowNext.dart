@@ -1,7 +1,7 @@
-import 'package:capstone_diary/KGB/weatherButton.dart';
+import 'package:capstone_diary/KGB/emotionTag.dart';
+import 'package:capstone_diary/KGB/summarytag.dart';
+import 'package:capstone_diary/KGB/weatherbutton.dart';
 import 'package:flutter/material.dart';
-
-import 'writewindow.dart';
 
 class WriteWindowNext extends StatefulWidget {
   final VoidCallback onBackToWriteWindow;
@@ -28,14 +28,40 @@ class WriteWindowNext extends StatefulWidget {
 }
 
 class _WriteeWindowNextState extends State<WriteWindowNext> {
+  List<int> selectedEmotions = [];
+  List<String> selectedSummaries = [];
+  List<IconData> emotionIcons = [
+    Icons.sentiment_satisfied_alt_rounded, // 0. 기쁨
+    Icons.sentiment_very_satisfied_rounded, // 1. 행복
+    Icons.move_to_inbox_rounded, // 2. 설렘
+    Icons.sentiment_very_satisfied, // 3. 화남
+    Icons.sentiment_very_dissatisfied, // 4. 우울함
+    Icons.mood, // 5. 슬픔
+    Icons.mood_bad, // 6. 불안
+    Icons.face, // 7. 놀람
+    Icons.tag_faces, // 8. 부끄러움
+    Icons.exposure_neg_1, // 9. 지루함
+  ];
+  List<String> emotionLabels = [
+    '기쁨',
+    '행복',
+    '설렘',
+    '화남',
+    '우울함',
+    '슬픔',
+    '불안',
+    '놀람',
+    '부끄러움',
+    '지루함',
+  ];
+  bool isPublic = false; // 공개 여부 상태 변수
+
   void onClickedBackButton() {
     widget.onBackToWriteWindow();
   }
 
-  bool isPublic = false; // 공개 여부 상태 변수
   void onClickedCompleteButton() {
     // DB 저장 로직 추가
-    print('저장 완료: ${widget.title}, ${widget.diaryContent}');
     Navigator.pop(context); // 저장 후 이전 화면으로 돌아가기
   }
 
@@ -85,14 +111,20 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                           SizedBox(width: 20),
                           Transform.translate(
                             offset: Offset(0, 10),
-                            child: Text('2025', style: TextStyle(fontSize: 15)),
+                            child: Text(
+                              widget.year.toString(),
+                              style: TextStyle(fontSize: 15),
+                            ),
                           ),
                         ],
                       ),
                       Row(
                         children: [
                           SizedBox(width: 20),
-                          Text('10월 12일', style: TextStyle(fontSize: 22)),
+                          Text(
+                            '${widget.month}월 ${widget.day}일',
+                            style: TextStyle(fontSize: 22),
+                          ),
                         ],
                       ),
                     ],
@@ -153,7 +185,8 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                     child: TextButton(
                       onPressed: () {
                         // 버튼 클릭 시 동작 추가
-                        print('텍스트 버튼 클릭됨');
+                        print('selectedEmotions: $selectedEmotions');
+                        print('selectedSummaries: $selectedSummaries');
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 10), // 내부 패딩
@@ -190,40 +223,39 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                     SizedBox(height: 10),
                     Row(
                       children: [
+                        // 왼쪽에 고정된 아이콘 버튼
                         SizedBox(
                           width: 30,
                           height: 30,
                           child: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
+                              _showEmotionPicker(); // 감정 선택 다이얼로그 호출
                               print('아이콘 버튼 클릭됨');
                             },
                             icon: Icon(
-                              Icons.add_circle_outlined, // 아이콘 종류
-                              size: 30, // 아이콘 크기
-                              color: Colors.amber, // 아이콘 색상,
+                              Icons.add_circle_outlined,
+                              size: 30,
+                              color: Colors.amber,
                             ),
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.amber[400], // 버튼 배경색
-                            borderRadius: BorderRadius.circular(
-                              50,
-                            ), // 버튼 모서리 둥글게
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 3,
-                            ),
-                            child: Text(
-                              '#즐거움',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14, // 텍스트 크기
-                              ),
-                            ),
+                        // 감정 태그들
+                        Expanded(
+                          child: Wrap(
+                            spacing: 8, // 태그들 간의 간격
+                            runSpacing: 8, // 줄 바꿈 시 간격
+                            children:
+                                selectedEmotions.map((index) {
+                                  return EmotionTag(
+                                    emotionIndex: index,
+                                    onDelete: () {
+                                      setState(() {
+                                        selectedEmotions.remove(index);
+                                      });
+                                    },
+                                  );
+                                }).toList(),
                           ),
                         ),
                       ],
@@ -255,40 +287,41 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                     SizedBox(height: 10),
                     Row(
                       children: [
+                        // 왼쪽에 고정된 아이콘 버튼
                         SizedBox(
                           width: 30,
                           height: 30,
                           child: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              print('아이콘 버튼 클릭됨');
+                              _showSummaryTagPicker(); // 요약 태그 선택 다이얼로그 호출
+                              print('요약 태그 버튼 클릭됨');
                             },
                             icon: Icon(
-                              Icons.add_circle_outlined, // 아이콘 종류
-                              size: 30, // 아이콘 크기
-                              color: Colors.amber, // 아이콘 색상,
+                              Icons.add_circle_outlined,
+                              size: 30,
+                              color: Colors.amber,
                             ),
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.amber[400], // 버튼 배경색
-                            borderRadius: BorderRadius.circular(
-                              50,
-                            ), // 버튼 모서리 둥글게
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 3,
-                            ),
-                            child: Text(
-                              '#',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14, // 텍스트 크기
-                              ),
-                            ),
+                        // 요약 태그들
+                        Expanded(
+                          child: Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children:
+                                selectedSummaries.map((summary) {
+                                  return SummaryTag(
+                                    summary: summary,
+                                    onDelete: () {
+                                      setState(() {
+                                        selectedSummaries.remove(
+                                          summary,
+                                        ); // 삭제할 항목을 리스트에서 제거
+                                      });
+                                    },
+                                  );
+                                }).toList(),
                           ),
                         ),
                       ],
@@ -322,7 +355,6 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                             setState(() {
                               isPublic = value; // 상태 변경
                             });
-                            print('공개 여부: ${isPublic ? "공개" : "비공개"}');
                           },
                           activeColor: Colors.amber, // 활성 상태 색상
                           inactiveThumbColor: Colors.grey, // 비활성 상태 색상
@@ -380,4 +412,113 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
       ),
     );
   }
+
+  void _showSummaryTagPicker() async {
+    final TextEditingController controller = TextEditingController();
+
+    String? newTag = await showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("요약 태그를 입력하세요"),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: '예: 여행, 공부, 친구와의 대화 등',
+              border: OutlineInputBorder(),
+            ),
+            autofocus: true,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context), // 아무 것도 입력하지 않고 닫기
+              child: Text("취소"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final input = controller.text.trim();
+                if (input.isNotEmpty) {
+                  Navigator.pop(context, input); // 입력한 텍스트 전달
+                }
+              },
+              child: Text("추가"),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (newTag != null &&
+        newTag.isNotEmpty &&
+        !selectedSummaries.contains(newTag)) {
+      setState(() {
+        selectedSummaries.add(newTag);
+      });
+    }
+  }
+
+  void _showEmotionPicker() async {
+    int? picked = await showDialog<int>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("감정을 선택하세요"),
+          content: Wrap(
+            spacing: 5,
+            runSpacing: 5,
+            children: List.generate(10, (index) {
+              return TextButton.icon(
+                onPressed: () => Navigator.pop(context, index),
+                // icon: Icon(
+                //   emotionIcons[index],
+                //   color: Colors.primaries[index % Colors.primaries.length],
+                // ),
+                label: Text(
+                  emotionLabels[index],
+                  style: TextStyle(color: Colors.black),
+                ),
+                style: TextButton.styleFrom(
+                  backgroundColor:
+                      Colors
+                          .primaries[index % Colors.primaries.length]
+                          .shade100,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                ),
+              );
+            }),
+          ),
+        );
+      },
+    );
+    if (picked != null && !selectedEmotions.contains(picked)) {
+      setState(() {
+        selectedEmotions.add(picked);
+      });
+    }
+  }
+
+  // Widget _buildEmotionSection() {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 20),
+  //     child: Wrap(
+  //       alignment: WrapAlignment.start,
+  //       children: [
+  //         SizedBox(height: 15),
+  //         SizedBox(height: 10),
+  //         Wrap(
+  //           spacing: 10,
+  //           runSpacing: 10,
+  //           children: [
+  //             ...selectedEmotions.map(
+  //               (index) => EmotionTag(emotionIndex: index),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

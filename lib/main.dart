@@ -107,7 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     //글쓰기 화면 리스트 초기화
-    writeScreens = [WriteWindow(setWriteWindowNext: updateWriteWindow)];
+    writeScreens = [
+      WriteWindow(
+        setWriteWindowNext: updateWriteWindow,
+        goBackToHome: () => updateSelectedIndex(0),
+      ),
+    ];
 
     //초기 화면 설정
     currentScreen = mainScreens[0];
