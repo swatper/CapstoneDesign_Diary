@@ -1,12 +1,14 @@
 {
-    "date" :"2023-10-01",
+    "userid" : "tester",
+    "createdAt": "2023-10-01",
+    "updatedAt": "2023-10-01",
     "title": "title",
     "weather": 0,
-    "socpe" : 1,
+    "scope" : 1,
     "content" : "content",
     "tags": {"emotags": [1,2,3,4,5],
             "sumtags": ["a", "b", "c"]
             },
-    "lat" : 1.0,
-    "lng" : 1.0
+    "lat" : 1.000,
+    "lng" : 1.000
 }
