@@ -1,3 +1,5 @@
+import 'package:capstone_diary/KGB/diaryitem2.dart';
+import 'package:capstone_diary/KGB/diaryview.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
@@ -8,13 +10,57 @@ import 'package:capstone_diary/DiaryItem/diaryitem.dart';
 
 class ArchiveWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
-  const ArchiveWindow({super.key, required this.sideMenuToHomeWindowIndex});
+  final Function(Widget) selectDiary;
+  const ArchiveWindow({
+    super.key,
+    required this.sideMenuToHomeWindowIndex,
+    required this.selectDiary,
+  });
 
   @override
   State<ArchiveWindow> createState() => _ArchiveWindowwState();
 }
 
 class _ArchiveWindowwState extends State<ArchiveWindow> {
+  final List<DiaryModel> diaryList = [
+    DiaryModel(
+      '2025-05-10',
+      1,
+      false,
+      37.5665,
+      126.9780,
+      title: "test1",
+      content:
+          'emptysssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss1',
+      tags: List<String>.from([
+        "감정1",
+        "감정2",
+        "감정3",
+        "감정3",
+        "감정3",
+        "감정3",
+        "감정3",
+        "감정3",
+        "감정3",
+        "감정3",
+        "감정3",
+        "감정3",
+        "감정3",
+        "감정3",
+      ]),
+    ),
+    DiaryModel(
+      '2025-05-01',
+      1,
+      false,
+      38.0000,
+      127.0000,
+      title: "test2",
+      content: 'empty2',
+      tags: List<String>.from(["감정A", "감정B"]),
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -113,11 +159,31 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                     tabsEnd: 0.5,
                     tabs: [Tab(text: "일자별"), Tab(text: "장소")],
                     children: [
-                      Text(
-                        '일기 목록',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 20),
+                            Text(
+                              '일기 목',
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            ...diaryList.map(
+                              (diary) => DiaryItem2(
+                                diaryModel: diary,
+                                onTap: () {
+                                  widget.selectDiary(
+                                    DiaryView(diaryModel: diary),
+                                  );
+                                  showToastMessage("일기 클릭됨");
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                          ],
                         ),
                       ),
                       DiaryMap(

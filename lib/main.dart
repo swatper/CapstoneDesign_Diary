@@ -81,7 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
         WriteWindowIndex: updateWriteSelectedIndex,
       ),
       StatisticsWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
-      ArchiveWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
+      ArchiveWindow(
+        sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
+        selectDiary: updateWriteWindow,
+      ),
       Text(
         '들춰보기 (공유 일기 목록)',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
