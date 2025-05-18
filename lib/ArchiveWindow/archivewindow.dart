@@ -15,6 +15,50 @@ class ArchiveWindow extends StatefulWidget {
 }
 
 class _ArchiveWindowwState extends State<ArchiveWindow> {
+  List<DiaryModel> testsamples = [
+    DiaryModel(
+      '2025-05-10',
+      1,
+      false,
+      37.5665,
+      126.9780,
+      title: "test1",
+      content: 'empty1',
+      tags: List<String>.from(["감정1", "감정2", "감정3"]),
+    ),
+    DiaryModel(
+      '2025-05-01',
+      1,
+      true,
+      38.2832,
+      127.4890,
+      title: "test2",
+      content: 'empty2',
+      tags: List<String>.from(["감정1", "감정2", "감정3"]),
+    ),
+    DiaryModel(
+      '2025-04-02',
+      1,
+      true,
+      38.0000,
+      127.0000,
+      title: "test3",
+      content: 'empty3',
+      tags: List<String>.from(["감정1", "감정2", "감정3"]),
+    ),
+    DiaryModel(
+      '2025-04-01',
+      1,
+      false,
+      37.5465,
+      126.9580,
+      title: "test3",
+      content: 'empty3',
+      tags: List<String>.from(["감정1", "감정2", "감정3"]),
+    ),
+  ];
+  bool isPublic = false; //공개 여부
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +90,37 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
           );
         },
       ),
+    );
+  }
+
+  Widget diaryList(List<DiaryModel> models) {
+    String lastYearMonth = "";
+    List<Widget> diaryWidgets = [];
+    for (var diary in models) {
+      //일기 목록 제목 넣기
+      if (lastYearMonth != diary.date.substring(0, 7)) {
+        lastYearMonth = diary.date.substring(0, 7);
+        diaryWidgets.add(SizedBox(height: 10));
+        diaryWidgets.add(
+          Text(
+            "${lastYearMonth.substring(0, 4)}년 ${lastYearMonth.substring(5, 7)}월",
+            style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
+            textAlign: TextAlign.start,
+          ),
+        );
+      }
+      //일기 목록 넣기
+      diaryWidgets.add(
+        Container(
+          alignment: Alignment.center,
+          child: DiaryItem(diaryModel: diary),
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: diaryWidgets,
     );
   }
 
@@ -105,7 +180,7 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                     ),
                     unselectedTextStyle: TextStyle(
                       fontSize: 14,
-                      color: Colors.black,
+                      color: const Color.fromARGB(255, 3, 2, 2),
                       fontWeight: FontWeight.w500,
                     ),
                     //tab 관련 설정 (위치, tab 안에 내용)
@@ -113,37 +188,42 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                     tabsEnd: 0.5,
                     tabs: [Tab(text: "일자별"), Tab(text: "장소")],
                     children: [
-                      Text(
-                        '일기 목록',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(17, 10, 17, 0),
+                          child: Stack(
+                            children: [
+                              //일기장 목록
+                              diaryList(
+                                isPublic
+                                    ? testsamples
+                                        .where((diary) => diary.isPublic)
+                                        .toList()
+                                    : testsamples,
+                              ),
+                              //버튼
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Switch(
+                                    value: isPublic,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isPublic = value; // 상태 변경
+                                      });
+                                    },
+                                    activeColor: Colors.amber, // 활성 상태 색상
+                                    inactiveThumbColor:
+                                        Colors.grey, // 비활성 상태 색상
+                                  ),
+                                  SizedBox(width: 10),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      DiaryMap(
-                        diaryList: [
-                          DiaryModel(
-                            '2025-05-10',
-                            1,
-                            false,
-                            37.5665,
-                            126.9780,
-                            title: "test1",
-                            content: 'empty1',
-                            tags: List<String>.from(["감정1", "감정2", "감정3"]),
-                          ),
-                          DiaryModel(
-                            '2025-05-01',
-                            1,
-                            false,
-                            38.0000,
-                            127.0000,
-                            title: "test1",
-                            content: 'empty1',
-                            tags: List<String>.from(["감정1", "감정2", "감정3"]),
-                          ),
-                        ],
-                      ),
+                      DiaryMap(diaryList: testsamples),
                     ],
                   ),
                 ),
