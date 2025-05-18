@@ -63,7 +63,9 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffFFE4B5),
-      body: SingleChildScrollView(
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+        width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
             Padding(
@@ -89,25 +91,21 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
               ),
             ),
             //통계 보여줄 Tab
-            Stack(
-              children: [
-                //선택 안한 tab 배경
-                Container(
-                  transform: Matrix4.translationValues(21, 0, 0),
-                  width: 184,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Color(0xffEDE8DF),
-                    borderRadius: BorderRadius.circular(10),
+            Expanded(
+              child: Stack(
+                children: [
+                  //선택 안한 tab 배경
+                  Container(
+                    transform: Matrix4.translationValues(21, 0, 0),
+                    width: 184,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Color(0xffEDE8DF),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                ),
-                //tab container 관련 설정
-                SizedBox(
-                  height:
-                      MediaQuery.of(context).size.height -
-                      kBottomNavigationBarHeight,
-                  width: MediaQuery.of(context).size.width,
-                  child: TabContainer(
+                  //tab container 관련 설정
+                  TabContainer(
                     color: Color(0xffFFF6E7),
                     selectedTextStyle: TextStyle(
                       fontSize: 16,
@@ -131,8 +129,8 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
                       createChart("이번달 주요 이벤트"),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -146,7 +144,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             //제목
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

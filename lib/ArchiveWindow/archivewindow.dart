@@ -128,7 +128,9 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffFFE4B5),
-      body: SingleChildScrollView(
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+        width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
             Padding(
@@ -154,25 +156,21 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
               ),
             ),
             //Tabs
-            Stack(
-              children: [
-                //선택 안한 tab 배경
-                Container(
-                  transform: Matrix4.translationValues(21, 0, 0),
-                  width: 184,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Color(0xffEDE8DF),
-                    borderRadius: BorderRadius.circular(10),
+            Expanded(
+              child: Stack(
+                children: [
+                  //선택 안한 tab 배경
+                  Container(
+                    transform: Matrix4.translationValues(21, 0, 0),
+                    width: 184,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Color(0xffEDE8DF),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                ),
-                //tab container 관련 설정
-                SizedBox(
-                  height:
-                      MediaQuery.of(context).size.height -
-                      kBottomNavigationBarHeight,
-                  width: MediaQuery.of(context).size.width,
-                  child: TabContainer(
+                  //tab container 관련 설정
+                  TabContainer(
                     color: Color(0xffFFF6E7),
                     selectedTextStyle: TextStyle(
                       fontSize: 16,
@@ -228,8 +226,8 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                       DiaryMap(diaryList: testsamples),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

@@ -125,9 +125,20 @@ class _HomeScreenState extends State<HomeScreen> {
       //메인 화면
       body: currentScreen,
       //하단 네비게이션 바
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: _selectedIndex,
-        itemTapEvent: updateSelectedIndex,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 10,
+              offset: Offset(0, -5),
+            ),
+          ],
+        ),
+        child: BottomNavBar(
+          selectedIndex: _selectedIndex,
+          itemTapEvent: updateSelectedIndex,
+        ),
       ),
     );
   }
