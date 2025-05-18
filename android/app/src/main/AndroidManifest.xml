@@ -2,7 +2,7 @@
     <!--위치 권한-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
-        android:label="capstone_diary"
+        android:label="SentiDiary"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
