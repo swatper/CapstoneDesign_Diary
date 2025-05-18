@@ -168,7 +168,9 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                 ),
                 //tab container 관련 설정
                 SizedBox(
-                  height: MediaQuery.of(context).size.height - 169,
+                  height:
+                      MediaQuery.of(context).size.height -
+                      kBottomNavigationBarHeight,
                   width: MediaQuery.of(context).size.width,
                   child: TabContainer(
                     color: Color(0xffFFF6E7),

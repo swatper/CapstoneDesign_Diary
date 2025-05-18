@@ -105,7 +105,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
                 SizedBox(
                   height:
                       MediaQuery.of(context).size.height -
-                      169, //169는 네비게이션 바 크기
+                      kBottomNavigationBarHeight,
                   width: MediaQuery.of(context).size.width,
                   child: TabContainer(
                     color: Color(0xffFFF6E7),
