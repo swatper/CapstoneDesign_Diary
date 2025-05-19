@@ -59,150 +59,152 @@ class _ProfileWindowState extends State<ProfileWindow> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          SizedBox(height: 20),
-          //제목 부분
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: backToHomeWindow,
-                icon: Icon(Icons.arrow_back_sharp, color: Color(0xffFC8650)),
-              ),
-              Text(
-                "프로필",
-                style: TextStyle(color: Color(0xffFC8650), fontSize: 45),
-              ),
-              SizedBox(width: 60),
-            ],
-          ),
-          Divider(color: Color(0xffFC8650), thickness: 1),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: isEditMode ? saveProfile : editProfile,
-                icon:
-                    isEditMode
-                        ? Icon(Icons.save, color: Colors.grey)
-                        : Icon(Icons.border_color_sharp, color: Colors.grey),
-              ),
-            ],
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Color.fromRGBO(255, 246, 231, isEditMode ? 1 : 0),
-            ),
-            child: Stack(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            //제목 부분
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AssetManager.instance.getProfileImage(
-                  "defaultpro.png",
-                  130,
-                  130,
+                IconButton(
+                  onPressed: backToHomeWindow,
+                  icon: Icon(Icons.arrow_back_sharp, color: Color(0xffFC8650)),
+                ),
+                Text(
+                  "프로필",
+                  style: TextStyle(color: Color(0xffFC8650), fontSize: 45),
+                ),
+                SizedBox(width: 60),
+              ],
+            ),
+            Divider(color: Color(0xffFC8650), thickness: 1),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: isEditMode ? saveProfile : editProfile,
+                  icon:
+                      isEditMode
+                          ? Icon(Icons.save, color: Colors.grey)
+                          : Icon(Icons.border_color_sharp, color: Colors.grey),
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Divider(color: Color(0xff919572), thickness: 2),
-                //닉네임 설정
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
-                  child: Row(
-                    children: [
-                      Text("닉네임", style: titleStyle),
-                      SizedBox(width: 20),
-                      //닉네임 입력창
-                      SizedBox(
-                        height: 40,
-                        width: 200,
-                        child: TextField(
-                          readOnly: !isEditMode,
-                          decoration: InputDecoration(
-                            hintText: nickname,
-                            hintStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            border: InputBorder.none,
-                            filled: isEditMode,
-                            fillColor: Color(0xffFFF6E7),
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 10,
-                            ),
-                          ),
-                          onChanged: saveNewNickname,
-                        ),
-                      ),
-                    ],
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color.fromRGBO(255, 246, 231, isEditMode ? 1 : 0),
+              ),
+              child: Stack(
+                children: [
+                  AssetManager.instance.getProfileImage(
+                    "defaultpro.png",
+                    130,
+                    130,
                   ),
-                ),
-                Divider(color: Color(0xff919572), thickness: 2),
-                //이메일
-                infomationSet("이메일", "abcd@gmail.com"),
-                Divider(color: Color(0xff919572), thickness: 2),
-                //비밀번호
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
-                  child: Row(
-                    children: [
-                      Text("비밀번호", style: titleStyle),
-                      SizedBox(width: 50),
-                      FilledButton(
-                        onPressed: chanagePassword,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: Color(0xffFFF6E7),
-                        ),
-                        child: Text(
-                          "비밀번호 변경",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(color: Color(0xff919572), thickness: 2),
-                //뱃지
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("뱃지", style: titleStyle),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Divider(color: Color(0xff919572), thickness: 2),
+                  //닉네임 설정
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
+                    child: Row(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color.fromRGBO(
-                              255,
-                              246,
-                              231,
-                              isEditMode ? 1 : 0,
+                        Text("닉네임", style: titleStyle),
+                        SizedBox(width: 20),
+                        //닉네임 입력창
+                        SizedBox(
+                          height: 40,
+                          width: 200,
+                          child: TextField(
+                            readOnly: !isEditMode,
+                            decoration: InputDecoration(
+                              hintText: nickname,
+                              hintStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              border: InputBorder.none,
+                              filled: isEditMode,
+                              fillColor: Color(0xffFFF6E7),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
                             ),
-                          ),
-                          child: AssetManager.instance.getChallengeImage(
-                            'default.png',
-                            80,
-                            80,
+                            onChanged: saveNewNickname,
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-                Divider(color: Color(0xff919572), thickness: 2),
-              ],
+                  ),
+                  Divider(color: Color(0xff919572), thickness: 2),
+                  //이메일
+                  infomationSet("이메일", "abcd@gmail.com"),
+                  Divider(color: Color(0xff919572), thickness: 2),
+                  //비밀번호
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
+                    child: Row(
+                      children: [
+                        Text("비밀번호", style: titleStyle),
+                        SizedBox(width: 50),
+                        FilledButton(
+                          onPressed: chanagePassword,
+                          style: FilledButton.styleFrom(
+                            backgroundColor: Color(0xffFFF6E7),
+                          ),
+                          child: Text(
+                            "비밀번호 변경",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(color: Color(0xff919572), thickness: 2),
+                  //뱃지
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("뱃지", style: titleStyle),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color.fromRGBO(
+                                255,
+                                246,
+                                231,
+                                isEditMode ? 1 : 0,
+                              ),
+                            ),
+                            child: AssetManager.instance.getChallengeImage(
+                              'default.png',
+                              80,
+                              80,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(color: Color(0xff919572), thickness: 2),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

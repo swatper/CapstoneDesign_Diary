@@ -48,7 +48,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
           alignment: Alignment.centerRight,
           child: Container(
             width: MediaQuery.of(context).size.width * 0.75,
-            height: MediaQuery.of(context).size.height * 0.95,
+            height: MediaQuery.of(context).size.height * 0.9,
             decoration: BoxDecoration(
               color: Color(0xffF8FFC2),
               borderRadius: BorderRadius.only(
@@ -64,6 +64,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //사용자 정보
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -215,32 +216,45 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 300),
+                    Expanded(child: SizedBox()),
                     Divider(color: Color(0xff919572), thickness: lineThickness),
                     //기타 정보
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.question_mark_outlined,
-                          color: Color(0xff757575),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          "Help",
-                          style: TextStyle(color: infoColor2, fontSize: 17),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 30),
-                    Row(
-                      children: [
-                        Icon(Icons.exit_to_app, color: Colors.red),
-                        SizedBox(width: 10),
-                        Text(
-                          "Logout Account",
-                          style: TextStyle(color: Colors.red, fontSize: 17),
-                        ),
-                      ],
+                    Container(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.question_mark_outlined,
+                                color: Color(0xff757575),
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "Help",
+                                style: TextStyle(
+                                  color: infoColor2,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Icon(Icons.exit_to_app, color: Colors.red),
+                              SizedBox(width: 10),
+                              Text(
+                                "Logout Account",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
