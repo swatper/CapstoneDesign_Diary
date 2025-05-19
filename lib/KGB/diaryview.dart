@@ -1,18 +1,61 @@
+import 'package:capstone_diary/ArchiveWindow/archivewibdow.dart';
 import 'package:capstone_diary/KGB/weatherButton.dart';
+import 'package:capstone_diary/KGB/writewindow.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 
 class DiaryView extends StatelessWidget {
   final DiaryModel diaryModel;
-
-  const DiaryView({super.key, required this.diaryModel});
+  final void Function(Widget) setWriteWindow;
+  final Function(int) sideMenuToHomeWindowIndex;
+  final Function(Widget) goBackToArchive;
+  const DiaryView({
+    super.key,
+    required this.diaryModel,
+    required this.setWriteWindow,
+    required this.sideMenuToHomeWindowIndex,
+    required this.goBackToArchive,
+  });
 
   get onClickedBackButton => null;
-  get onClickedNextButton => null;
+
+  void onSelectedDelete() {
+    print("삭제하기");
+  }
 
   @override
   Widget build(BuildContext context) {
     DateTime parsedDate = DateTime.tryParse(diaryModel.date) ?? DateTime.now();
+    void onSelectedEdit() {
+      setWriteWindow(
+        WriteWindow(
+          isEditMode: true,
+          diaryModel: diaryModel,
+          goBackToHome: () {
+            setWriteWindow(
+              DiaryView(
+                diaryModel: diaryModel,
+                setWriteWindow: setWriteWindow,
+                sideMenuToHomeWindowIndex: sideMenuToHomeWindowIndex,
+                goBackToArchive: goBackToArchive,
+              ),
+            );
+          },
+          setWriteWindowNext: (Widget nextPage) {
+            setWriteWindow(nextPage); // WriteWindowNext로 이동
+          },
+        ),
+      );
+    }
+
+    void onClickedBackButton() {
+      goBackToArchive(
+        ArchiveWindow(
+          sideMenuToHomeWindowIndex: sideMenuToHomeWindowIndex,
+          selectDiary: setWriteWindow,
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: const Color(0xffFFE4B5),
@@ -35,18 +78,50 @@ class DiaryView extends StatelessWidget {
                       color: Colors.amber,
                     ),
                   ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 255, 248, 229),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      minimumSize: const Size(80, 35),
+                  PopupMenuButton<String>(
+                    onSelected: (value) {
+                      if (value == 'edit') {
+                        // 수정하기 눌렀을 때
+                        onSelectedEdit();
+                      } else if (value == 'delete') {
+                        // 삭제하기 눌렀을 때
+                        onSelectedDelete();
+                      }
+                    },
+                    offset: const Offset(0, 40), // 팝업 위치 조정 (버튼 아래로)
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    onPressed: onClickedNextButton,
-                    child: const Text(
-                      '다음',
-                      style: TextStyle(color: Colors.black),
+                    color: const Color(0xFFFFF2DC), // 배경색 (이미지와 비슷한 밝은 베이지)
+                    itemBuilder:
+                        (context) => [
+                          const PopupMenuItem(
+                            height: 20,
+                            value: 'edit',
+                            child: Text('수정하기'),
+                          ),
+                          const PopupMenuDivider(),
+                          const PopupMenuItem(
+                            height: 20,
+                            value: 'delete',
+                            child: Text('삭제하기'),
+                          ),
+                        ],
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.transparent,
+                        border: Border.all(color: Colors.black, width: 2.0),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.more_horiz_outlined,
+                          size: 20,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ],

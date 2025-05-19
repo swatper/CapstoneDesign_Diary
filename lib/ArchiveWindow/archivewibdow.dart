@@ -1,5 +1,6 @@
 import 'package:capstone_diary/KGB/diaryitem2.dart';
 import 'package:capstone_diary/KGB/diaryview.dart';
+import 'package:capstone_diary/KGB/writewindow.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
@@ -30,8 +31,7 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
       37.5665,
       126.9780,
       title: "test1",
-      content:
-          'emptysssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss1',
+      content: 'emptysssssssss1',
       tags: List<String>.from([
         "감정1",
         "감정2",
@@ -176,9 +176,14 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                                 diaryModel: diary,
                                 onTap: () {
                                   widget.selectDiary(
-                                    DiaryView(diaryModel: diary),
+                                    DiaryView(
+                                      diaryModel: diary,
+                                      setWriteWindow: widget.selectDiary,
+                                      sideMenuToHomeWindowIndex:
+                                          widget.sideMenuToHomeWindowIndex,
+                                      goBackToArchive: widget.selectDiary,
+                                    ),
                                   );
-                                  showToastMessage("일기 클릭됨");
                                 },
                               ),
                             ),
