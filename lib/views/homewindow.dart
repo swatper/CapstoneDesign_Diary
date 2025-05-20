@@ -3,7 +3,7 @@ import 'package:capstone_diary/Calender/customcalender.dart';
 import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
-import 'package:capstone_diary/items/diaryitem2.dart';
+import 'package:capstone_diary/Items/diaryitem2.dart';
 import 'package:capstone_diary/KGB/diaryview.dart';
 
 class HomeWindow extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:capstone_diary/views/archivewindow.dart';
+import 'package:capstone_diary/Views/archivewindow.dart';
 import 'package:capstone_diary/KGB/weatherButton.dart';
 import 'package:capstone_diary/KGB/writewindow.dart';
 import 'package:flutter/material.dart';

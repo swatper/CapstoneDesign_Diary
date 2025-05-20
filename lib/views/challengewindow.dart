@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:capstone_diary/items/challengeitem.dart';
+import 'package:capstone_diary/Items/challengeitem.dart';
 
 class ChallengeWindow extends StatefulWidget {
   const ChallengeWindow({super.key});

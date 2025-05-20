@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
 //메인 화면
-import 'package:capstone_diary/views/homewindow.dart'; //메인
-import 'package:capstone_diary/views/statisticswindow.dart'; //통계
-import 'package:capstone_diary/views/archivewindow.dart'; //일기 목록
-import 'package:capstone_diary/views/challengewindow.dart'; //도전과제
+import 'package:capstone_diary/Views/homewindow.dart'; //메인
+import 'package:capstone_diary/Views/statisticswindow.dart'; //통계
+import 'package:capstone_diary/Views/archivewindow.dart'; //일기 목록
+import 'package:capstone_diary/Views/challengewindow.dart'; //도전과제
 //사이드 메뉴 관련 화면
-import 'package:capstone_diary/views/profilewindow.dart';
+import 'package:capstone_diary/Views/profilewindow.dart';
 //일기쓰기 관련 화면
 import 'package:capstone_diary/KGB/writewindow.dart';
 
