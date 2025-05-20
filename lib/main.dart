@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //사이드 메뉴 화면 리스트
   late List<Widget> sideScreens;
   //글쓰기 화면 리스트
+
   late List<Widget> writeScreens;
 
   //현재 보고 있는 화면
@@ -81,7 +82,10 @@ class _HomeScreenState extends State<HomeScreen> {
         WriteWindowIndex: updateWriteSelectedIndex,
       ),
       StatisticsWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
-      ArchiveWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
+      ArchiveWindow(
+        sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
+        selectDiary: updateWriteWindow,
+      ),
       Text(
         '들춰보기 (공유 일기 목록)',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),

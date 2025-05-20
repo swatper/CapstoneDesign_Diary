@@ -1,30 +1,22 @@
+import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/KGB/weatherbutton.dart';
 import 'package:capstone_diary/KGB/writewindowNext.dart';
 import 'package:flutter/material.dart';
 
 class WriteWindow extends StatefulWidget {
+  final DiaryModel? diaryModel;
   final Function(Widget) setWriteWindowNext;
-  final VoidCallback goBackToHome; //글쓰기 화면간 데이터 전달을 위한 변수
+  final VoidCallback? goBackToHome;
+  bool isEditMode;
   WriteWindow({
     super.key,
     required this.setWriteWindowNext,
-    required this.goBackToHome,
-    this.initialYear,
-    this.initialMonth,
-    this.initialDay,
-    this.initialWeatherIndex,
-    this.initialTitle,
-    this.initialContent,
+    this.isEditMode = false,
+    this.diaryModel,
+    this.goBackToHome,
   });
   @override
   State<WriteWindow> createState() => _WriteWindow();
-
-  int? initialYear;
-  int? initialMonth;
-  int? initialDay;
-  int? initialWeatherIndex;
-  String? initialTitle;
-  String? initialContent;
 }
 
 void onClickedCalanderButton() {}
@@ -43,18 +35,23 @@ class _WriteWindow extends State<WriteWindow> {
     super.initState();
     // 초기 데이터 적용 (널이면 기본값 사용)
     contentController = TextEditingController(
-      text: widget.initialContent ?? '',
+      text: widget.diaryModel?.content ?? '',
     );
-    titleController = TextEditingController(text: widget.initialTitle ?? '');
-    selectedWeatherIndex = widget.initialWeatherIndex ?? 0;
-    year = widget.initialYear ?? today.year;
-    month = widget.initialMonth ?? today.month;
-    day = widget.initialDay ?? today.day;
+    titleController = TextEditingController(
+      text: widget.diaryModel?.title ?? '',
+    );
+    selectedWeatherIndex = widget.diaryModel?.weather ?? 0;
+    DateTime parsedDate =
+        DateTime.tryParse(widget.diaryModel?.date ?? '') ?? today;
+
+    year = parsedDate.year;
+    month = parsedDate.month;
+    day = parsedDate.day;
   }
 
   void onClickedBackButton() {
     // 뒤로가기 버튼 클릭 시 이전 화면으로 이동
-    widget.goBackToHome();
+    widget.goBackToHome!();
   }
 
   void onWeatherSelected(int index) {
@@ -76,13 +73,17 @@ class _WriteWindow extends State<WriteWindow> {
           widget.setWriteWindowNext(
             WriteWindow(
               setWriteWindowNext: widget.setWriteWindowNext,
+              diaryModel: DiaryModel(
+                '${year.toString()}-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}',
+                selectedWeatherIndex,
+                false,
+                0.0,
+                0.0,
+                title: titleController.text,
+                content: contentController.text,
+                tags: [],
+              ),
               goBackToHome: widget.goBackToHome,
-              initialContent: contentController.text,
-              initialTitle: titleController.text,
-              initialYear: year,
-              initialMonth: month,
-              initialDay: day,
-              initialWeatherIndex: selectedWeatherIndex,
             ),
           ); // 자신으로 다시 설정
         },
