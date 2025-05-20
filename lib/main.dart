@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
 //메인 화면
-import 'package:capstone_diary/HomeWindow/homewindow.dart'; //메인
-import 'package:capstone_diary/StatisticsWindow/statisticswindow.dart'; //통계
-import 'package:capstone_diary/ArchiveWindow/archivewindow.dart'; //일기 목록
-import 'package:capstone_diary/ChallengeWindow/challengewindow.dart'; //도전과제
+import 'package:capstone_diary/views/homewindow.dart'; //메인
+import 'package:capstone_diary/views/statisticswindow.dart'; //통계
+import 'package:capstone_diary/views/archivewindow.dart'; //일기 목록
+import 'package:capstone_diary/views/challengewindow.dart'; //도전과제
 //사이드 메뉴 관련 화면
-import 'package:capstone_diary/profilewindow.dart';
+import 'package:capstone_diary/views/profilewindow.dart';
 //일기쓰기 관련 화면
 import 'package:capstone_diary/KGB/writewindow.dart';
-import 'package:capstone_diary/KGB/writewindowNext.dart'; //일기장
 
 void main() {
   runApp(const MyApp());
@@ -80,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
       HomeWindow(
         sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
         WriteWindowIndex: updateWriteSelectedIndex,
+        selectDiary: updateWriteWindow,
       ),
       StatisticsWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
       ArchiveWindow(

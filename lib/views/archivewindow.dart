@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
-import 'package:capstone_diary/HomeWindow/sidemenuwidget.dart';
-import 'package:capstone_diary/ArchiveWindow/diarymap.dart';
+import 'package:capstone_diary/Calender/sidemenuwidget.dart';
+import 'package:capstone_diary/GoogleMap/diarymap.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
-import 'package:capstone_diary/DiaryItem/diaryitem.dart';
+import 'package:capstone_diary/items/diaryitem2.dart';
+import 'package:capstone_diary/KGB/diaryview.dart';
 
 class ArchiveWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
-  const ArchiveWindow({super.key, required this.sideMenuToHomeWindowIndex});
+  final Function(Widget) selectDiary;
+  const ArchiveWindow({
+    super.key,
+    required this.sideMenuToHomeWindowIndex,
+    required this.selectDiary,
+  });
 
   @override
   State<ArchiveWindow> createState() => _ArchiveWindowwState();
@@ -113,7 +119,19 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
       diaryWidgets.add(
         Container(
           alignment: Alignment.center,
-          child: DiaryItem(diaryModel: diary),
+          child: DiaryItem2(
+            diaryModel: diary,
+            onTap: () {
+              widget.selectDiary(
+                DiaryView(
+                  diaryModel: diary,
+                  setWriteWindow: widget.selectDiary,
+                  sideMenuToHomeWindowIndex: widget.sideMenuToHomeWindowIndex,
+                  goBackToArchive: widget.selectDiary,
+                ),
+              );
+            },
+          ),
         ),
       );
     }

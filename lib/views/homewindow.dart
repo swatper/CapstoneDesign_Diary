@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:capstone_diary/HomeWindow/customcalender.dart';
-import 'package:capstone_diary/DiaryItem/diaryitem.dart';
-import 'package:capstone_diary/HomeWindow/sidemenuwidget.dart';
+import 'package:capstone_diary/Calender/customcalender.dart';
+import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
+import 'package:capstone_diary/items/diaryitem2.dart';
+import 'package:capstone_diary/KGB/diaryview.dart';
 
 class HomeWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
   final Function(int) WriteWindowIndex;
+  final Function(Widget) selectDiary;
   const HomeWindow({
     super.key,
     required this.sideMenuToHomeWindowIndex,
     required this.WriteWindowIndex,
+    required this.selectDiary,
   });
   @override
   State<HomeWindow> createState() => _HomeWindowState();
@@ -19,6 +22,48 @@ class HomeWindow extends StatefulWidget {
 
 class _HomeWindowState extends State<HomeWindow> {
   DateTime? selectedDate;
+  List<DiaryModel> testsamples = [
+    DiaryModel(
+      '2025-05-10',
+      1,
+      false,
+      37.5665,
+      126.9780,
+      title: "test1",
+      content: 'empty1',
+      tags: List<String>.from(["감정1", "감정2", "감정3"]),
+    ),
+    DiaryModel(
+      '2025-05-01',
+      1,
+      true,
+      38.2832,
+      127.4890,
+      title: "test2",
+      content: 'empty2',
+      tags: List<String>.from(["감정1", "감정2", "감정3"]),
+    ),
+    DiaryModel(
+      '2025-04-02',
+      1,
+      true,
+      38.0000,
+      127.0000,
+      title: "test3",
+      content: 'empty3',
+      tags: List<String>.from(["감정1", "감정2", "감정3"]),
+    ),
+    DiaryModel(
+      '2025-04-01',
+      1,
+      false,
+      37.5465,
+      126.9580,
+      title: "test3",
+      content: 'empty3',
+      tags: List<String>.from(["감정1", "감정2", "감정3"]),
+    ),
+  ];
 
   @override
   void initState() {
@@ -109,44 +154,49 @@ class _HomeWindowState extends State<HomeWindow> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 //일기장 아이템
                 children: [
-                  DiaryItem(
-                    diaryModel: DiaryModel(
-                      "날짜",
-                      1,
-                      false,
-                      0,
-                      0,
-                      title: "title",
-                      content: "content",
-                      tags: List<String>.from(["감정1", "감정2", "감정3"]),
-                    ),
+                  DiaryItem2(
+                    diaryModel: testsamples[0],
+                    onTap: () {
+                      widget.selectDiary(
+                        DiaryView(
+                          diaryModel: testsamples[1],
+                          setWriteWindow: widget.selectDiary,
+                          sideMenuToHomeWindowIndex:
+                              widget.sideMenuToHomeWindowIndex,
+                          goBackToArchive: widget.selectDiary,
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 5),
-                  //
-                  DiaryItem(
-                    diaryModel: DiaryModel(
-                      "3월30일",
-                      1,
-                      false,
-                      0,
-                      0,
-                      title: "개미는 뚠뚠 오늘도 뚠뚠",
-                      content: "열심히 일을 하네 뚠뚠 개미는 아무말도 하지않지만",
-                      tags: List<String>.from(["노예", "개발", "행복"]),
-                    ),
+                  DiaryItem2(
+                    diaryModel: testsamples[1],
+                    onTap: () {
+                      widget.selectDiary(
+                        DiaryView(
+                          diaryModel: testsamples[1],
+                          setWriteWindow: widget.selectDiary,
+                          sideMenuToHomeWindowIndex:
+                              widget.sideMenuToHomeWindowIndex,
+                          goBackToArchive: widget.selectDiary,
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 5),
-                  DiaryItem(
-                    diaryModel: DiaryModel(
-                      "3월30일",
-                      1,
-                      false,
-                      0,
-                      0,
-                      title: "???",
-                      content: "?",
-                      tags: List<String>.from(["노예", "개발", "행복"]),
-                    ),
+                  DiaryItem2(
+                    diaryModel: testsamples[2],
+                    onTap: () {
+                      widget.selectDiary(
+                        DiaryView(
+                          diaryModel: testsamples[1],
+                          setWriteWindow: widget.selectDiary,
+                          sideMenuToHomeWindowIndex:
+                              widget.sideMenuToHomeWindowIndex,
+                          goBackToArchive: widget.selectDiary,
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 5),
                 ],

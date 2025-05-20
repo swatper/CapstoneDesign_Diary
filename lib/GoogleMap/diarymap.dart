@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
-import 'package:capstone_diary/ArchiveWindow/diaryclusteritem.dart';
-import 'package:capstone_diary/ArchiveWindow/custommarkergenerator.dart';
+import 'package:capstone_diary/GoogleMap/diaryclusteritem.dart';
+import 'package:capstone_diary/GoogleMap/custommarkergenerator.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart'
     as cmanager;
