@@ -5,18 +5,19 @@ import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/Items/diaryitem2.dart';
 import 'package:capstone_diary/KGB/diaryview.dart';
+import 'package:capstone_diary/Views/searchingwindow.dart';
 
 class HomeWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
-  final Function(int) WriteWindowIndex;
+  final Function(int) writeWindowIndex;
   final Function(Widget) selectDiary;
-  final VoidCallback goToSearchingWindow;
+  final Function(Widget) diaryView;
   const HomeWindow({
     super.key,
     required this.sideMenuToHomeWindowIndex,
-    required this.WriteWindowIndex,
+    required this.writeWindowIndex,
     required this.selectDiary,
-    required this.goToSearchingWindow,
+    required this.diaryView,
   });
   @override
   State<HomeWindow> createState() => _HomeWindowState();
@@ -91,7 +92,7 @@ class _HomeWindowState extends State<HomeWindow> {
 
   //검색 버튼
   void searchDiray() {
-    widget.goToSearchingWindow();
+    widget.diaryView(Searchingwindow());
   }
 
   //메뉴 버튼
@@ -115,7 +116,7 @@ class _HomeWindowState extends State<HomeWindow> {
   }
 
   void writeDiary() {
-    widget.WriteWindowIndex(0);
+    widget.writeWindowIndex(0);
   }
 
   @override

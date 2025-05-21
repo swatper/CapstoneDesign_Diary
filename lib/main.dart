@@ -11,8 +11,6 @@ import 'package:capstone_diary/Views/challengewindow.dart'; //도전과제
 import 'package:capstone_diary/Views/profilewindow.dart';
 //일기쓰기 화면
 import 'package:capstone_diary/KGB/writewindow.dart';
-//검색 화면
-import 'package:capstone_diary/Views/searchingwindow.dart';
 
 void main() {
   runApp(const MyApp());
@@ -73,9 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void showSearchingWindow() {
+  void setSearchWindow(Widget diaryView) {
     setState(() {
-      currentScreen = Searchingwindow();
+      currentScreen = diaryView;
     });
   }
 
@@ -87,9 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
     mainScreens = [
       HomeWindow(
         sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
-        WriteWindowIndex: updateWriteSelectedIndex,
+        writeWindowIndex: updateWriteSelectedIndex,
         selectDiary: updateWriteWindow,
-        goToSearchingWindow: showSearchingWindow,
+        diaryView: setSearchWindow,
       ),
       StatisticsWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
       ArchiveWindow(
