@@ -10,11 +10,13 @@ class HomeWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
   final Function(int) WriteWindowIndex;
   final Function(Widget) selectDiary;
+  final VoidCallback goToSearchingWindow;
   const HomeWindow({
     super.key,
     required this.sideMenuToHomeWindowIndex,
     required this.WriteWindowIndex,
     required this.selectDiary,
+    required this.goToSearchingWindow,
   });
   @override
   State<HomeWindow> createState() => _HomeWindowState();
@@ -89,7 +91,7 @@ class _HomeWindowState extends State<HomeWindow> {
 
   //검색 버튼
   void searchDiray() {
-    showToastMessage("아직 미구현");
+    widget.goToSearchingWindow();
   }
 
   //메뉴 버튼

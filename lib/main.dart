@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
 //메인 화면
 import 'package:capstone_diary/Views/homewindow.dart'; //메인
@@ -7,8 +9,10 @@ import 'package:capstone_diary/Views/archivewindow.dart'; //일기 목록
 import 'package:capstone_diary/Views/challengewindow.dart'; //도전과제
 //사이드 메뉴 관련 화면
 import 'package:capstone_diary/Views/profilewindow.dart';
-//일기쓰기 관련 화면
+//일기쓰기 화면
 import 'package:capstone_diary/KGB/writewindow.dart';
+//검색 화면
+import 'package:capstone_diary/Views/searchingwindow.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,15 +37,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  DateTime? lastPressedAt; //뒤로가기 버튼을 눌렀을 때의 시간
 
   //메인 화면 리스트
   late List<Widget> mainScreens;
   //사이드 메뉴 화면 리스트
   late List<Widget> sideScreens;
   //글쓰기 화면 리스트
-
   late List<Widget> writeScreens;
-
   //현재 보고 있는 화면
   late Widget currentScreen;
 
@@ -70,6 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void showSearchingWindow() {
+    setState(() {
+      currentScreen = Searchingwindow();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -80,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
         sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
         WriteWindowIndex: updateWriteSelectedIndex,
         selectDiary: updateWriteWindow,
+        goToSearchingWindow: showSearchingWindow,
       ),
       StatisticsWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
       ArchiveWindow(
@@ -124,24 +134,48 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffFFE4B5),
-      //메인 화면
-      body: currentScreen,
-      //하단 네비게이션 바
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 10,
-              offset: Offset(0, -5),
-            ),
-          ],
-        ),
-        child: BottomNavBar(
-          selectedIndex: _selectedIndex,
-          itemTapEvent: updateSelectedIndex,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          if (currentScreen == mainScreens[0]) {
+            DateTime now = DateTime.now();
+            if (lastPressedAt == null ||
+                now.difference(lastPressedAt!) > Duration(seconds: 2)) {
+              lastPressedAt = now;
+              showToastMessage("한 번 더 누르면 종료됩니다.");
+              return;
+            } else {
+              //앱 종료
+              SystemNavigator.pop();
+            }
+          } else {
+            //다른 화면을 보고 있을 경우
+            setState(() {
+              updateSelectedIndex(0);
+            });
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Color(0xffFFE4B5),
+        //메인 화면
+        body: currentScreen,
+        //하단 네비게이션 바
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 10,
+                offset: Offset(0, -5),
+              ),
+            ],
+          ),
+          child: BottomNavBar(
+            selectedIndex: _selectedIndex,
+            itemTapEvent: updateSelectedIndex,
+          ),
         ),
       ),
     );
