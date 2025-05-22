@@ -1,3 +1,4 @@
+import 'package:capstone_diary/KGB/shareddiary.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
 //메인 화면
@@ -86,10 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
         sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
         selectDiary: updateWriteWindow,
       ),
-      Text(
-        '들춰보기 (공유 일기 목록)',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-      ), //Sidemenu에서 선택한 화면
+      SharedDiary(),
       ChallengeWindow(),
     ];
 
