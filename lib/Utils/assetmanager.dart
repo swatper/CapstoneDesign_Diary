@@ -6,6 +6,7 @@ class AssetManager {
   String weatherPath = 'assets/images/weather/';
   String iconPath = 'assets/images/icons/';
   String chanllengePath = 'assets/images/challenge/';
+  String etcPath = 'assets/images/etc/';
 
   AssetManager._privateConstructor();
   static final AssetManager _instance = AssetManager._privateConstructor();
@@ -38,5 +39,9 @@ class AssetManager {
       width: width,
       height: height,
     );
+  }
+
+  Widget getEtcImage(String imageName) {
+    return Image.asset(etcPath + imageName, fit: BoxFit.cover);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BottomNavBar extends StatelessWidget {
+class BottomNavBar extends StatefulWidget {
   final int selectedIndex;
   final Function(int) itemTapEvent;
 
@@ -9,6 +9,16 @@ class BottomNavBar extends StatelessWidget {
     required this.selectedIndex,
     required this.itemTapEvent,
   });
+
+  @override
+  State<BottomNavBar> createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  bool isValidIndex() {
+    return widget.selectedIndex >= 0 &&
+        widget.selectedIndex < 5; // 0~4까지의 인덱스만 유효
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +31,11 @@ class BottomNavBar extends StatelessWidget {
         createBottomNavigationBarItem(Icons.remove_red_eye, "들춰보기"),
         createBottomNavigationBarItem(Icons.flag, "도전과제"),
       ],
-      currentIndex: selectedIndex,
-      selectedItemColor: Colors.amber[800],
-      unselectedItemColor: Colors.black,
+      currentIndex: widget.selectedIndex % 5,
+      selectedItemColor: isValidIndex() ? Colors.amber[800] : Colors.grey,
+      unselectedItemColor: isValidIndex() ? Colors.black : Colors.grey,
       type: BottomNavigationBarType.fixed,
-      onTap: itemTapEvent,
+      onTap: isValidIndex() ? widget.itemTapEvent : null,
     );
   }
 }

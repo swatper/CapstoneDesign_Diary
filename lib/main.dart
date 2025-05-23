@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
 //메인 화면
+import 'package:capstone_diary/Views/loginwindow.dart';
 import 'package:capstone_diary/Views/homewindow.dart'; //메인
 import 'package:capstone_diary/Views/statisticswindow.dart'; //통계
 import 'package:capstone_diary/Views/archivewindow.dart'; //일기 목록
@@ -13,7 +14,13 @@ import 'package:capstone_diary/Views/profilewindow.dart';
 //일기쓰기 화면
 import 'package:capstone_diary/KGB/writewindow.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  //화면 회전 잠금(세로 모드)
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const MyApp());
 }
 
@@ -36,6 +43,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  bool isLogin = false;
   DateTime? lastPressedAt; //뒤로가기 버튼을 눌렀을 때의 시간
 
   //메인 화면 리스트
@@ -78,6 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void updateLoginStatus(bool status) {
+    if (status) {
+      isLogin = true;
+      updateSelectedIndex(0);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -97,6 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       SharedDiary(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
       ChallengeWindow(),
+      LoginWindow(onLogin: updateLoginStatus),
     ];
 
     //사이드 메뉴 화면 리스트 초기화
@@ -125,7 +141,12 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     //초기 화면 설정
-    currentScreen = mainScreens[0];
+    if (isLogin) {
+      //로그인 정보가 있으면
+      currentScreen = mainScreens[0];
+    } else {
+      updateSelectedIndex(5);
+    }
   }
 
   @override
