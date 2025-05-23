@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
+import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 
 class SharedDiary extends StatefulWidget {
-  const SharedDiary({super.key});
+  final Function(int) sideMenuToHomeWindowIndex;
+  const SharedDiary({super.key, required this.sideMenuToHomeWindowIndex});
 
   @override
   State<SharedDiary> createState() => _SharedDiaryState();
 }
 
 class _SharedDiaryState extends State<SharedDiary> {
-  get onClickedBackButton => null;
   bool isLiked = false;
+
+  void showMenu() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: Offset(1.0, 0),
+              end: Offset(0, 0),
+            ).animate(animation),
+            child: SideMenuWidget(
+              sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     DiaryModel diaryModel = DiaryModel(
@@ -37,8 +58,9 @@ class _SharedDiaryState extends State<SharedDiary> {
 
     return Scaffold(
       backgroundColor: const Color(0xffFFE4B5),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 45),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+        width: MediaQuery.of(context).size.width,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -46,21 +68,11 @@ class _SharedDiaryState extends State<SharedDiary> {
             children: [
               // 상단 바
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    onPressed: onClickedBackButton,
-                    icon: const Icon(
-                      Icons.arrow_back_rounded,
-                      size: 30,
-                      color: Colors.amber,
-                    ),
-                  ),
+                  IconButton(onPressed: showMenu, icon: const Icon(Icons.menu)),
                 ],
               ),
-
-              const SizedBox(height: 20),
-
               // 날짜
               Row(
                 children: [
