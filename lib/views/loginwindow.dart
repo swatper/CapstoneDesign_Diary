@@ -1,6 +1,7 @@
+import 'package:capstone_diary/Utils/kakaomanager.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:capstone_diary/Utils/datamanager.dart';
 
 class LoginWindow extends StatefulWidget {
   final Function(bool) onLogin;
@@ -13,6 +14,7 @@ class LoginWindow extends StatefulWidget {
 class _LoginWindowState extends State<LoginWindow> {
   @override
   void initState() {
+    loginCheck();
     super.initState();
   }
 
@@ -23,21 +25,22 @@ class _LoginWindowState extends State<LoginWindow> {
   }
 
   void kakaoLogin() {
-    //카카오 로그인
-    widget.onLogin(true);
+    //KakaoManager().doKakaoLogin();
+    //widget.onLogin(true);
   }
 
   //로그인 성공 시
-  Future<void> saveLoginState(bool setLoginStatus) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('is_logged_in', setLoginStatus); //로그인 상태 저장
+  void saveLoginState(bool setLoginStatus) async {
+    Datamanager().saveData("is_logged_in", setLoginStatus, true);
   }
 
-  //앱 시작 시 로그인 상태 확인
-  Future<bool> checkLoginState() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isLoggedIn = prefs.getBool('is_logged_in') ?? false; //로그인 상태 확인
-    return isLoggedIn;
+  void loginCheck() async {
+    //로그인 상태 확인
+    if (Datamanager().getData("is_logged_in") == "true") {
+      widget.onLogin(true);
+    } else {
+      saveLoginState(false);
+    }
   }
 
   @override
