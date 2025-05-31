@@ -69,6 +69,7 @@ class _WriteWindow extends State<WriteWindow> {
         day: day,
         weatherIndex: selectedWeatherIndex,
         title: titleController.text,
+        onReturnToMain: widget.goBackToHome ?? () {},
         onBackToWriteWindow: () {
           widget.setWriteWindowNext(
             WriteWindow(

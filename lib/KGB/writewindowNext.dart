@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class WriteWindowNext extends StatefulWidget {
   final VoidCallback onBackToWriteWindow;
+  final VoidCallback onReturnToMain;
   final int year;
   final int month;
   final int day;
@@ -23,6 +24,7 @@ class WriteWindowNext extends StatefulWidget {
     required this.title,
     required this.diaryContent,
     required this.onBackToWriteWindow,
+    required this.onReturnToMain,
   });
 
   @override
@@ -64,7 +66,7 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
   }
 
   void onClickedCompleteButton() {
-    // DB 저장 로직 추가
+    widget.onReturnToMain();
   }
 
   Future<void> genrateTags() async {
@@ -560,26 +562,4 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
       });
     }
   }
-
-  // Widget _buildEmotionSection() {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 20),
-  //     child: Wrap(
-  //       alignment: WrapAlignment.start,
-  //       children: [
-  //         SizedBox(height: 15),
-  //         SizedBox(height: 10),
-  //         Wrap(
-  //           spacing: 10,
-  //           runSpacing: 10,
-  //           children: [
-  //             ...selectedEmotions.map(
-  //               (index) => EmotionTag(emotionIndex: index),
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

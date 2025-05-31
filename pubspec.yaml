@@ -105,6 +105,7 @@ flutter:
     - assets/images/book.png
     - assets/images/eye.png
     - assets/images/mapicon.png
+    - assets/images/sharedirayIcon.png
 
     - assets/images/etc/kakao_login.png
 
