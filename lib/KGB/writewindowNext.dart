@@ -3,6 +3,7 @@ import 'package:capstone_diary/KGB/aitaggenerator.dart';
 import 'package:capstone_diary/KGB/emotionTag.dart';
 import 'package:capstone_diary/KGB/summarytag.dart';
 import 'package:capstone_diary/KGB/weatherbutton.dart';
+import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:flutter/material.dart';
 
 class WriteWindowNext extends StatefulWidget {
@@ -66,6 +67,21 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
   }
 
   void onClickedCompleteButton() {
+    DiaryManager().uploadDiary(
+      '20213010',
+      DiaryModel(
+        date:
+            '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',
+        weather: widget.weatherIndex,
+        isPublic: isPublic,
+        lat: 0.0, // 위치 정보는 임시로 0.0으로 설정
+        lng: 0.0, // 위치 정보는 임시로 0.0으로 설정
+        title: widget.title,
+        content: widget.diaryContent,
+        emotionTagIds: selectedEmotions,
+        summaryKeywords: selectedSummaries,
+      ),
+    );
     widget.onReturnToMain();
   }
 

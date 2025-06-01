@@ -104,6 +104,7 @@ flutter:
     - assets/images/sharedirayIcon.png
 
     - assets/images/etc/kakao_login.png
+    - assets/DiraySample.json
 
 
   # The following line ensures that the Material Icons font is

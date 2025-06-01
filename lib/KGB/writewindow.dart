@@ -8,6 +8,7 @@ class WriteWindow extends StatefulWidget {
   final Function(Widget) setWriteWindowNext;
   final VoidCallback? goBackToHome;
   bool isEditMode;
+
   WriteWindow({
     super.key,
     required this.setWriteWindowNext,

@@ -1,3 +1,4 @@
+import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Calender/sidemenuwidget.dart';
@@ -25,58 +26,27 @@ class ArchiveWindow extends StatefulWidget {
 }
 
 class _ArchiveWindowwState extends State<ArchiveWindow> {
-  List<DiaryModel> testsamples = [
-    DiaryModel(
-      date: ' 2025-05-02',
-      weather: 1,
-      isPublic: true,
-      lat: 37.5665,
-      lng: 126.9780,
-      title: "test1",
-      content: 'empty1',
-      emotionTagIds: List<int>.from([1, 2, 3]),
-      summaryKeywords: List<String>.from(["요약1", "요약2", "요약3"]),
-    ),
-    DiaryModel(
-      date: ' 2025-05-02',
-      weather: 1,
-      isPublic: true,
-      lat: 37.5665,
-      lng: 126.9780,
-      title: "test1",
-      content: 'empty' * 300,
-      emotionTagIds: List<int>.from([1, 2, 3]),
-      summaryKeywords: List<String>.from(["요약1", "요약2", "요약3"]),
-    ),
-    DiaryModel(
-      date: ' 2025-05-02',
-      weather: 1,
-      isPublic: true,
-      lat: 37.5665,
-      lng: 126.9780,
-      title: "test1",
-      content: 'empty1',
-      emotionTagIds: List<int>.from([1, 2, 3]),
-      summaryKeywords: List<String>.from(["요약1", "요약2", "요약3"]),
-    ),
-    DiaryModel(
-      date: ' 2025-05-02',
-      weather: 1,
-      isPublic: true,
-      lat: 37.5665,
-      lng: 126.9780,
-      title: "test1",
-      content: 'empty1',
-      emotionTagIds: List<int>.from([1, 2, 3]),
-      summaryKeywords: List<String>.from(["요약1", "요약2", "요약3"]),
-    ),
-  ];
+  List<DiaryModel> testsamples = [];
   bool isPublic = false; //공개 여부
 
   @override
   void initState() {
     super.initState();
     //일기 목록 가져오기
+    _loadDiaries();
+  }
+
+  Future<void> _loadDiaries() async {
+    String userId = '20213010'; // 사용자 ID 하드코딩 또는 로그인 값 사용
+    try {
+      List<DiaryModel> diaries = await DiaryManager().fetchAllDiaries(userId);
+      print('[INIT] 서버에서 불러온 일기 개수: ${diaries.length}');
+      setState(() {
+        testsamples = diaries;
+      });
+    } catch (e) {
+      print('[ERROR] 일기 불러오기 실패: $e');
+    }
   }
 
   void handleDateSelected(DateTime date) {
