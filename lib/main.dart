@@ -65,6 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void updateSideMenuSelectedIndex(int index) {
     setState(() {
+      if (index > 0) {
+        showToastMessage("준비 중입니다.");
+        return;
+      }
       currentScreen = sideScreens[index];
     });
   }
@@ -144,6 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
         '회원 탈퇴',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
       ),
+      Text('도움말', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
     ];
 
     //글쓰기 화면 리스트 초기화

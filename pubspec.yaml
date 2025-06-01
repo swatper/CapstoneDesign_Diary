@@ -43,10 +43,6 @@ dependencies:
   flutter_launcher_icons: ^0.14.1
   shared_preferences: ^2.5.3
 
-  #KakaoSDK
-  kakao_flutter_sdk: ^1.9.5 # 전체 추가
-  kakao_flutter_sdk_user: ^1.9.5 # 카카오 로그인 API 패키지
-
   #Google Map
   google_maps_flutter: ^2.12.1
   google_maps_cluster_manager:

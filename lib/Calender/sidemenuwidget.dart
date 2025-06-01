@@ -34,7 +34,6 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
     void selectSideMenu(int index) {
       widget.sideMenuSelectedIndex(index);
-      showToastMessage("아직 미구현");
       Navigator.pop(context);
     }
 
@@ -262,21 +261,24 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                       child: Column(
                         children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.question_mark_outlined,
-                                color: Color(0xff757575),
-                              ),
-                              SizedBox(width: 10),
-                              Text(
-                                "Help",
-                                style: TextStyle(
-                                  color: infoColor2,
-                                  fontSize: 17,
+                          GestureDetector(
+                            onTap: () => selectSideMenu(4),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.question_mark_outlined,
+                                  color: Color(0xff757575),
                                 ),
-                              ),
-                            ],
+                                SizedBox(width: 10),
+                                Text(
+                                  "Help",
+                                  style: TextStyle(
+                                    color: infoColor2,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(height: 10),
                           GestureDetector(

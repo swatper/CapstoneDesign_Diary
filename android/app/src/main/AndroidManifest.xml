@@ -35,23 +35,7 @@
         
         <!--구글 지도 -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyDyuu1h-MHnq8B5x99ntnKWck7gJkV0cWo"/>
-
-    <!-- 카카오 로그인 -->
-    <activity
-        android:name="com.kakao.sdk.flutter.AppsHandlerActivity"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-
-            <!-- 배송지 피커를 위한 설정 -->
-            <data android:scheme="kakao$네이티브코튼" />
-            <data android:host="address" />
-        </intent-filter>
-    </activity>
+               android:value="구글API키"/>
     
     </application>
     <!-- Required to query activities that can process text, see:

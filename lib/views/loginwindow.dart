@@ -1,4 +1,3 @@
-import 'package:capstone_diary/Utils/kakaomanager.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
 import 'package:capstone_diary/Utils/datamanager.dart';
@@ -29,14 +28,12 @@ class _LoginWindowState extends State<LoginWindow> {
 
   void guestLogin() {
     //게스트 로그인
-    //saveLoginState(true);
     widget.onLogin(true);
     Datamanager().saveData("is_logged_in", true, false);
   }
 
   void kakaoLogin() {
-    //KakaoManager().doKakaoLogin();
-    //widget.onLogin(true);
+    //TODO:백엔드 카카오 로그인 연결
   }
 
   //로그인 성공 시
