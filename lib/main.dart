@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (!didPop) {
-          if (currentScreen == mainScreens[0]) {
+          if (currentScreen == mainScreens[0] || !isLogin) {
             DateTime now = DateTime.now();
             if (lastPressedAt == null ||
                 now.difference(lastPressedAt!) > Duration(seconds: 2)) {
