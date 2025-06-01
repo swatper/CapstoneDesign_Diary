@@ -5,7 +5,8 @@ class DiaryModel {
   final String title;
   final String content;
   final int weather;
-  final List<String> tags;
+  final List<int> emotionTagIds; // 감정 태그 ID 목록
+  final List<String> summaryKeywords; // 키워드 목록
   //공개 여부
   final bool isPublic;
   //위치 정보
@@ -13,25 +14,15 @@ class DiaryModel {
   final double lng;
 
   //테스트용 생성자
-  DiaryModel(
-    this.date,
-    this.weather,
-    this.isPublic,
-    this.lat,
-    this.lng, {
+  DiaryModel({
+    required this.date,
+    required this.weather,
+    required this.isPublic,
+    required this.lat,
+    required this.lng,
     required this.title,
     required this.content,
-    required this.tags,
+    required this.emotionTagIds,
+    required this.summaryKeywords,
   });
-
-  //json to object
-  DiaryModel.fromJson(Map<String, dynamic> json)
-    : date = json['date'],
-      title = json['title'],
-      content = json['content'],
-      weather = json['weather'],
-      tags = List<String>.from(json['tags']),
-      isPublic = json['isPublic'],
-      lat = json['lat'],
-      lng = json['lng'];
 }

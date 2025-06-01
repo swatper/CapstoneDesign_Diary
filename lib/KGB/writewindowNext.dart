@@ -78,14 +78,16 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
     final aiTagGenerator = AiTagGenerator();
 
     final diary = DiaryModel(
-      '2025-05-25',
-      widget.weatherIndex,
-      true,
-      35.1796,
-      129.0756,
+      date:
+          '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',
+      weather: widget.weatherIndex,
+      isPublic: isPublic,
+      lat: 0.0, // 위치 정보는 임시로 0.0으로 설정
+      lng: 0.0, // 위치 정보는 임시로 0.0으로 설정
       title: widget.title,
       content: widget.diaryContent,
-      tags: [],
+      emotionTagIds: selectedEmotions,
+      summaryKeywords: selectedSummaries,
     );
     try {
       final tags = await aiTagGenerator.generateTags(diary);

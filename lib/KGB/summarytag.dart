@@ -26,7 +26,7 @@ class _SummaryTagState extends State<SummaryTag> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
         decoration: BoxDecoration(
-          color: Colors.amber[400],
+          color: const Color.fromARGB(255, 255, 253, 110),
           borderRadius: BorderRadius.circular(50),
         ),
         child: Row(
