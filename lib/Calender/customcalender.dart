@@ -42,7 +42,6 @@ class _CustomcalenderState extends State<Customcalender> {
             _selectedDay = selectedDay;
             _focusedDay = focusedDay;
           });
-          //선택한 날짜 넘겨주기
           widget.getSelectedDate(selectedDay);
         },
         onFormatChanged: (format) {

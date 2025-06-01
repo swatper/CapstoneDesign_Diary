@@ -91,6 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (status) {
       isLogin = true;
       updateSelectedIndex(0);
+    } else {
+      isLogin = false;
+      updateSelectedIndex(5); //로그인 화면으로 이동
     }
   }
 
@@ -104,14 +107,24 @@ class _HomeScreenState extends State<HomeScreen> {
         sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
         writeWindowIndex: updateWriteSelectedIndex,
         selectDiary: updateWriteWindow,
-        diaryView: setSearchWindow,
+        searchingView: setSearchWindow,
+        logOutCallback: updateLoginStatus,
       ),
-      StatisticsWindow(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
+      StatisticsWindow(
+        sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
+        searchingView: setSearchWindow,
+        logOutCallback: updateLoginStatus,
+      ),
       ArchiveWindow(
         sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
         selectDiary: updateWriteWindow,
+        searchingView: setSearchWindow,
+        logOutCallback: updateLoginStatus,
       ),
-      SharedDiary(sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex),
+      SharedDiary(
+        sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
+        logOutCallback: updateLoginStatus,
+      ),
       ChallengeWindow(),
       LoginWindow(onLogin: updateLoginStatus),
     ];
@@ -141,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ];
 
-    //초기 화면 설정
+    //초기 화면 설정: 코드 중복
     if (isLogin) {
       //로그인 정보가 있으면
       currentScreen = mainScreens[0];

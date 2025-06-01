@@ -1,10 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
-import 'package:flutter/material.dart';
+import 'package:capstone_diary/Utils/datamanager.dart';
 
 class SideMenuWidget extends StatefulWidget {
   final Function(int) sideMenuSelectedIndex;
-  const SideMenuWidget({super.key, required this.sideMenuSelectedIndex});
+  final Function(bool)? logOutCallback;
+  const SideMenuWidget({
+    super.key,
+    required this.sideMenuSelectedIndex,
+    this.logOutCallback,
+  });
   @override
   State<SideMenuWidget> createState() => _SideMenuWidgetState();
 }
@@ -30,6 +36,39 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
       widget.sideMenuSelectedIndex(index);
       showToastMessage("아직 미구현");
       Navigator.pop(context);
+    }
+
+    void logout() {
+      //로그아웃 처리
+      Datamanager().saveData("is_logged_in", false, false);
+      widget.logOutCallback?.call(false);
+      showToastMessage("로그아웃 되었습니다.");
+      Navigator.pop(context);
+    }
+
+    void showLogoutDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("로그아웃"),
+            content: Text("정말 로그아웃 하시겠습니까?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("취소"),
+              ),
+              TextButton(
+                onPressed: () {
+                  logout();
+                  Navigator.pop(context);
+                },
+                child: Text("로그아웃"),
+              ),
+            ],
+          );
+        },
+      );
     }
 
     return Stack(
@@ -240,18 +279,21 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                             ],
                           ),
                           SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Icon(Icons.exit_to_app, color: Colors.red),
-                              SizedBox(width: 10),
-                              Text(
-                                "Logout Account",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 17,
+                          GestureDetector(
+                            onTap: showLogoutDialog,
+                            child: Row(
+                              children: [
+                                Icon(Icons.exit_to_app, color: Colors.red),
+                                SizedBox(width: 10),
+                                Text(
+                                  "Logout Account",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 17,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),

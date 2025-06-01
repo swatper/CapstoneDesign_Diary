@@ -4,7 +4,12 @@ import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 
 class SharedDiary extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
-  const SharedDiary({super.key, required this.sideMenuToHomeWindowIndex});
+  final Function(bool) logOutCallback;
+  const SharedDiary({
+    super.key,
+    required this.sideMenuToHomeWindowIndex,
+    required this.logOutCallback,
+  });
 
   @override
   State<SharedDiary> createState() => _SharedDiaryState();
@@ -25,6 +30,7 @@ class _SharedDiaryState extends State<SharedDiary> {
             ).animate(animation),
             child: SideMenuWidget(
               sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
+              logOutCallback: widget.logOutCallback,
             ),
           );
         },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/Calender/customcalender.dart';
 import 'package:capstone_diary/Calender/sidemenuwidget.dart';
-import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/Items/diaryitem2.dart';
 import 'package:capstone_diary/KGB/diaryview.dart';
@@ -10,14 +9,16 @@ import 'package:capstone_diary/Views/searchingwindow.dart';
 class HomeWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
   final Function(int) writeWindowIndex;
+  final Function(bool) logOutCallback;
   final Function(Widget) selectDiary;
-  final Function(Widget) diaryView;
+  final Function(Widget) searchingView;
   const HomeWindow({
     super.key,
     required this.sideMenuToHomeWindowIndex,
     required this.writeWindowIndex,
     required this.selectDiary,
-    required this.diaryView,
+    required this.searchingView,
+    required this.logOutCallback,
   });
   @override
   State<HomeWindow> createState() => _HomeWindowState();
@@ -86,13 +87,12 @@ class _HomeWindowState extends State<HomeWindow> {
     //"YYYY-MM-DD"
     String formattedDate =
         "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
-    print("서버 요청: $formattedDate");
     //TODO SERVER: 서버 요청해서 JSON 데이터를 받아오기
   }
 
   //검색 버튼
   void searchDiray() {
-    widget.diaryView(Searchingwindow());
+    widget.searchingView(Searchingwindow());
   }
 
   //메뉴 버튼
@@ -108,6 +108,7 @@ class _HomeWindowState extends State<HomeWindow> {
             ).animate(animation),
             child: SideMenuWidget(
               sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
+              logOutCallback: widget.logOutCallback,
             ),
           );
         },

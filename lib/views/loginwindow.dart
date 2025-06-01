@@ -14,14 +14,24 @@ class LoginWindow extends StatefulWidget {
 class _LoginWindowState extends State<LoginWindow> {
   @override
   void initState() {
-    loginCheck();
+    initLoginCheck();
     super.initState();
+  }
+
+  void initLoginCheck() async {
+    //로그인 상태 확인
+    if (await Datamanager().getData("is_logged_in") == "true") {
+      widget.onLogin(true);
+    } else {
+      saveLoginState(false);
+    }
   }
 
   void guestLogin() {
     //게스트 로그인
     //saveLoginState(true);
     widget.onLogin(true);
+    Datamanager().saveData("is_logged_in", true, false);
   }
 
   void kakaoLogin() {
@@ -32,15 +42,6 @@ class _LoginWindowState extends State<LoginWindow> {
   //로그인 성공 시
   void saveLoginState(bool setLoginStatus) async {
     Datamanager().saveData("is_logged_in", setLoginStatus, true);
-  }
-
-  void loginCheck() async {
-    //로그인 상태 확인
-    if (Datamanager().getData("is_logged_in") == "true") {
-      widget.onLogin(true);
-    } else {
-      saveLoginState(false);
-    }
   }
 
   @override

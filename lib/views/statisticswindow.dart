@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
-import 'package:capstone_diary/Utils/toastmessage.dart';
+import 'package:capstone_diary/Views/searchingwindow.dart';
 import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 import 'package:capstone_diary/Items/emotionraderchart.dart';
 
 class StatisticsWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
-  const StatisticsWindow({super.key, required this.sideMenuToHomeWindowIndex});
+  final Function(bool) logOutCallback;
+  final Function(Widget) searchingView;
+  const StatisticsWindow({
+    super.key,
+    required this.sideMenuToHomeWindowIndex,
+    required this.searchingView,
+    required this.logOutCallback,
+  });
+
   @override
   State<StatisticsWindow> createState() => _StatisticsWindowState();
 }
@@ -36,7 +44,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
   }
 
   void searchDiray() {
-    showToastMessage("아직 미구현");
+    widget.searchingView(Searchingwindow());
   }
 
   //메뉴 버튼
@@ -52,6 +60,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
             ).animate(animation),
             child: SideMenuWidget(
               sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
+              logOutCallback: widget.logOutCallback,
             ),
           );
         },

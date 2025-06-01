@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
-import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 import 'package:capstone_diary/GoogleMap/diarymap.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/Items/diaryitem2.dart';
+import 'package:capstone_diary/Views/searchingwindow.dart';
 import 'package:capstone_diary/KGB/diaryview.dart';
 
 class ArchiveWindow extends StatefulWidget {
   final Function(int) sideMenuToHomeWindowIndex;
+  final Function(bool)? logOutCallback;
   final Function(Widget) selectDiary;
+  final Function(Widget)? searchingView;
   const ArchiveWindow({
     super.key,
     required this.sideMenuToHomeWindowIndex,
     required this.selectDiary,
+    this.searchingView,
+    this.logOutCallback,
   });
 
   @override
@@ -76,7 +80,7 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
   }
 
   void searchDiray() {
-    showToastMessage("아직 미구현");
+    widget.searchingView?.call(Searchingwindow());
   }
 
   //메뉴 버튼
@@ -92,6 +96,7 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
             ).animate(animation),
             child: SideMenuWidget(
               sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
+              logOutCallback: widget.logOutCallback,
             ),
           );
         },
