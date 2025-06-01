@@ -164,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
       //로그인 정보가 있으면
       currentScreen = mainScreens[0];
     } else {
+      currentScreen = mainScreens[5];
       updateSelectedIndex(5);
     }
   }
