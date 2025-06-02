@@ -1,3 +1,5 @@
+import 'package:capstone_diary/KGB/emotiontag.dart';
+import 'package:capstone_diary/KGB/summarytag.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 
@@ -58,10 +60,23 @@ class _DiaryItemState2 extends State<DiaryItem2> {
               Wrap(
                 spacing: 5,
                 runSpacing: 5,
-                children:
-                    widget.diaryModel.tags.map((emotion) {
-                      return emotionTag(emotion);
-                    }).toList(),
+                children: [
+                  // 요약 태그
+                  ...widget.diaryModel.summaryKeywords.map((keyword) {
+                    return SummaryTag(
+                      summary: keyword,
+                      onDelete: null, // 삭제 기능 없으면 null 또는 생략
+                    );
+                  }),
+
+                  // 감정 태그
+                  ...widget.diaryModel.emotionTagIds.map((id) {
+                    return EmotionTag(
+                      emotionIndex: id - 1, // 감정 리스트는 0부터 시작하니까 -1
+                      onDelete: null, // 삭제 기능 없으면 null
+                    );
+                  }),
+                ],
               ),
             ],
           ),
@@ -69,15 +84,4 @@ class _DiaryItemState2 extends State<DiaryItem2> {
       ),
     );
   }
-}
-
-Container emotionTag(String emotion) {
-  return Container(
-    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-    decoration: BoxDecoration(
-      color: Color(0xFFF8FFC2),
-      borderRadius: BorderRadius.circular(45),
-    ),
-    child: Text("#$emotion"),
-  );
 }

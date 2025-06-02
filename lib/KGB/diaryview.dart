@@ -1,3 +1,5 @@
+import 'package:capstone_diary/KGB/emotiontag.dart';
+import 'package:capstone_diary/KGB/summarytag.dart';
 import 'package:capstone_diary/Views/archivewindow.dart';
 import 'package:capstone_diary/KGB/weatherButton.dart';
 import 'package:capstone_diary/KGB/writewindow.dart';
@@ -209,26 +211,16 @@ class DiaryView extends StatelessWidget {
                       Wrap(
                         spacing: 8,
                         runSpacing: 4,
-                        children:
-                            diaryModel.tags.map((tag) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 3,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.amber[400],
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Text(
-                                  '#$tag',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
+                        children: [
+                          ...diaryModel.summaryKeywords.map(
+                            (keyword) => SummaryTag(summary: keyword),
+                          ),
+                          ...diaryModel.emotionTagIds.map(
+                            (id) => EmotionTag(
+                              emotionIndex: id - 1, // 0-based index 맞춰서 -1
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

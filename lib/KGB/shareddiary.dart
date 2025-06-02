@@ -42,25 +42,16 @@ class _SharedDiaryState extends State<SharedDiary> {
   @override
   Widget build(BuildContext context) {
     DiaryModel diaryModel = DiaryModel(
-      '2025-05-10',
-      1,
-      false,
-      37.5665,
-      126.9780,
-      title: "test1",
-      content: '내용 ' * 100,
-      tags: List<String>.from([
-        "감정1",
-        "감정2",
-        "감정3",
-        "감정3",
-        "감정3",
-        "감정3",
-        "감정3",
-        "감정3",
-        "감정3",
-        "감정3",
-      ]),
+      title: '오늘의 일기',
+      content:
+          '오늘은 정말 좋은 날이었어요! 친구들과 함께 시간을 보내고, 맛있는 음식을 먹었답니다. 날씨도 맑고 화창해서 기분이 좋았어요.',
+      date: '2025-05-10',
+      summaryKeywords: ['행복', '친구', '맛집'],
+      weather: 1, // 예시로 날씨를 설정
+      emotionTagIds: [1, 2], // 예시로 감정 태그 ID를 설정
+      isPublic: true,
+      lat: 37.5665, // 예시로 위도 설정
+      lng: 126.978, // 예시로 경도 설정
     );
 
     return Scaffold(
@@ -227,7 +218,7 @@ class _SharedDiaryState extends State<SharedDiary> {
                                   spacing: 8,
                                   runSpacing: 4,
                                   children:
-                                      diaryModel.tags.map((tag) {
+                                      diaryModel.emotionTagIds.map((tag) {
                                         return Container(
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 10,

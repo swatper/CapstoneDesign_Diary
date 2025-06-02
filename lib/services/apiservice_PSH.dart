@@ -15,7 +15,7 @@ class ApiservicePsh {
       final List<dynamic> diayList = jsonDecode(response.body);
       //list 안에 있는 내용의 객체화
       for (var diary in diayList) {
-        DiaryModel.fromJson(diary);
+        //DiaryModel.fromJson(diary);
       }
     } else {
       print("실패");

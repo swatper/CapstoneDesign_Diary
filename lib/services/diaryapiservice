@@ -1,0 +1,49 @@
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class DiaryApiService {
+  final String baseUrl;
+  static final DiaryApiService _instance = DiaryApiService._internal(baseUrl: 'http://localhost:8088/SentiDiary/');
+
+  factory DiaryApiService() => _instance;
+
+  DiaryApiService._internal({required this.baseUrl});
+
+  /// 새 일기  작성 JSON 업로드 (POST)
+Future<bool> postNewDiray(Map<String, dynamic> diaryJson) async {
+  final url = Uri.parse('https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary');
+
+  print('[POST] 요청 보낼 URL: $url');
+  print('[POST] 요청 데이터: ${json.encode(diaryJson)}');
+
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: json.encode(diaryJson),
+  );
+
+  print('[POST] 응답 코드: ${response.statusCode}');
+  print('[POST] 응답 본문: ${response.body}');
+
+  return response.statusCode == 200;
+}
+
+
+  /// 전체 일기 JSON 리스트 가져오기 (GET)
+  Future<List<Map<String, dynamic>>> getAllDiary(String userId) async {
+  final url = Uri.parse('https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/users/$userId');
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final decoded = utf8.decode(response.bodyBytes);
+    print('[RESPONSE] UTF8 디코딩된 응답: $decoded');
+
+    final List<dynamic> jsonList = json.decode(decoded);
+    return jsonList.cast<Map<String, dynamic>>();
+  } else {
+    print('[ERROR] 실패한 응답 코드: ${response.statusCode}');
+    throw Exception('일기 데이터를 불러오지 못했습니다.');
+  }
+}
+}

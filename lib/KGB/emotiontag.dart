@@ -40,7 +40,7 @@ class _EmotionTagState extends State<EmotionTag> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
         decoration: BoxDecoration(
-          color: Colors.amber[400],
+          color: const Color.fromARGB(255, 250, 171, 217),
           borderRadius: BorderRadius.circular(50),
         ),
         child: Row(

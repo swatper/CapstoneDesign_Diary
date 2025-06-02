@@ -8,6 +8,7 @@ class WriteWindow extends StatefulWidget {
   final Function(Widget) setWriteWindowNext;
   final VoidCallback? goBackToHome;
   bool isEditMode;
+
   WriteWindow({
     super.key,
     required this.setWriteWindowNext,
@@ -75,14 +76,16 @@ class _WriteWindow extends State<WriteWindow> {
             WriteWindow(
               setWriteWindowNext: widget.setWriteWindowNext,
               diaryModel: DiaryModel(
-                '${year.toString()}-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}',
-                selectedWeatherIndex,
-                false,
-                0.0,
-                0.0,
+                date:
+                    '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}',
+                weather: selectedWeatherIndex,
+                isPublic: false,
+                lat: 0.0,
+                lng: 0.0,
                 title: titleController.text,
                 content: contentController.text,
-                tags: [],
+                emotionTagIds: [],
+                summaryKeywords: [],
               ),
               goBackToHome: widget.goBackToHome,
             ),
