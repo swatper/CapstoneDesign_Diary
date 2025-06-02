@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //글쓰기 화면 리스트
   late List<Widget> writeScreens;
   //현재 보고 있는 화면
-  late Widget currentScreen;
+  Widget currentScreen = const Center(child: CircularProgressIndicator());
 
   void updateSelectedIndex(int index) {
     setState(() {
