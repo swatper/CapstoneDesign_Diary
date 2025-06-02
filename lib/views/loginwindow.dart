@@ -62,7 +62,8 @@ class _LoginWindowState extends State<LoginWindow> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
+      height:
+          MediaQuery.of(context).size.height /*- kBottomNavigationBarHeight*/,
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
         child: Column(
