@@ -38,7 +38,10 @@ dependencies:
   fl_chart: ^0.70.2
   tab_container: ^3.5.3
 
+  #웹 관련
   http: ^1.3.0
+  webview_flutter: ^4.13.0
+
   geolocator : ^14.0.0
   flutter_launcher_icons: ^0.14.1
   shared_preferences: ^2.5.3

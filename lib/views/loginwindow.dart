@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:capstone_diary/views/webview.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
 import 'package:capstone_diary/Utils/datamanager.dart';
 
@@ -32,8 +33,24 @@ class _LoginWindowState extends State<LoginWindow> {
     Datamanager().saveData("is_logged_in", true, false);
   }
 
-  void kakaoLogin() {
-    //TODO:백엔드 카카오 로그인 연결
+  void kakaoLogin() async {
+    String kakaoLoginUrl = "https://www.kakaocorp.com/page/";
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WebViewPage(initialUrl: kakaoLoginUrl),
+      ),
+    ).then((value) {
+      //웹뷰에서 로그인 후 돌아왔을 때
+      if (value != null && value is bool) {
+        if (value) {
+          widget.onLogin(true);
+          saveLoginState(true);
+        } else {
+          widget.onLogin(false);
+        }
+      }
+    });
   }
 
   //로그인 성공 시
