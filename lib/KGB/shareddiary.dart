@@ -60,11 +60,14 @@ class _SharedDiaryState extends State<SharedDiary> {
         height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
         width: MediaQuery.of(context).size.width,
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child:
+          padding: EdgeInsets.symmetric(horizontal: 40),
+          child: Column(
+            children: [
               isLoaded
                   ? _buildDiaryContent(diaryModel) // 일기 내용 전체
-                  : _buildLoadingView(), // 처음 진입 시 보여줄 뷰
+                  : _buildLoadingView(),
+            ],
+          ), // 처음 진입 시 보여줄 뷰
         ),
       ),
     );
@@ -75,13 +78,17 @@ class _SharedDiaryState extends State<SharedDiary> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              IconButton(onPressed: showMenu, icon: const Icon(Icons.menu)),
+              IconButton(
+                onPressed: showMenu,
+                icon: const Icon(Icons.menu, size: 35),
+              ),
             ],
           ),
-          const SizedBox(height: 150),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.15),
           Divider(color: Colors.black, thickness: 1, indent: 20, endIndent: 20),
           Image.asset(
             'assets/images/sharedirayIcon.png', // 원하는 이미지 경로
@@ -120,7 +127,8 @@ class _SharedDiaryState extends State<SharedDiary> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 상단 바
+        SizedBox(height: 20),
+        //상단 바
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

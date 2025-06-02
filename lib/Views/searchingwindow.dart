@@ -8,7 +8,7 @@ class Searchingwindow extends StatefulWidget {
 }
 
 class _SearchingwindowState extends State<Searchingwindow> {
-  List<bool> isSelected = [true, false, false, false];
+  List<bool> isSelected = [true, false, false];
 
   //뒤로가기 버튼
   void onClickedBackButton() {}
@@ -36,10 +36,13 @@ class _SearchingwindowState extends State<Searchingwindow> {
         ),
         onPressed: () {
           setState(() {
-            if (index != 0 && isSelected[0]) {
-              isSelected[0] = false;
+            for (int i = 0; i < isSelected.length; i++) {
+              if (i == index) {
+                isSelected[i] = true;
+              } else {
+                isSelected[i] = false;
+              }
             }
-            isSelected[index] = !isSelected[index];
           });
         },
         child: Text(
@@ -63,6 +66,7 @@ class _SearchingwindowState extends State<Searchingwindow> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 20),
             //검색창
             Container(
               height: 50,
@@ -98,16 +102,18 @@ class _SearchingwindowState extends State<Searchingwindow> {
             ),
             SizedBox(height: 20),
             //검색 옵션
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                createOptionButton("전체", 0),
-                createOptionButton("제목", 1),
-                createOptionButton("내용", 2),
-                createOptionButton("태그", 3),
-              ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  createOptionButton("제목", 0),
+                  createOptionButton("내용", 1),
+                  createOptionButton("태그", 2),
+                ],
+              ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.15),
             Icon(
               Icons.search_sharp,
               size: 200,
