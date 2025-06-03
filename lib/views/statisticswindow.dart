@@ -45,7 +45,6 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            SizedBox(height: 20),
             //통계 보여줄 Tab
             Expanded(
               child: Stack(
