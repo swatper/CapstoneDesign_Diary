@@ -38,13 +38,10 @@ class _SharedDiaryState extends State<SharedDiary> {
         width: MediaQuery.of(context).size.width,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
-            children: [
+          child:
               isLoaded
                   ? _buildDiaryContent(diaryModel) // 일기 내용 전체
-                  : _buildLoadingView(),
-            ],
-          ), // 처음 진입 시 보여줄 뷰
+                  : _buildLoadingView(), // 처음 진입 시 보여줄 뷰
         ),
       ),
     );
