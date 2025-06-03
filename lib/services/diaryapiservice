@@ -46,4 +46,58 @@ Future<bool> postNewDiray(Map<String, dynamic> diaryJson) async {
     throw Exception('일기 데이터를 불러오지 못했습니다.');
   }
 }
+
+/// 기존 일기 수정 요청 (PUT)
+Future<bool> updateDiary(int diaryId, Map<String, dynamic> diaryJson) async {
+  final url = Uri.parse('https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/$diaryId');
+
+  print('[PUT] 요청 보낼 URL: $url');
+  print('[PUT] 요청 데이터: ${json.encode(diaryJson)}');
+
+  final response = await http.put(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: json.encode(diaryJson),
+  );
+
+  print('[PUT] 응답 코드: ${response.statusCode}');
+  print('[PUT] 응답 본문: ${response.body}');
+
+  return response.statusCode == 200;
+}
+
+/// 특정 일기 1개 가져오기 (GET)
+Future<Map<String, dynamic>> getDiaryById(String userId,int diaryId) async {
+  final url = Uri.parse('https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/users/$userId/diaries/$diaryId');
+  
+  print('[GET] 요청 보낼 URL: $url');
+  
+  final response = await http.get(url);
+
+  print('[GET] 응답 코드: ${response.statusCode}');
+  print('[GET] 응답 본문: ${response.body}');
+
+  if (response.statusCode == 200) {
+    final decoded = utf8.decode(response.bodyBytes);
+    final Map<String, dynamic> diary = json.decode(decoded);
+    return diary;
+  } else {
+    throw Exception('일기 조회 실패: 상태 코드 ${response.statusCode}');
+  }
+}
+
+/// 특정 일기 삭제 요청 (DELETE)
+Future<bool> deleteDiary(int diaryId) async {
+  final url = Uri.parse('https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/$diaryId');
+
+  print('[DELETE] 요청 보낼 URL: $url');
+
+  final response = await http.delete(url);
+
+  print('[DELETE] 응답 코드: ${response.statusCode}');
+  print('[DELETE] 응답 본문: ${response.body}');
+
+  return response.statusCode == 200;
+}
+
 }

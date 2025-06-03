@@ -15,6 +15,8 @@ class WriteWindowNext extends StatefulWidget {
   final int weatherIndex;
   final String title;
   final String diaryContent;
+  final int? diaryId;
+  final DiaryModel? diaryModel;
 
   const WriteWindowNext({
     super.key,
@@ -26,6 +28,8 @@ class WriteWindowNext extends StatefulWidget {
     required this.diaryContent,
     required this.onBackToWriteWindow,
     required this.onReturnToMain,
+    this.diaryId,
+    this.diaryModel,
   });
 
   @override
@@ -62,26 +66,48 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
   ];
   bool isPublic = false; // 공개 여부 상태 변수
 
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.diaryModel != null) {
+      final model = widget.diaryModel!;
+
+      // 감정 태그 ID 추가
+      selectedEmotions = List.from(model.emotionTagIds);
+
+      // 요약 키워드 추가
+      selectedSummaries = List.from(model.summaryKeywords);
+    }
+  }
+
   void onClickedBackButton() {
+    print("다이어리 ID: ${widget.diaryId}");
     widget.onBackToWriteWindow();
   }
 
-  void onClickedCompleteButton() {
-    DiaryManager().uploadDiary(
-      '20213010',
-      DiaryModel(
-        date:
-            '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',
-        weather: widget.weatherIndex,
-        isPublic: isPublic,
-        lat: 0.0, // 위치 정보는 임시로 0.0으로 설정
-        lng: 0.0, // 위치 정보는 임시로 0.0으로 설정
-        title: widget.title,
-        content: widget.diaryContent,
-        emotionTagIds: selectedEmotions,
-        summaryKeywords: selectedSummaries,
-      ),
+  Future<void> onClickedCompleteButton() async {
+    final diary = DiaryModel(
+      diaryId: widget.diaryId ?? 0, // null이면 빈 문자열로 처리
+      date:
+          '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',
+      weather: widget.weatherIndex,
+      isPublic: isPublic,
+      lat: 0.0,
+      lng: 0.0,
+      title: widget.title,
+      content: widget.diaryContent,
+      emotionTagIds: selectedEmotions,
+      summaryKeywords: selectedSummaries,
     );
+    final userId = '20213010';
+    if (diary.diaryId == 0) {
+      print('[ACTION] 새 일기 업로드');
+      await DiaryManager().uploadDiary(userId, diary);
+    } else {
+      print('[ACTION] 기존 일기 수정');
+      await DiaryManager().updateDiary(userId, diary);
+    }
     widget.onReturnToMain();
   }
 
@@ -94,6 +120,7 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
     final aiTagGenerator = AiTagGenerator();
 
     final diary = DiaryModel(
+      diaryId: 0,
       date:
           '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',
       weather: widget.weatherIndex,

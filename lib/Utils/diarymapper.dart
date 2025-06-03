@@ -4,6 +4,7 @@ class DiaryMapper {
   // JSON → DiaryModel
   static DiaryModel fromJson(Map<String, dynamic> json) {
     return DiaryModel(
+      diaryId: json['id'] as int,
       date: json['diaryDate'] as String,
       title: json['title'] as String,
       content: json['content'] as String,

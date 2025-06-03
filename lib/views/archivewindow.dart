@@ -99,6 +99,7 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
         Container(
           alignment: Alignment.center,
           child: DiaryItem2(
+            diaryId: diary.diaryId,
             diaryModel: diary,
             onTap: () {
               widget.selectDiary(

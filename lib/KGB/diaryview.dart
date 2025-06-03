@@ -1,5 +1,6 @@
 import 'package:capstone_diary/KGB/emotiontag.dart';
 import 'package:capstone_diary/KGB/summarytag.dart';
+import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:capstone_diary/Views/archivewindow.dart';
 import 'package:capstone_diary/KGB/weatherButton.dart';
 import 'package:capstone_diary/KGB/writewindow.dart';
@@ -23,6 +24,13 @@ class DiaryView extends StatelessWidget {
 
   void onSelectedDelete() {
     print("삭제하기");
+    DiaryManager().deleteDiaryById(diaryModel.diaryId);
+    goBackToArchive(
+      ArchiveWindow(
+        sideMenuToHomeWindowIndex: sideMenuToHomeWindowIndex,
+        selectDiary: setWriteWindow,
+      ),
+    );
   }
 
   @override
@@ -31,12 +39,18 @@ class DiaryView extends StatelessWidget {
     void onSelectedEdit() {
       setWriteWindow(
         WriteWindow(
+          diaryId: diaryModel.diaryId,
           isEditMode: true,
           diaryModel: diaryModel,
-          goBackToHome: () {
+          goBackToHome: () async {
+            String userId = '20213010';
+            DiaryModel editedDiary = await DiaryManager().getDiaryById(
+              userId,
+              diaryModel.diaryId,
+            );
             setWriteWindow(
               DiaryView(
-                diaryModel: diaryModel,
+                diaryModel: editedDiary,
                 setWriteWindow: setWriteWindow,
                 sideMenuToHomeWindowIndex: sideMenuToHomeWindowIndex,
                 goBackToArchive: goBackToArchive,

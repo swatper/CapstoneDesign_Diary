@@ -28,6 +28,7 @@ class _HomeWindowState extends State<HomeWindow> {
   DateTime? selectedDate;
   List<DiaryModel> testsamples = [
     DiaryModel(
+      diaryId: 1,
       date: ' 2025-05-02',
       weather: 1,
       isPublic: true,
@@ -39,6 +40,7 @@ class _HomeWindowState extends State<HomeWindow> {
       summaryKeywords: List<String>.from(["감정1", "감정2", "감정3"]),
     ),
     DiaryModel(
+      diaryId: 2,
       date: ' 2025-05-02',
       weather: 1,
       isPublic: true,
@@ -50,6 +52,7 @@ class _HomeWindowState extends State<HomeWindow> {
       summaryKeywords: List<String>.from(["감정1", "감정2", "감정3"]),
     ),
     DiaryModel(
+      diaryId: 3,
       date: ' 2025-05-02',
       weather: 1,
       isPublic: true,
@@ -61,6 +64,7 @@ class _HomeWindowState extends State<HomeWindow> {
       summaryKeywords: List<String>.from(["감정1", "감정2", "감정3"]),
     ),
     DiaryModel(
+      diaryId: 4,
       date: ' 2025-05-02',
       weather: 1,
       isPublic: true,
@@ -163,6 +167,7 @@ class _HomeWindowState extends State<HomeWindow> {
                 //일기장 아이템
                 children: [
                   DiaryItem2(
+                    diaryId: testsamples[0].diaryId,
                     diaryModel: testsamples[0],
                     onTap: () {
                       widget.selectDiary(
@@ -178,6 +183,7 @@ class _HomeWindowState extends State<HomeWindow> {
                   ),
                   SizedBox(height: 5),
                   DiaryItem2(
+                    diaryId: testsamples[1].diaryId,
                     diaryModel: testsamples[1],
                     onTap: () {
                       widget.selectDiary(
@@ -193,6 +199,7 @@ class _HomeWindowState extends State<HomeWindow> {
                   ),
                   SizedBox(height: 5),
                   DiaryItem2(
+                    diaryId: testsamples[2].diaryId,
                     diaryModel: testsamples[2],
                     onTap: () {
                       widget.selectDiary(
