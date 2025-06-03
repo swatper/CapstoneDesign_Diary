@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
+import 'package:capstone_diary/Views/searchingwindow.dart';
+import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 //메인 화면
 import 'package:capstone_diary/Views/loginwindow.dart';
 import 'package:capstone_diary/Views/homewindow.dart'; //메인
@@ -85,10 +87,30 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void setSearchWindow(Widget diaryView) {
-    setState(() {
-      currentScreen = diaryView;
-    });
+  void setSearchWindow2() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Searchingwindow()),
+    );
+  }
+
+  void showSideMenu() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: Offset(1.0, 0),
+              end: Offset(0, 0),
+            ).animate(animation),
+            child: SideMenuWidget(
+              sideMenuSelectedIndex: updateSideMenuSelectedIndex,
+            ),
+          );
+        },
+      ),
+    );
   }
 
   void updateLoginStatus(bool status) {
@@ -108,27 +130,16 @@ class _HomeScreenState extends State<HomeScreen> {
     //메인 화면 리스트 초기화
     mainScreens = [
       HomeWindow(
-        sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
         writeWindowIndex: updateWriteSelectedIndex,
         selectDiary: updateWriteWindow,
-        searchingView: setSearchWindow,
         logOutCallback: updateLoginStatus,
       ),
-      StatisticsWindow(
-        sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
-        searchingView: setSearchWindow,
-        logOutCallback: updateLoginStatus,
-      ),
+      StatisticsWindow(logOutCallback: updateLoginStatus),
       ArchiveWindow(
-        sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
         selectDiary: updateWriteWindow,
-        searchingView: setSearchWindow,
         logOutCallback: updateLoginStatus,
       ),
-      SharedDiary(
-        sideMenuToHomeWindowIndex: updateSideMenuSelectedIndex,
-        logOutCallback: updateLoginStatus,
-      ),
+      SharedDiary(logOutCallback: updateLoginStatus),
       ChallengeWindow(),
       LoginWindow(onLogin: updateLoginStatus),
     ];
@@ -196,7 +207,24 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(
         backgroundColor: Color(0xffFFE4B5),
-        //메인 화면
+        appBar:
+            isLogin && _selectedIndex < 3
+                ? AppBar(
+                  backgroundColor: Color(0xffFFE4B5),
+                  centerTitle: true,
+                  actions: [
+                    IconButton(
+                      onPressed: setSearchWindow2,
+                      icon: Icon(Icons.search, size: 35),
+                    ),
+                    IconButton(
+                      onPressed: showSideMenu,
+                      icon: Icon(Icons.menu, size: 35),
+                    ),
+                    SizedBox(width: 20),
+                  ],
+                )
+                : null, //메인 화면
         body: currentScreen,
         //하단 네비게이션 바
         bottomNavigationBar:

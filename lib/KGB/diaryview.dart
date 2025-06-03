@@ -10,13 +10,11 @@ import 'package:capstone_diary/DataModels/diarymodel.dart';
 class DiaryView extends StatelessWidget {
   final DiaryModel diaryModel;
   final void Function(Widget) setWriteWindow;
-  final Function(int) sideMenuToHomeWindowIndex;
   final Function(Widget) goBackToArchive;
   const DiaryView({
     super.key,
     required this.diaryModel,
     required this.setWriteWindow,
-    required this.sideMenuToHomeWindowIndex,
     required this.goBackToArchive,
   });
 
@@ -25,12 +23,7 @@ class DiaryView extends StatelessWidget {
   void onSelectedDelete() {
     print("삭제하기");
     DiaryManager().deleteDiaryById(diaryModel.diaryId);
-    goBackToArchive(
-      ArchiveWindow(
-        sideMenuToHomeWindowIndex: sideMenuToHomeWindowIndex,
-        selectDiary: setWriteWindow,
-      ),
-    );
+    goBackToArchive(ArchiveWindow(selectDiary: setWriteWindow));
   }
 
   @override
@@ -52,7 +45,6 @@ class DiaryView extends StatelessWidget {
               DiaryView(
                 diaryModel: editedDiary,
                 setWriteWindow: setWriteWindow,
-                sideMenuToHomeWindowIndex: sideMenuToHomeWindowIndex,
                 goBackToArchive: goBackToArchive,
               ),
             );
@@ -65,12 +57,7 @@ class DiaryView extends StatelessWidget {
     }
 
     void onClickedBackButton() {
-      goBackToArchive(
-        ArchiveWindow(
-          sideMenuToHomeWindowIndex: sideMenuToHomeWindowIndex,
-          selectDiary: setWriteWindow,
-        ),
-      );
+      goBackToArchive(ArchiveWindow(selectDiary: setWriteWindow));
     }
 
     return Scaffold(

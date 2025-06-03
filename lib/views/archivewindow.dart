@@ -9,13 +9,11 @@ import 'package:capstone_diary/Views/searchingwindow.dart';
 import 'package:capstone_diary/KGB/diaryview.dart';
 
 class ArchiveWindow extends StatefulWidget {
-  final Function(int) sideMenuToHomeWindowIndex;
   final Function(bool)? logOutCallback;
   final Function(Widget) selectDiary;
   final Function(Widget)? searchingView;
   const ArchiveWindow({
     super.key,
-    required this.sideMenuToHomeWindowIndex,
     required this.selectDiary,
     this.searchingView,
     this.logOutCallback,
@@ -57,27 +55,6 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
     widget.searchingView?.call(Searchingwindow());
   }
 
-  //메뉴 버튼
-  void showMenu() {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset(1.0, 0),
-              end: Offset(0, 0),
-            ).animate(animation),
-            child: SideMenuWidget(
-              sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
-              logOutCallback: widget.logOutCallback,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   Widget diaryList(List<DiaryModel> models) {
     String lastYearMonth = "";
     List<Widget> diaryWidgets = [];
@@ -106,7 +83,6 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                 DiaryView(
                   diaryModel: diary,
                   setWriteWindow: widget.selectDiary,
-                  sideMenuToHomeWindowIndex: widget.sideMenuToHomeWindowIndex,
                   goBackToArchive: widget.selectDiary,
                 ),
               );
@@ -131,28 +107,7 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: searchDiray,
-                        icon: Icon(Icons.search, size: 35),
-                      ),
-                      IconButton(
-                        onPressed: showMenu,
-                        icon: Icon(Icons.menu, size: 35),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 40)),
             //Tabs
             Expanded(
               child: Stack(

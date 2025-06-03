@@ -7,17 +7,13 @@ import 'package:capstone_diary/KGB/diaryview.dart';
 import 'package:capstone_diary/Views/searchingwindow.dart';
 
 class HomeWindow extends StatefulWidget {
-  final Function(int) sideMenuToHomeWindowIndex;
   final Function(int) writeWindowIndex;
   final Function(bool) logOutCallback;
   final Function(Widget) selectDiary;
-  final Function(Widget) searchingView;
   const HomeWindow({
     super.key,
-    required this.sideMenuToHomeWindowIndex,
     required this.writeWindowIndex,
     required this.selectDiary,
-    required this.searchingView,
     required this.logOutCallback,
   });
   @override
@@ -98,32 +94,6 @@ class _HomeWindowState extends State<HomeWindow> {
     //TODO SERVER: 서버 요청해서 JSON 데이터를 받아오기
   }
 
-  //검색 버튼
-  void searchDiray() {
-    widget.searchingView(Searchingwindow());
-  }
-
-  //메뉴 버튼
-  void showMenu() {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset(1.0, 0),
-              end: Offset(0, 0),
-            ).animate(animation),
-            child: SideMenuWidget(
-              sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
-              logOutCallback: widget.logOutCallback,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   void writeDiary() {
     widget.writeWindowIndex(0);
   }
@@ -138,23 +108,6 @@ class _HomeWindowState extends State<HomeWindow> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 20),
-              //검색, 더보기 아이콘
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: searchDiray,
-                    icon: Icon(Icons.search, size: 35),
-                  ),
-                  IconButton(
-                    onPressed: showMenu,
-                    icon: Icon(Icons.menu, size: 35),
-                  ),
-                  SizedBox(width: 20),
-                ],
-              ),
-              SizedBox(height: 10),
               //달력
               Customcalender(
                 backgroundColor: Colors.white,
@@ -174,8 +127,6 @@ class _HomeWindowState extends State<HomeWindow> {
                         DiaryView(
                           diaryModel: testsamples[1],
                           setWriteWindow: widget.selectDiary,
-                          sideMenuToHomeWindowIndex:
-                              widget.sideMenuToHomeWindowIndex,
                           goBackToArchive: widget.selectDiary,
                         ),
                       );
@@ -190,8 +141,6 @@ class _HomeWindowState extends State<HomeWindow> {
                         DiaryView(
                           diaryModel: testsamples[1],
                           setWriteWindow: widget.selectDiary,
-                          sideMenuToHomeWindowIndex:
-                              widget.sideMenuToHomeWindowIndex,
                           goBackToArchive: widget.selectDiary,
                         ),
                       );
@@ -206,8 +155,6 @@ class _HomeWindowState extends State<HomeWindow> {
                         DiaryView(
                           diaryModel: testsamples[1],
                           setWriteWindow: widget.selectDiary,
-                          sideMenuToHomeWindowIndex:
-                              widget.sideMenuToHomeWindowIndex,
                           goBackToArchive: widget.selectDiary,
                         ),
                       );

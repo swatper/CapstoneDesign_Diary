@@ -11,7 +11,10 @@ class _SearchingwindowState extends State<Searchingwindow> {
   List<bool> isSelected = [true, false, false];
 
   //뒤로가기 버튼
-  void onClickedBackButton() {}
+  void onClickedBackButton() {
+    Navigator.pop(context);
+  }
+
   //검색 버튼
   void onClickedSearchButton() {}
 

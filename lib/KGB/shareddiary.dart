@@ -3,13 +3,8 @@ import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 
 class SharedDiary extends StatefulWidget {
-  final Function(int) sideMenuToHomeWindowIndex;
   final Function(bool) logOutCallback;
-  const SharedDiary({
-    super.key,
-    required this.sideMenuToHomeWindowIndex,
-    required this.logOutCallback,
-  });
+  const SharedDiary({super.key, required this.logOutCallback});
 
   @override
   State<SharedDiary> createState() => _SharedDiaryState();
@@ -18,26 +13,6 @@ class SharedDiary extends StatefulWidget {
 class _SharedDiaryState extends State<SharedDiary> {
   bool isLiked = false;
   bool isLoaded = false; // <-- 추가됨
-
-  void showMenu() {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset(1.0, 0),
-              end: Offset(0, 0),
-            ).animate(animation),
-            child: SideMenuWidget(
-              sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
-              logOutCallback: widget.logOutCallback,
-            ),
-          );
-        },
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,16 +55,6 @@ class _SharedDiaryState extends State<SharedDiary> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: showMenu,
-                icon: const Icon(Icons.menu, size: 35),
-              ),
-            ],
-          ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.15),
           Divider(color: Colors.black, thickness: 1, indent: 20, endIndent: 20),
           Image.asset(
@@ -130,13 +95,6 @@ class _SharedDiaryState extends State<SharedDiary> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 20),
-        //상단 바
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(onPressed: showMenu, icon: const Icon(Icons.menu)),
-          ],
-        ),
         // 날짜
         Row(
           children: [

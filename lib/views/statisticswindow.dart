@@ -5,15 +5,8 @@ import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 import 'package:capstone_diary/Items/emotionraderchart.dart';
 
 class StatisticsWindow extends StatefulWidget {
-  final Function(int) sideMenuToHomeWindowIndex;
   final Function(bool) logOutCallback;
-  final Function(Widget) searchingView;
-  const StatisticsWindow({
-    super.key,
-    required this.sideMenuToHomeWindowIndex,
-    required this.searchingView,
-    required this.logOutCallback,
-  });
+  const StatisticsWindow({super.key, required this.logOutCallback});
 
   @override
   State<StatisticsWindow> createState() => _StatisticsWindowState();
@@ -43,31 +36,6 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
     setState(() {});
   }
 
-  void searchDiray() {
-    widget.searchingView(Searchingwindow());
-  }
-
-  //메뉴 버튼
-  void showMenu() {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset(1.0, 0),
-              end: Offset(0, 0),
-            ).animate(animation),
-            child: SideMenuWidget(
-              sideMenuSelectedIndex: widget.sideMenuToHomeWindowIndex,
-              logOutCallback: widget.logOutCallback,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,28 +45,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: searchDiray,
-                        icon: Icon(Icons.search, size: 35),
-                      ),
-                      IconButton(
-                        onPressed: showMenu,
-                        icon: Icon(Icons.menu, size: 35),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            SizedBox(height: 20),
             //통계 보여줄 Tab
             Expanded(
               child: Stack(
@@ -153,7 +100,6 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            SizedBox(height: 10),
             //제목
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
