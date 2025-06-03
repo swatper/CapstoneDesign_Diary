@@ -42,6 +42,8 @@ class _SharedDiaryState extends State<SharedDiary> {
   @override
   Widget build(BuildContext context) {
     DiaryModel diaryModel = DiaryModel(
+      // 예시로 일기 ID를 설정
+      diaryId: 0,
       title: '오늘의 일기',
       content:
           '오늘은 정말 좋은 날이었어요! 친구들과 함께 시간을 보내고, 맛있는 음식을 먹었답니다. 날씨도 맑고 화창해서 기분이 좋았어요.',

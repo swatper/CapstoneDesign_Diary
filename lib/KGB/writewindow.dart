@@ -8,6 +8,7 @@ class WriteWindow extends StatefulWidget {
   final Function(Widget) setWriteWindowNext;
   final VoidCallback? goBackToHome;
   bool isEditMode;
+  final int? diaryId;
 
   WriteWindow({
     super.key,
@@ -15,6 +16,7 @@ class WriteWindow extends StatefulWidget {
     this.isEditMode = false,
     this.diaryModel,
     this.goBackToHome,
+    this.diaryId,
   });
   @override
   State<WriteWindow> createState() => _WriteWindow();
@@ -62,8 +64,11 @@ class _WriteWindow extends State<WriteWindow> {
   }
 
   void onClickedNextButton() {
+    print("다이어리 ID: ${widget.diaryId}");
     widget.setWriteWindowNext(
       WriteWindowNext(
+        diaryModel: widget.diaryModel,
+        diaryId: widget.diaryId,
         diaryContent: contentController.text,
         year: year,
         month: month,
@@ -76,6 +81,7 @@ class _WriteWindow extends State<WriteWindow> {
             WriteWindow(
               setWriteWindowNext: widget.setWriteWindowNext,
               diaryModel: DiaryModel(
+                diaryId: widget.diaryId ?? 0,
                 date:
                     '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}',
                 weather: selectedWeatherIndex,

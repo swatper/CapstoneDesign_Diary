@@ -5,8 +5,14 @@ import 'package:capstone_diary/DataModels/diarymodel.dart';
 
 class DiaryItem2 extends StatefulWidget {
   final DiaryModel diaryModel;
+  final int diaryId;
   final VoidCallback? onTap;
-  const DiaryItem2({super.key, required this.diaryModel, this.onTap});
+  const DiaryItem2({
+    super.key,
+    required this.diaryModel,
+    this.onTap,
+    required this.diaryId,
+  });
 
   @override
   State<DiaryItem2> createState() => _DiaryItemState2();
@@ -21,7 +27,7 @@ class _DiaryItemState2 extends State<DiaryItem2> {
         margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
         decoration: BoxDecoration(
-          color: Color(0xffFFCB6C),
+          color: Color.fromARGB(255, 255, 188, 111),
           borderRadius: BorderRadius.circular(25),
         ),
         child: Container(

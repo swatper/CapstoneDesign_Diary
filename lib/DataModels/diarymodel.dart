@@ -1,6 +1,7 @@
 //일기 데이터 모델
 class DiaryModel {
   //일기 관련 데이터
+  final int diaryId; // 일기 ID
   final String date;
   final String title;
   final String content;
@@ -15,6 +16,7 @@ class DiaryModel {
 
   //테스트용 생성자
   DiaryModel({
+    required this.diaryId,
     required this.date,
     required this.weather,
     required this.isPublic,

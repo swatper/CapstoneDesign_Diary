@@ -35,4 +35,44 @@ class DiaryManager {
 
     return result;
   }
+
+  // 일기 수정
+  Future<bool> updateDiary(String userId, DiaryModel diary) async {
+    if (diary.diaryId == 0) {
+      print('[ERROR] 일기 ID가 없습니다. 수정 불가');
+      return false;
+    }
+
+    final json = DiaryMapper.toJson(userId, diary);
+    print('[UPDATE] 수정할 일기 ID: ${diary.diaryId}');
+    print('[UPDATE] 변환된 JSON: $json');
+
+    final result = await _apiService.updateDiary(diary.diaryId, json);
+
+    print('[UPDATE] 수정 결과: $result');
+    return result;
+  }
+
+  /// 일기 ID로 단일 일기 가져오기
+  Future<DiaryModel> getDiaryById(String userId, int diaryId) async {
+    print('[FETCH ONE] 요청한 일기 ID: $diaryId');
+
+    final json = await _apiService.getDiaryById(userId, diaryId);
+    print('[FETCH ONE] 받아온 JSON: $json');
+
+    final diary = DiaryMapper.fromJson(json);
+    print('[FETCH ONE] 변환된 DiaryModel: $diary');
+
+    return diary;
+  }
+
+  /// 일기 ID로 삭제 요청
+  Future<bool> deleteDiaryById(int diaryId) async {
+    print('[DELETE] 삭제할 일기 ID: $diaryId');
+
+    final result = await _apiService.deleteDiary(diaryId);
+
+    print('[DELETE] 삭제 결과: $result');
+    return result;
+  }
 }
