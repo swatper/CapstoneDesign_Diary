@@ -15,6 +15,7 @@ import 'package:capstone_diary/Views/challengewindow.dart'; //도전과제
 import 'package:capstone_diary/Views/profilewindow.dart';
 //일기쓰기 화면
 import 'package:capstone_diary/KGB/writewindow.dart';
+import 'package:capstone_diary/KGB/writewindowNext.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -124,6 +125,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  bool isNeedAppbar() {
+    return isLogin && _selectedIndex < 4
+    /*&&
+        currentScreen != writeScreens[0] &&
+        currentScreen is! WriteWindowNext &&
+        currentScreen is! WriteWindowNext*/
+    ;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -209,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Color(0xffFFE4B5),
         appBar:
-            isLogin && _selectedIndex < 4
+            isNeedAppbar()
                 ? AppBar(
                   backgroundColor: Color(0xffFFE4B5),
                   centerTitle: true,
