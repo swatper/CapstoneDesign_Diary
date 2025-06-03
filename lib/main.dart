@@ -106,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ).animate(animation),
             child: SideMenuWidget(
               sideMenuSelectedIndex: updateSideMenuSelectedIndex,
+              logOutCallback: updateLoginStatus,
             ),
           );
         },
@@ -208,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Color(0xffFFE4B5),
         appBar:
-            isLogin && _selectedIndex < 3
+            isLogin && _selectedIndex < 4
                 ? AppBar(
                   backgroundColor: Color(0xffFFE4B5),
                   centerTitle: true,

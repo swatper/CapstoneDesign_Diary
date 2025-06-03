@@ -5,11 +5,11 @@ import 'package:capstone_diary/Utils/datamanager.dart';
 
 class SideMenuWidget extends StatefulWidget {
   final Function(int) sideMenuSelectedIndex;
-  final Function(bool)? logOutCallback;
+  final Function(bool) logOutCallback;
   const SideMenuWidget({
     super.key,
     required this.sideMenuSelectedIndex,
-    this.logOutCallback,
+    required this.logOutCallback,
   });
   @override
   State<SideMenuWidget> createState() => _SideMenuWidgetState();
@@ -40,7 +40,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
     void logout() {
       //로그아웃 처리
       Datamanager().saveData("is_logged_in", false, false);
-      widget.logOutCallback?.call(false);
+      widget.logOutCallback.call(false);
       showToastMessage("로그아웃 되었습니다.");
       Navigator.pop(context);
     }
