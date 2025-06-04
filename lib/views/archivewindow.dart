@@ -1,7 +1,6 @@
 import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
-import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 import 'package:capstone_diary/GoogleMap/diarymap.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/Items/diaryitem2.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
-import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 
 class SharedDiary extends StatefulWidget {
   final Function(bool) logOutCallback;

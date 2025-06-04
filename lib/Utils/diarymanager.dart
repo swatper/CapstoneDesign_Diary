@@ -23,6 +23,19 @@ class DiaryManager {
     return diaries;
   }
 
+  //특정 날짜 일기 가져오기
+  Future<List<DiaryModel>> fetchDiaryForDate(String userId, String date) async {
+    print('[FETCH] 사용자 ID: $userId');
+
+    final jsonList = await _apiService.getDiaryforDate(userId, date);
+    print('[FETCH] 받아온 원시 JSON 리스트: $jsonList');
+
+    final diaries = jsonList.map((json) => DiaryMapper.fromJson(json)).toList();
+    print('[FETCH] 변환된 DiaryModel 리스트: $diaries');
+
+    return diaries;
+  }
+
   /// 새로운 일기 업로드
   Future<bool> uploadDiary(String userId, DiaryModel diary) async {
     final json = DiaryMapper.toJson(userId, diary);

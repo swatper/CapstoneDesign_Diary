@@ -3,6 +3,7 @@ import 'package:capstone_diary/Calender/customcalender.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/Items/diaryitem2.dart';
 import 'package:capstone_diary/KGB/diaryview.dart';
+import 'package:capstone_diary/Utils/diarymanager.dart';
 
 class HomeWindow extends StatefulWidget {
   final Function(int) writeWindowIndex;
@@ -20,56 +21,7 @@ class HomeWindow extends StatefulWidget {
 
 class _HomeWindowState extends State<HomeWindow> {
   DateTime? selectedDate;
-  List<DiaryModel> testsamples = [
-    DiaryModel(
-      diaryId: 1,
-      date: ' 2025-05-02',
-      weather: 1,
-      isPublic: true,
-      lat: 37.5665,
-      lng: 126.9780,
-      title: "test1",
-      content: 'empty1',
-      emotionTagIds: List<int>.from([1, 2, 3]),
-      summaryKeywords: List<String>.from(["감정1", "감정2", "감정3"]),
-    ),
-    DiaryModel(
-      diaryId: 2,
-      date: ' 2025-05-02',
-      weather: 1,
-      isPublic: true,
-      lat: 37.5665,
-      lng: 126.9780,
-      title: "test1",
-      content: 'empty1',
-      emotionTagIds: List<int>.from([1, 2, 3]),
-      summaryKeywords: List<String>.from(["감정1", "감정2", "감정3"]),
-    ),
-    DiaryModel(
-      diaryId: 3,
-      date: ' 2025-05-02',
-      weather: 1,
-      isPublic: true,
-      lat: 37.5665,
-      lng: 126.9780,
-      title: "test1",
-      content: 'empty1',
-      emotionTagIds: List<int>.from([1, 2, 3]),
-      summaryKeywords: List<String>.from(["감정1", "감정2", "감정3"]),
-    ),
-    DiaryModel(
-      diaryId: 4,
-      date: ' 2025-05-02',
-      weather: 1,
-      isPublic: true,
-      lat: 37.5665,
-      lng: 126.9780,
-      title: "test1",
-      content: 'empty1',
-      emotionTagIds: List<int>.from([1, 2, 3]),
-      summaryKeywords: List<String>.from(["감정1", "감정2", "감정3"]),
-    ),
-  ];
+  List<DiaryModel> testsamples = [];
 
   @override
   void initState() {
@@ -84,16 +36,51 @@ class _HomeWindowState extends State<HomeWindow> {
     fetchDiaryData(date);
   }
 
-  //서버에서 일기 데이터를 받아오는 함수
-  void fetchDiaryData(DateTime date) async {
-    //"YYYY-MM-DD"
-    String formattedDate =
-        "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
-    //TODO SERVER: 서버 요청해서 JSON 데이터를 받아오기
-  }
-
   void writeDiary() {
     widget.writeWindowIndex(0);
+  }
+
+  Future<void> fetchDiaryData(DateTime date) async {
+    String userId = '20213010'; // 사용자 ID 하드코딩 또는 로그인 값 사용
+    String formattedDate =
+        "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+    try {
+      List<DiaryModel> diaries = await DiaryManager().fetchDiaryForDate(
+        userId,
+        formattedDate,
+      );
+      print('[INIT] 서버에서 불러온 일기 개수: ${diaries.length}');
+      setState(() {
+        testsamples = diaries;
+      });
+    } catch (e) {
+      print('[ERROR] 일기 불러오기 실패: $e');
+    }
+  }
+
+  Widget updateDiaryList(List<DiaryModel> models) {
+    List<Widget> diaryWidgets = [];
+    for (var diary in models) {
+      diaryWidgets.add(
+        DiaryItem2(
+          diaryId: diary.diaryId,
+          diaryModel: diary,
+          onTap: () {
+            widget.selectDiary(
+              DiaryView(
+                diaryModel: diary,
+                setWriteWindow: widget.selectDiary,
+                goBackToArchive: widget.selectDiary,
+              ),
+            );
+          },
+        ),
+      );
+    }
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: diaryWidgets,
+    );
   }
 
   @override
@@ -113,54 +100,7 @@ class _HomeWindowState extends State<HomeWindow> {
               ),
               SizedBox(height: 20),
               //일기장 목록
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                //일기장 아이템
-                children: [
-                  DiaryItem2(
-                    diaryId: testsamples[0].diaryId,
-                    diaryModel: testsamples[0],
-                    onTap: () {
-                      widget.selectDiary(
-                        DiaryView(
-                          diaryModel: testsamples[1],
-                          setWriteWindow: widget.selectDiary,
-                          goBackToArchive: widget.selectDiary,
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 5),
-                  DiaryItem2(
-                    diaryId: testsamples[1].diaryId,
-                    diaryModel: testsamples[1],
-                    onTap: () {
-                      widget.selectDiary(
-                        DiaryView(
-                          diaryModel: testsamples[1],
-                          setWriteWindow: widget.selectDiary,
-                          goBackToArchive: widget.selectDiary,
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 5),
-                  DiaryItem2(
-                    diaryId: testsamples[2].diaryId,
-                    diaryModel: testsamples[2],
-                    onTap: () {
-                      widget.selectDiary(
-                        DiaryView(
-                          diaryModel: testsamples[1],
-                          setWriteWindow: widget.selectDiary,
-                          goBackToArchive: widget.selectDiary,
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 5),
-                ],
-              ),
+              updateDiaryList(testsamples),
             ],
           ),
         ),
