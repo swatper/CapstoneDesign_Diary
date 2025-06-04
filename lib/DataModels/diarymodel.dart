@@ -14,8 +14,11 @@ class DiaryModel {
   final double lat;
   final double lng;
 
+  final bool isEdited; // 일기 수정 여부
+
   //테스트용 생성자
   DiaryModel({
+    required this.isEdited,
     required this.diaryId,
     required this.date,
     required this.weather,

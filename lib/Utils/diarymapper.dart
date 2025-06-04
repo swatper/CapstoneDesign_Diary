@@ -3,7 +3,21 @@ import 'package:capstone_diary/DataModels/diarymodel.dart';
 class DiaryMapper {
   // JSON → DiaryModel
   static DiaryModel fromJson(Map<String, dynamic> json) {
+    bool isEdited = false;
+
+    // createdAt과 updatedAt이 둘 다 존재할 때만 비교
+    if (json.containsKey('createdAt') && json.containsKey('updatedAt')) {
+      try {
+        final createdAt = DateTime.parse(json['createdAt']);
+        final updatedAt = DateTime.parse(json['updatedAt']);
+        isEdited = !createdAt.isAtSameMomentAs(updatedAt);
+      } catch (e) {
+        // 날짜 파싱 실패 시에도 안전하게 false 유지
+        isEdited = false;
+      }
+    }
     return DiaryModel(
+      isEdited: isEdited,
       diaryId: json['id'] as int,
       date: json['diaryDate'] as String,
       title: json['title'] as String,

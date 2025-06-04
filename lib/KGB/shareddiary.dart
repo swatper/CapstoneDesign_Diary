@@ -17,6 +17,7 @@ class _SharedDiaryState extends State<SharedDiary> {
   bool isLoaded = false; // <-- 추가됨
   DiaryModel diaryModel = DiaryModel(
     // 예시로 일기 ID를 설정
+    isEdited: true,
     diaryId: 0,
     title: '오늘의 일기',
     content:
@@ -191,6 +192,19 @@ class _SharedDiaryState extends State<SharedDiary> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (diaryModel.isEdited == true)
+                            Text(
+                              '(수정됨)',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            ),
+                        ],
+                      ),
                       const Divider(color: Colors.black, thickness: 1),
                       const SizedBox(height: 8),
                       Expanded(
