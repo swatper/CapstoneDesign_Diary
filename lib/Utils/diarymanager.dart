@@ -88,4 +88,17 @@ class DiaryManager {
     print('[DELETE] 삭제 결과: $result');
     return result;
   }
+
+  /// 랜덤 공개 일기 1개 가져오기
+  Future<DiaryModel> getRandomPublicDiary() async {
+    print('[FETCH RANDOM] 랜덤 공개 일기 요청 시작');
+
+    final json = await _apiService.getRandomPublicDiary();
+    print('[FETCH RANDOM] 받아온 JSON: $json');
+
+    final diary = DiaryMapper.fromJson(json);
+    print('[FETCH RANDOM] 변환된 DiaryModel: $diary');
+
+    return diary;
+  }
 }
