@@ -115,11 +115,11 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                                 color: Colors.black,
                                 fontSize: 22,
                               ),
-                            ),
+                            ) /*
                             Text(
                               "tester@abcdef.com",
                               style: TextStyle(color: infoColor2, fontSize: 12),
-                            ),
+                            ),*/,
                           ],
                         ),
                         Row(

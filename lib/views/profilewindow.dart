@@ -151,6 +151,7 @@ class _ProfileWindowState extends State<ProfileWindow> {
                   infomationSet("이메일", "abcd@gmail.com"),
                   Divider(color: Color(0xff919572), thickness: 2),
                   //비밀번호
+                  /*
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
                     child: Row(
@@ -170,34 +171,37 @@ class _ProfileWindowState extends State<ProfileWindow> {
                       ],
                     ),
                   ),
-                  Divider(color: Color(0xff919572), thickness: 2),
+                  Divider(color: Color(0xff919572), thickness: 2), */
                   //뱃지
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("뱃지", style: titleStyle),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Color.fromRGBO(
-                                255,
-                                246,
-                                231,
-                                isEditMode ? 1 : 0,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("뱃지", style: titleStyle),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color.fromRGBO(
+                                  255,
+                                  246,
+                                  231,
+                                  isEditMode ? 1 : 0,
+                                ),
+                              ),
+                              child: AssetManager.instance.getChallengeImage(
+                                'default.png',
+                                80,
+                                80,
                               ),
                             ),
-                            child: AssetManager.instance.getChallengeImage(
-                              'default.png',
-                              80,
-                              80,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   Divider(color: Color(0xff919572), thickness: 2),
                 ],
