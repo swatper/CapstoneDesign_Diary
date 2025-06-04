@@ -25,6 +25,8 @@ class ArchiveWindow extends StatefulWidget {
 class _ArchiveWindowwState extends State<ArchiveWindow> {
   List<DiaryModel> testsamples = [];
   bool isPublic = false; //공개 여부
+  bool isLoaded = false;
+  Center loadingWidget = const Center(child: CircularProgressIndicator());
 
   @override
   void initState() {
@@ -34,12 +36,16 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
   }
 
   Future<void> _loadDiaries() async {
+    setState(() {
+      isLoaded = false; // 로딩 시작
+    });
     String userId = '20213010'; // 사용자 ID 하드코딩 또는 로그인 값 사용
     try {
       List<DiaryModel> diaries = await DiaryManager().fetchAllDiaries(userId);
       print('[INIT] 서버에서 불러온 일기 개수: ${diaries.length}');
       setState(() {
         testsamples = diaries;
+        isLoaded = true;
       });
     } catch (e) {
       print('[ERROR] 일기 불러오기 실패: $e');
@@ -146,13 +152,15 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                           child: Stack(
                             children: [
                               //일기장 목록
-                              diaryList(
-                                isPublic
-                                    ? testsamples
-                                        .where((diary) => diary.isPublic)
-                                        .toList()
-                                    : testsamples,
-                              ),
+                              isLoaded
+                                  ? diaryList(
+                                    isPublic
+                                        ? testsamples
+                                            .where((diary) => diary.isPublic)
+                                            .toList()
+                                        : testsamples,
+                                  )
+                                  : loadingWidget,
                               //버튼
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,

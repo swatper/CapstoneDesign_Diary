@@ -21,7 +21,9 @@ class HomeWindow extends StatefulWidget {
 
 class _HomeWindowState extends State<HomeWindow> {
   DateTime? selectedDate;
+  bool isLoaded = false;
   List<DiaryModel> testsamples = [];
+  Center loadingWidget = const Center(child: CircularProgressIndicator());
 
   @override
   void initState() {
@@ -41,6 +43,9 @@ class _HomeWindowState extends State<HomeWindow> {
   }
 
   Future<void> fetchDiaryData(DateTime date) async {
+    setState(() {
+      isLoaded = false;
+    });
     String userId = '20213010'; // 사용자 ID 하드코딩 또는 로그인 값 사용
     String formattedDate =
         "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
@@ -52,6 +57,7 @@ class _HomeWindowState extends State<HomeWindow> {
       print('[INIT] 서버에서 불러온 일기 개수: ${diaries.length}');
       setState(() {
         testsamples = diaries;
+        isLoaded = true;
       });
     } catch (e) {
       print('[ERROR] 일기 불러오기 실패: $e');
@@ -100,7 +106,7 @@ class _HomeWindowState extends State<HomeWindow> {
               ),
               SizedBox(height: 20),
               //일기장 목록
-              updateDiaryList(testsamples),
+              isLoaded ? updateDiaryList(testsamples) : loadingWidget,
             ],
           ),
         ),
