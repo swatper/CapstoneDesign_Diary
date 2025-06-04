@@ -100,10 +100,24 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void gotoSrearchWithOption(String option, String value) {
+    setState(() {
+      currentScreen = ArchiveWindow(
+        selectDiary: updateWriteWindow,
+        logOutCallback: updateLoginStatus,
+        option: option,
+        value: value,
+      );
+    });
+    _selectedIndex = 2;
+  }
+
   void setSearchWindow() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Searchingwindow()),
+      MaterialPageRoute(
+        builder: (context) => Searchingwindow(onSearch: gotoSrearchWithOption),
+      ),
     );
   }
 

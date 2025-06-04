@@ -1,4 +1,5 @@
 import 'package:capstone_diary/Utils/diarymanager.dart';
+import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/GoogleMap/diarymap.dart';
@@ -8,11 +9,15 @@ import 'package:capstone_diary/Views/searchingwindow.dart';
 import 'package:capstone_diary/KGB/diaryview.dart';
 
 class ArchiveWindow extends StatefulWidget {
+  final String? option;
+  final String? value;
   final Function(bool)? logOutCallback;
   final Function(Widget) selectDiary;
   final Function(Widget)? searchingView;
   const ArchiveWindow({
     super.key,
+    this.option,
+    this.value,
     required this.selectDiary,
     this.searchingView,
     this.logOutCallback,
@@ -31,8 +36,47 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
   @override
   void initState() {
     super.initState();
-    //일기 목록 가져오기
-    _loadDiaries();
+    loadSearchingWindow();
+  }
+
+  @override
+  void didUpdateWidget(covariant ArchiveWindow oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // 위젯의 속성(option, value)이 변경되었을 때 호출됩니다.
+    // 기존 option/value와 새로운 option/value가 다르면 다시 로드합니다.
+    if (widget.option != oldWidget.option || widget.value != oldWidget.value) {
+      loadSearchingWindow(); // 변경된 옵션으로 다시 로드
+    }
+  }
+
+  void loadSearchingWindow() {
+    if (widget.option != null && widget.value != null) {
+      //옵션과 값이 주어졌을 때, 해당 조건으로 일기 불러오기
+      _loadDiariesWithFilter(widget.option!, widget.value!);
+      showToastMessage("옵션 값: ${widget.option}, ${widget.value}");
+    } else {
+      //옵션과 값이 없을 때, 전체 일기 불러오기
+      showToastMessage("옵션 없이 검색");
+      _loadDiaries();
+    }
+  }
+
+  Future<void> _loadDiariesWithFilter(String option, String value) async {
+    setState(() {
+      isLoaded = false; // 로딩 시작
+    });
+    /*
+    String userId = '20213010'; // 사용자 ID 하드코딩 또는 로그인 값 사용
+    try {
+      List<DiaryModel> diaries = await DiaryManager().fetchAllDiaries(userId);
+      print('[INIT] 서버에서 불러온 일기 개수: ${diaries.length}');
+      setState(() {
+        testsamples = diaries;
+        isLoaded = true;
+      });
+    } catch (e) {
+      print('[ERROR] 일기 불러오기 실패: $e');
+    }*/
   }
 
   Future<void> _loadDiaries() async {

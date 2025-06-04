@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Searchingwindow extends StatefulWidget {
-  const Searchingwindow({super.key});
+  final Function(String, String)? onSearch;
+  const Searchingwindow({super.key, this.onSearch});
 
   @override
   State<Searchingwindow> createState() => _SearchingwindowState();
@@ -9,6 +10,14 @@ class Searchingwindow extends StatefulWidget {
 
 class _SearchingwindowState extends State<Searchingwindow> {
   List<bool> isSelected = [true, false, false];
+  late TextEditingController contentController;
+  String serchValue = "";
+
+  @override
+  void initState() {
+    super.initState();
+    contentController = TextEditingController();
+  }
 
   //뒤로가기 버튼
   void onClickedBackButton() {
@@ -16,7 +25,18 @@ class _SearchingwindowState extends State<Searchingwindow> {
   }
 
   //검색 버튼
-  void onClickedSearchButton() {}
+  void onClickedSearchButton() {
+    serchValue = contentController.text.trim();
+    widget.onSearch?.call(
+      isSelected[0]
+          ? "title"
+          : isSelected[1]
+          ? "content"
+          : "tag",
+      serchValue,
+    );
+    Navigator.pop(context);
+  }
 
   //검색 옵션 버튼
   Widget createOptionButton(String text, int index) {
@@ -64,6 +84,7 @@ class _SearchingwindowState extends State<Searchingwindow> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFFE4B5),
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
@@ -79,6 +100,7 @@ class _SearchingwindowState extends State<Searchingwindow> {
                 borderRadius: BorderRadius.circular(45),
               ),
               child: TextField(
+                controller: contentController,
                 maxLines: 1,
                 onChanged: (value) {},
                 decoration: InputDecoration(
