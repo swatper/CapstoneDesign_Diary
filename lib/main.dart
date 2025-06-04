@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/bottomnavbar.dart';
 import 'package:capstone_diary/Views/searchingwindow.dart';
@@ -24,7 +25,6 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
   runApp(const MyApp());
 }
 
@@ -33,7 +33,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'MyDiary', home: HomeScreen());
+    return MaterialApp(
+      title: 'MyDiary',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ko', ''), // 한국어
+        Locale('en', ''), // 영어
+      ],
+      home: HomeScreen(),
+    );
   }
 }
 

@@ -29,7 +29,7 @@ class _CustomcalenderState extends State<Customcalender> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: TableCalendar(
-        //locale: 'ko-KR', 한글 안됨...
+        locale: 'ko_KR',
         firstDay: DateTime.utc(2020, 01, 01),
         lastDay: DateTime.utc(2030, 12, 31),
         focusedDay: _focusedDay,

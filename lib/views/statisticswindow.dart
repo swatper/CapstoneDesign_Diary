@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:capstone_diary/Utils/toastmessage.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Items/emotionraderchart.dart';
 
@@ -30,8 +32,16 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
     //감정 통계 값 가져오기
   }
 
-  void handleDateSelected(DateTime date) {
-    setState(() {});
+  void showMonthCalander() {
+    String selectedMonth;
+    showMonthPicker(context: context, initialDate: DateTime.now()).then((
+      DateTime? date,
+    ) {
+      if (date != null) {
+        selectedMonth = "${date.year}년 ${date.month}월";
+        showToastMessage("선택한 월: $selectedMonth");
+      }
+    });
   }
 
   @override
@@ -106,7 +116,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: showMonthCalander,
                   icon: Icon(Icons.calendar_month, size: 40),
                 ),
               ],
