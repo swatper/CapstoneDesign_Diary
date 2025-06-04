@@ -1,3 +1,6 @@
+import 'package:capstone_diary/KGB/emotiontag.dart';
+import 'package:capstone_diary/KGB/summarytag.dart';
+import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/Calender/sidemenuwidget.dart';
@@ -13,24 +16,43 @@ class SharedDiary extends StatefulWidget {
 class _SharedDiaryState extends State<SharedDiary> {
   bool isLiked = false;
   bool isLoaded = false; // <-- 추가됨
+  DiaryModel diaryModel = DiaryModel(
+    // 예시로 일기 ID를 설정
+    diaryId: 0,
+    title: '오늘의 일기',
+    content:
+        '오늘은 정말 좋은 날이었어요! 친구들과 함께 시간을 보내고, 맛있는 음식을 먹었답니다. 날씨도 맑고 화창해서 기분이 좋았어요.',
+    date: '2025-05-10',
+    summaryKeywords: ['행복', '친구', '맛집'],
+    weather: 1, // 예시로 날씨를 설정
+    emotionTagIds: [1, 2], // 예시로 감정 태그 ID를 설정
+    isPublic: true,
+    lat: 37.5665, // 예시로 위도 설정
+    lng: 126.978, // 예시로 경도 설정
+  );
+
+  DateTime parseDate(String dateStr) {
+    try {
+      return DateTime.parse(dateStr);
+    } catch (e) {
+      return DateTime.now(); // 파싱 실패 시 현재 시간 반환
+    }
+  }
+
+  void updateSharedDiary() async {
+    setState(() {
+      isLoaded = true; // 첫 진입에서 일기 내용 보여주기용
+    });
+
+    DiaryModel newDiary = await DiaryManager().getRandomPublicDiary();
+
+    setState(() {
+      diaryModel = newDiary; // 새 일기로 갱신
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    DiaryModel diaryModel = DiaryModel(
-      // 예시로 일기 ID를 설정
-      diaryId: 0,
-      title: '오늘의 일기',
-      content:
-          '오늘은 정말 좋은 날이었어요! 친구들과 함께 시간을 보내고, 맛있는 음식을 먹었답니다. 날씨도 맑고 화창해서 기분이 좋았어요.',
-      date: '2025-05-10',
-      summaryKeywords: ['행복', '친구', '맛집'],
-      weather: 1, // 예시로 날씨를 설정
-      emotionTagIds: [1, 2], // 예시로 감정 태그 ID를 설정
-      isPublic: true,
-      lat: 37.5665, // 예시로 위도 설정
-      lng: 126.978, // 예시로 경도 설정
-    );
-
     return Scaffold(
       backgroundColor: const Color(0xffFFE4B5),
       body: SizedBox(
@@ -41,13 +63,13 @@ class _SharedDiaryState extends State<SharedDiary> {
           child:
               isLoaded
                   ? _buildDiaryContent(diaryModel) // 일기 내용 전체
-                  : _buildLoadingView(), // 처음 진입 시 보여줄 뷰
+                  : _buildLoadingView(updateSharedDiary), // 처음 진입 시 보여줄 뷰
         ),
       ),
     );
   }
 
-  Widget _buildLoadingView() {
+  Widget _buildLoadingView(void Function() updateSharedDiary) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -65,11 +87,7 @@ class _SharedDiaryState extends State<SharedDiary> {
           ),
           Divider(color: Colors.black, thickness: 1, indent: 20, endIndent: 20),
           TextButton(
-            onPressed: () {
-              setState(() {
-                isLoaded = true;
-              });
-            },
+            onPressed: updateSharedDiary,
             style: TextButton.styleFrom(
               backgroundColor: Colors.grey[400],
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -103,14 +121,20 @@ class _SharedDiaryState extends State<SharedDiary> {
                     const SizedBox(width: 20),
                     Transform.translate(
                       offset: const Offset(0, 10),
-                      child: const Text('2025', style: TextStyle(fontSize: 15)),
+                      child: Text(
+                        parseDate(diaryModel.date).year.toString(),
+                        style: const TextStyle(fontSize: 15),
+                      ),
                     ),
                   ],
                 ),
                 Row(
                   children: [
                     const SizedBox(width: 20),
-                    const Text('5월 10일', style: TextStyle(fontSize: 22)),
+                    Text(
+                      '${parseDate(diaryModel.date).month}월 ${parseDate(diaryModel.date).day}일',
+                      style: const TextStyle(fontSize: 22),
+                    ),
                   ],
                 ),
               ],
@@ -149,14 +173,13 @@ class _SharedDiaryState extends State<SharedDiary> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          diaryModel.content,
-                          style: const TextStyle(fontSize: 16, height: 1.6),
-                        ),
-                      ],
+                    child: Align(
+                      alignment: Alignment.topLeft, // 왼쪽 정렬 강제
+                      child: Text(
+                        diaryModel.content,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(fontSize: 16, height: 1.6),
+                      ),
                     ),
                   ),
                 ),
@@ -179,31 +202,31 @@ class _SharedDiaryState extends State<SharedDiary> {
                               flex: 15,
                               child: Align(
                                 alignment: Alignment.topLeft,
-                                child: Wrap(
-                                  spacing: 8,
-                                  runSpacing: 4,
-                                  children:
-                                      diaryModel.emotionTagIds.map((tag) {
-                                        return Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                            vertical: 3,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Colors.amber[400],
-                                            borderRadius: BorderRadius.circular(
-                                              50,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            '#$tag',
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Wrap(
+                                      spacing: 8,
+                                      runSpacing: 4,
+                                      children:
+                                          diaryModel.emotionTagIds.map((tagId) {
+                                            return EmotionTag(
+                                              emotionIndex: tagId,
+                                            );
+                                          }).toList(),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Wrap(
+                                      spacing: 8,
+                                      runSpacing: 4,
+                                      children:
+                                          diaryModel.summaryKeywords.map((
+                                            keyword,
+                                          ) {
+                                            return SummaryTag(summary: keyword);
+                                          }).toList(),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -239,7 +262,7 @@ class _SharedDiaryState extends State<SharedDiary> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      // 불러오기 버튼 눌렀을 때 동작
+                                      updateSharedDiary();
                                     },
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.grey[400],
