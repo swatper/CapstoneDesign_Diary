@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tab_container/tab_container.dart';
-import 'package:capstone_diary/Views/searchingwindow.dart';
-import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 import 'package:capstone_diary/Items/emotionraderchart.dart';
 
 class StatisticsWindow extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/KGB/weatherbutton.dart';
 import 'package:capstone_diary/KGB/writewindowNext.dart';
+import 'package:capstone_diary/Calender/customcalender.dart';
 import 'package:flutter/material.dart';
 
 class WriteWindow extends StatefulWidget {
@@ -21,8 +22,6 @@ class WriteWindow extends StatefulWidget {
   @override
   State<WriteWindow> createState() => _WriteWindow();
 }
-
-void onClickedCalanderButton() {}
 
 class _WriteWindow extends State<WriteWindow> {
   PageController pageController = PageController();
@@ -61,6 +60,43 @@ class _WriteWindow extends State<WriteWindow> {
     setState(() {
       selectedWeatherIndex = index;
     });
+  }
+
+  //날짜 선택 버튼
+  void onClickedCalanderButton() {
+    showDialog<DateTime>(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    '날짜를 선택하세요',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                ),
+                Customcalender(
+                  backgroundColor: Color(0xffFFE4B5),
+                  getSelectedDate: (selectedDate) {
+                    setState(() {
+                      year = selectedDate.year;
+                      month = selectedDate.month;
+                      day = selectedDate.day;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void onClickedNextButton() {
@@ -110,6 +146,7 @@ class _WriteWindow extends State<WriteWindow> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

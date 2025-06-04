@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void setSearchWindow2() {
+  void setSearchWindow() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Searchingwindow()),
@@ -126,12 +126,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   bool isNeedAppbar() {
-    return isLogin && _selectedIndex < 4
-    /*&&
-        currentScreen != writeScreens[0] &&
-        currentScreen is! WriteWindowNext &&
-        currentScreen is! WriteWindowNext*/
-    ;
+    return isLogin &&
+        _selectedIndex < 4 &&
+        (currentScreen is HomeWindow ||
+            currentScreen is StatisticsWindow ||
+            currentScreen is ArchiveWindow ||
+            currentScreen is SharedDiary);
   }
 
   @override
@@ -224,10 +224,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: Color(0xffFFE4B5),
                   centerTitle: true,
                   actions: [
-                    IconButton(
-                      onPressed: setSearchWindow2,
-                      icon: Icon(Icons.search, size: 35),
-                    ),
+                    currentScreen is! SharedDiary
+                        ? IconButton(
+                          onPressed: setSearchWindow,
+                          icon: Icon(Icons.search, size: 35),
+                        )
+                        : SizedBox.shrink(),
                     IconButton(
                       onPressed: showSideMenu,
                       icon: Icon(Icons.menu, size: 35),

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/Calender/customcalender.dart';
-import 'package:capstone_diary/Calender/sidemenuwidget.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/Items/diaryitem2.dart';
 import 'package:capstone_diary/KGB/diaryview.dart';
-import 'package:capstone_diary/Views/searchingwindow.dart';
 
 class HomeWindow extends StatefulWidget {
   final Function(int) writeWindowIndex;

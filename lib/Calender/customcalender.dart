@@ -12,7 +12,7 @@ class Customcalender extends StatefulWidget {
   });
 
   @override
-  _CustomcalenderState createState() => _CustomcalenderState();
+  State<Customcalender> createState() => _CustomcalenderState();
 }
 
 class _CustomcalenderState extends State<Customcalender> {
@@ -29,9 +29,9 @@ class _CustomcalenderState extends State<Customcalender> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: TableCalendar(
-        //locale: 'ko_KR',
-        firstDay: DateTime.utc(2010, 10, 16),
-        lastDay: DateTime.utc(2030, 3, 14),
+        //locale: 'ko-KR', 한글 안됨...
+        firstDay: DateTime.utc(2020, 01, 01),
+        lastDay: DateTime.utc(2030, 12, 31),
         focusedDay: _focusedDay,
         calendarFormat: _calendarFormat,
         selectedDayPredicate: (day) {
@@ -54,6 +54,27 @@ class _CustomcalenderState extends State<Customcalender> {
         },
         //꾸미기
         calendarBuilders: CalendarBuilders(
+          dowBuilder: (context, day) {
+            switch (day.weekday) {
+              case 1:
+                return Center(child: Text('월'));
+              case 2:
+                return Center(child: Text('화'));
+              case 3:
+                return Center(child: Text('수'));
+              case 4:
+                return Center(child: Text('목'));
+              case 5:
+                return Center(child: Text('금'));
+              case 6:
+                return Center(child: Text('토'));
+              case 7:
+                return Center(
+                  child: Text('일', style: TextStyle(color: Colors.red)),
+                );
+            }
+            return null;
+          },
           selectedBuilder: (context, day, focusedDay) {
             return dateBox(day, Colors.white, Colors.black);
           },
@@ -79,6 +100,7 @@ class _CustomcalenderState extends State<Customcalender> {
           ),
           weekdayStyle: TextStyle(fontWeight: FontWeight.bold),
         ),
+        //eventLoader: ,
       ),
     );
   }
