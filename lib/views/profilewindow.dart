@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
 
 class ProfileWindow extends StatefulWidget {
@@ -12,6 +15,11 @@ class ProfileWindow extends StatefulWidget {
 class _ProfileWindowState extends State<ProfileWindow> {
   bool isEditMode = false;
   String nickname = "닉네임";
+  Widget defaultProfileImage = AssetManager.instance.getProfileImage(
+    "defaultpro.png",
+    130,
+    130,
+  );
 
   TextStyle titleStyle = TextStyle(
     fontSize: 20,
@@ -41,7 +49,51 @@ class _ProfileWindowState extends State<ProfileWindow> {
     });
   }
 
-  void chanagePassword() {}
+  void changeProfileImage() {
+    //프로필 이미지 변경 기능 구현
+  }
+
+  //사진 권한 요청
+  Future<bool> profilePermissionCheck(Permission permission) async {
+    PermissionStatus status = await permission.status;
+    if (status.isGranted) {
+      return true;
+    }
+
+    if (status.isDenied) {
+      status = await permission.request();
+      return status.isGranted;
+    }
+
+    if (status.isPermanentlyDenied) {
+      // 사용자가 영구적으로 거부한 경우, 설정으로 이동하도록 안내
+      openAppSettings();
+      return false;
+    }
+    return false;
+  }
+
+  //갤러리에서 이미지 선택
+  /*
+  Future<void> _pickImageFromGallery() async {
+    Permission permission =
+        Platform.isAndroid && await targetSdkVersion() >= 33
+            ? Permission.photos
+            : Permission.storage;
+
+    if (await _requestPermission(permission)) {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+      if (image != null) {
+        setState(() {
+          _imageFile = image;
+        });
+      }
+    } else {
+      _showPermissionDeniedDialog('갤러리');
+    }
+  }*/
 
   void saveNewNickname(String newNickname) {
     setState(() {
@@ -98,10 +150,14 @@ class _ProfileWindowState extends State<ProfileWindow> {
               ),
               child: Stack(
                 children: [
-                  AssetManager.instance.getProfileImage(
-                    "defaultpro.png",
-                    130,
-                    130,
+                  GestureDetector(
+                    onTap:
+                        isEditMode ? changeProfileImage : null, //프로필 이미지 변경 기능
+                    child: AssetManager.instance.getProfileImage(
+                      "defaultpro.png",
+                      130,
+                      130,
+                    ),
                   ),
                 ],
               ),
@@ -192,11 +248,7 @@ class _ProfileWindowState extends State<ProfileWindow> {
                                   isEditMode ? 1 : 0,
                                 ),
                               ),
-                              child: AssetManager.instance.getChallengeImage(
-                                'default.png',
-                                80,
-                                80,
-                              ),
+                              child: defaultProfileImage,
                             ),
                           ],
                         ),

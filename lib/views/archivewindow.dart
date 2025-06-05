@@ -227,7 +227,7 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
                           ),
                         ),
                       ),
-                      DiaryMap(diaryList: testsamples),
+                      DiaryMap(diaryList: testsamples, isFromWrite: false),
                     ],
                   ),
                 ],

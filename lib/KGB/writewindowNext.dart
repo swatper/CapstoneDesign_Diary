@@ -4,6 +4,7 @@ import 'package:capstone_diary/KGB/emotionTag.dart';
 import 'package:capstone_diary/KGB/summarytag.dart';
 import 'package:capstone_diary/KGB/weatherbutton.dart';
 import 'package:capstone_diary/Utils/diarymanager.dart';
+import 'package:capstone_diary/GoogleMap/diarymap.dart';
 import 'package:flutter/material.dart';
 
 class WriteWindowNext extends StatefulWidget {
@@ -65,6 +66,7 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
     '지루함',
   ];
   bool isPublic = false; // 공개 여부 상태 변수
+  String diaryLocation = '부산 부산진구 가야대로 567 상가 5동';
 
   @override
   void initState() {
@@ -109,6 +111,15 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
       await DiaryManager().updateDiary(userId, diary);
     }
     widget.onReturnToMain();
+  }
+
+  void onClickedLocationButton() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(child: DiaryMap(isFromWrite: true));
+      },
+    );
   }
 
   Future<void> genrateTags() async {
@@ -491,9 +502,9 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
                         ),
                         minimumSize: Size(80, 35),
                       ),
-                      onPressed: () {},
+                      onPressed: onClickedLocationButton,
                       child: Text(
-                        '부산 부산진구 가야대로 567 상가 5동',
+                        diaryLocation,
                         style: TextStyle(color: Colors.black),
                       ),
                     ),

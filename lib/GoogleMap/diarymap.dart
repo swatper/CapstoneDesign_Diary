@@ -9,8 +9,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 class DiaryMap extends StatefulWidget {
-  final List<DiaryModel> diaryList;
-  const DiaryMap({super.key, required this.diaryList});
+  final List<DiaryModel>? diaryList;
+  final bool isFromWrite; //검색에서 넘어온 경우
+  const DiaryMap({super.key, this.diaryList, required this.isFromWrite});
 
   @override
   State<DiaryMap> createState() => _DiaryMapState();
@@ -102,10 +103,12 @@ class _DiaryMapState extends State<DiaryMap> {
     //setCurrentLocation();
 
     //클러스터 생성 및 초기화 (DirayModel -> DiaryClusterItem)
-    List<DiaryClusterItem> clusterItems =
-        widget.diaryList
-            .map((diary) => DiaryClusterItem(diary))
-            .toList(); //일기 목록을 클러스터 아이템으로 변환
+    List<DiaryClusterItem> clusterItems = [];
+    if (widget.diaryList != null) {
+      //일기 목록을 클러스터 아이템으로 변환
+      clusterItems =
+          widget.diaryList!.map((diary) => DiaryClusterItem(diary)).toList();
+    }
 
     //클러스터 매니저 초기화 (DiaryClustyerItem -> Maker)
     clusterManager = cmanager.ClusterManager<DiaryClusterItem>(
@@ -119,20 +122,54 @@ class _DiaryMapState extends State<DiaryMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: curPos,
-          zoom: 10,
-        ), //지도 초기 위치 및 줌 레벨 설정
-        onMapCreated: (controller) async {
-          mapController = controller;
-          if (!mounted) return;
-          clusterManager.setMapId(controller.mapId); //클러스터 매니저에 맵 ID 설정
-          clusterManager.updateMap(); //맵 업데이트
-        },
-        markers: diarymarkers,
-        onCameraMove: clusterManager.onCameraMove,
-        onCameraIdle: clusterManager.updateMap,
+      body: Column(
+        children: [
+          Expanded(
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: curPos,
+                zoom: 10,
+              ), //지도 초기 위치 및 줌 레벨 설정
+              onMapCreated: (controller) async {
+                mapController = controller;
+                if (!mounted) return;
+                clusterManager.setMapId(controller.mapId); //클러스터 매니저에 맵 ID 설정
+                clusterManager.updateMap(); //맵 업데이트
+              },
+              markers: diarymarkers,
+              onCameraMove: clusterManager.onCameraMove,
+              onCameraIdle: clusterManager.updateMap,
+              onTap:
+                  widget.isFromWrite
+                      ? (LatLng position) {
+                        //일기 작성 화면으로 이동
+                        //Navigator.pop(context, position);
+                      }
+                      : null,
+            ),
+          ),
+          widget.isFromWrite
+              ? Column(
+                children: [
+                  SizedBox(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        //현재 위치로 이동
+                        mapController?.animateCamera(
+                          CameraUpdate.newLatLngZoom(curPos, 15),
+                        );
+                      },
+                      child: Text("현재 위치로 이동"),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("선택"),
+                  ),
+                ],
+              )
+              : SizedBox(),
+        ],
       ),
     );
   }
