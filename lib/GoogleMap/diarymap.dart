@@ -119,11 +119,31 @@ class _DiaryMapState extends State<DiaryMap> {
     );
   }
 
+  void onClickedSearchButton() {
+    mapController?.animateCamera(CameraUpdate.newLatLngZoom(curPos, 15));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
+          widget.isFromWrite
+              ? TextField(
+                decoration: InputDecoration(
+                  hintText: "검색하려는 위치를 입력하세요",
+                  prefixIcon: SizedBox.shrink(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.search,
+                      color: Color(0xFFFC8650),
+                      size: 40,
+                    ),
+                    onPressed: onClickedSearchButton,
+                  ),
+                ),
+              )
+              : SizedBox.shrink(),
           Expanded(
             child: GoogleMap(
               initialCameraPosition: CameraPosition(
@@ -149,26 +169,15 @@ class _DiaryMapState extends State<DiaryMap> {
             ),
           ),
           widget.isFromWrite
-              ? Column(
-                children: [
-                  SizedBox(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        //현재 위치로 이동
-                        mapController?.animateCamera(
-                          CameraUpdate.newLatLngZoom(curPos, 15),
-                        );
-                      },
-                      child: Text("현재 위치로 이동"),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text("선택"),
-                  ),
-                ],
+              ? SizedBox(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("선택"),
+                ),
               )
-              : SizedBox(),
+              : SizedBox.shrink(),
         ],
       ),
     );
