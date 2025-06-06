@@ -159,4 +159,70 @@ Map<String, dynamic> _getFallbackDiary() {
     'longitude': 126.9780,
   };
 }
+
+/// 사용자별 전체 요약 데이터 가져오기 (GET)
+Future<Map<String, int>> getAllSummary(String userId) async {
+  final url = Uri.parse('https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/summary/$userId');
+
+  print('[GET - Summary] 요청 보낼 URL: $url');
+
+  final response = await http.get(url);
+
+  print('[GET - Summary] 응답 코드: ${response.statusCode}');
+  print('[GET - Summary] 응답 본문: ${response.body}');
+
+  if (response.statusCode == 200) {
+    final decoded = utf8.decode(response.bodyBytes);
+    final Map<String, dynamic> rawMap = json.decode(decoded);
+
+    // dynamic → int 캐스팅
+    final Map<String, int> keywordMap = rawMap.map(
+      (key, value) => MapEntry(key, value as int),
+    );
+
+    return keywordMap;
+  } else {
+    return {
+    "임시": 1,
+    "통신실패": 7,
+    "임시": 5,
+    "요약태그": 3,
+    "에러러": 2,
+  };
+  }
+}
+
+/// 사용자별 연/월 기준 요약 데이터 가져오기 (GET)
+Future<Map<String, int>> getMonthlySummary(String userId, int year, int month) async {
+  final url = Uri.parse(
+      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/summary/$userId/$year/$month');
+
+  print('[GET - Monthly Summary] 요청 보낼 URL: $url');
+
+  final response = await http.get(url);
+
+  print('[GET - Monthly Summary] 응답 코드: ${response.statusCode}');
+  print('[GET - Monthly Summary] 응답 본문: ${response.body}');
+
+  if (response.statusCode == 200) {
+    final decoded = utf8.decode(response.bodyBytes);
+    final Map<String, dynamic> rawMap = json.decode(decoded);
+
+    // dynamic → int 캐스팅
+    final Map<String, int> keywordMap = rawMap.map(
+      (key, value) => MapEntry(key, value as int),
+    );
+
+    return keywordMap;
+  } else {
+    return {
+      "임시": 1,
+      "통신실패": 7,
+      "에러러": 2,
+      "요약태그": 3,
+    };
+  }
+}
+
+
 }

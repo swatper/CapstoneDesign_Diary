@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
@@ -15,7 +16,17 @@ class _SummaryChartState extends State<SummaryChart> {
     print("클릭한 단어: $word");
   }
 
-  final Map<String, int> keywordCounts = {
+  void selectDate(DateTime date) {
+    print("선택한 날짜: $date");
+  }
+
+  Future<void> _loadAllSummaryData() async {
+    keywordCounts = await DiaryManager().getAllSummary("20213010"); //userId
+    entries = _generateWordEntries(); // 데이터 변경 후 entries 갱신
+    setState(() {}); // 화면 갱신
+  }
+
+  Map<String, int> keywordCounts = {
     "여행": 1,
     "음식": 7,
     "공부": 5,
@@ -30,7 +41,7 @@ class _SummaryChartState extends State<SummaryChart> {
   @override
   void initState() {
     super.initState();
-    entries = _generateWordEntries();
+    _loadAllSummaryData();
   }
 
   void showMonthCalander() {
@@ -39,6 +50,7 @@ class _SummaryChartState extends State<SummaryChart> {
       DateTime? date,
     ) {
       if (date != null) {
+        selectDate(date);
         selectedMonth = "${date.year}년 ${date.month}월";
         showToastMessage("선택한 월: $selectedMonth");
       }

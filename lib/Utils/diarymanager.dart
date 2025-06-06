@@ -101,4 +101,41 @@ class DiaryManager {
 
     return diary;
   }
+
+  /// 사용자별 전체체 요약 데이터 가져오기
+  Future<Map<String, int>> getAllSummary(String userId) async {
+    print('[FETCH KEYWORDS] 사용자 ID: $userId');
+
+    try {
+      final keywordSummary = await _apiService.getAllSummary(userId);
+      print('[FETCH KEYWORDS] 받아온 키워드 요약: $keywordSummary');
+      return keywordSummary;
+    } catch (e) {
+      print('[ERROR] 키워드 요약 데이터 가져오기 실패: $e');
+      return {}; // 빈 Map 반환
+    }
+  }
+
+  /// 특정 연/월에 대한 요약 데이터 가져오기
+  Future<Map<String, int>> getMonthlySummary(
+    String userId,
+    DateTime date,
+  ) async {
+    final year = date.year;
+    final month = date.month;
+    print('[FETCH MONTHLY KEYWORDS] 사용자 ID: $userId / 연도: $year / 월: $month');
+
+    try {
+      final keywordSummary = await _apiService.getMonthlySummary(
+        userId,
+        year,
+        month,
+      );
+      print('[FETCH MONTHLY KEYWORDS] 받아온 키워드 요약: $keywordSummary');
+      return keywordSummary;
+    } catch (e) {
+      print('[ERROR] 월별 키워드 요약 데이터 가져오기 실패: $e');
+      return {}; // 빈 Map 반환
+    }
+  }
 }
