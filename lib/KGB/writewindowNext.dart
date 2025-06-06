@@ -95,7 +95,7 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
   }
 
   void onClickedBackButton() {
-    print("다이어리 ID: ${widget.diaryId}");
+    print("다이어리 ID2: ${widget.diaryId}");
     widget.onBackToWriteWindow();
   }
 
@@ -114,13 +114,12 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
       emotionTagIds: selectedEmotions,
       summaryKeywords: selectedSummaries,
     );
-    final userId = '20213010';
     if (diary.diaryId == 0) {
       print('[ACTION] 새 일기 업로드');
-      await DiaryManager().uploadDiary(userId, diary);
+      await DiaryManager().uploadDiary(diary);
     } else {
       print('[ACTION] 기존 일기 수정');
-      await DiaryManager().updateDiary(userId, diary);
+      await DiaryManager().updateDiary(diary);
     }
     widget.onReturnToMain();
   }

@@ -5,7 +5,6 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Items/emotionraderchart.dart';
 import 'package:capstone_diary/DataModels/emotiontag.dart';
-import 'package:capstone_diary/services/diaryapiservice';
 
 class StatisticsWindow extends StatefulWidget {
   final Function(bool) logOutCallback;

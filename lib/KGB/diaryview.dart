@@ -36,9 +36,7 @@ class DiaryView extends StatelessWidget {
           isEditMode: true,
           diaryModel: diaryModel,
           goBackToHome: () async {
-            String userId = '20213010';
             DiaryModel editedDiary = await DiaryManager().getDiaryById(
-              userId,
               diaryModel.diaryId,
             );
             setWriteWindow(
