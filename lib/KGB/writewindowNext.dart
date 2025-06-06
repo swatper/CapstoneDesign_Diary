@@ -117,7 +117,15 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
     showDialog(
       context: context,
       builder: (context) {
-        return Dialog(child: DiaryMap(isFromWrite: true));
+        return Dialog(
+          insetPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAlias,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.95,
+            height: MediaQuery.of(context).size.height * 0.75,
+            child: DiaryMap(isFromWrite: true),
+          ),
+        );
       },
     );
   }
