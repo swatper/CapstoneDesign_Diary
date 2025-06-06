@@ -35,7 +35,7 @@ class _LoginWindowState extends State<LoginWindow> {
   Future<void> initBackendCallbackListener() async {
     final appLinks = AppLinks(); // AppLinks 인스턴스 생성
 
-    // 2. 앱이 백그라운드에 있거나 실행 중인 상태에서 딥링크로 들어올 경우 처리
+    //앱이 백그라운드에 있거나 실행 중인 상태에서 딥링크로 들어올 경우 처리
     linkSubscription = appLinks.uriLinkStream.listen(
       (Uri uri) {
         // uni_links와 달리 AppLinks는 Uri 객체를 직접 반환합니다.
@@ -49,19 +49,18 @@ class _LoginWindowState extends State<LoginWindow> {
 
   void handleBackendCallbackLink(String link) {
     Uri uri = Uri.parse(link);
-    //Senti://kakao_login?jwt=...
-    if (uri.scheme == 'Senti' && uri.host == 'kakao_login') {
-      String? jwt = uri.queryParameters['jwt'];
+    //Senti://kakao_login?jwt=... 패턴 찾기
+    if (uri.scheme == 'senti' && uri.host == 'kakao_login') {
+      String? jwt = uri.queryParameters['token'];
+      String? username = uri.queryParameters['nickname'];
       if (jwt != null && jwt.isNotEmpty) {
-        showToastMessage('백엔드로부터 JWT 수신: $jwt');
-        Datamanager().saveToken(jwt); // JWT 저장 (예시)
-        saveLoginState(true); // 로그인 성공 상태로 변경
-        widget.onLogin(true); // 부모 위젯에 로그인 성공 알림
+        showToastMessage('백엔드로부터 JWT 수신: $jwt \n 닉네임: $username');
+        Datamanager().saveToken(jwt);
+        Datamanager().saveData("username", username, false);
+        saveLoginState(true);
+        widget.onLogin(true);
       } else {
         showToastMessage('JWT가 파라미터에 없거나 비어있습니다.');
-        // 로그인 실패 처리 (필요하다면)
-        saveLoginState(false);
-        widget.onLogin(false);
       }
     }
   }
@@ -89,17 +88,7 @@ class _LoginWindowState extends State<LoginWindow> {
       MaterialPageRoute(
         builder: (context) => WebViewPage(initialUrl: kakaoLoginUrl),
       ),
-    ).then((value) {
-      //웹뷰에서 로그인 후 돌아왔을 때
-      if (value != null && value is bool) {
-        if (value) {
-          widget.onLogin(true);
-          saveLoginState(true);
-        } else {
-          widget.onLogin(false);
-        }
-      }
-    });
+    );
   }
 
   //로그인 성공 시

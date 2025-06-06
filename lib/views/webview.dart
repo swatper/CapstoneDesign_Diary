@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebViewPage extends StatefulWidget {
   final String initialUrl;
@@ -11,34 +12,54 @@ class WebViewPage extends StatefulWidget {
 }
 
 class _WebViewPageState extends State<WebViewPage> {
-  late WebViewController _controller;
+  late WebViewController webController;
 
   @override
   void initState() {
     super.initState();
     // WebView 초기화
-    _controller =
-        WebViewController()
-          ..setJavaScriptMode(JavaScriptMode.unrestricted) //JavaScript 허용
-          /*
+    webController =
+        WebViewController() // WebViewController 초기화
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setBackgroundColor(const Color(0x00000000))
           ..setNavigationDelegate(
             NavigationDelegate(
-              onNavigationRequest: (NavigationRequest request) {
-                //리디렉션 URL이 설정되어 있다면 해당 URL로 이동
-                if (widget.redirectUrl != null &&
-                    request.url == widget.redirectUrl) {
-                  Navigator.pop(context, request.url); //성공적으로 로그인되었다고 알림
-                  return NavigationDecision.prevent; //현재 요청을 막음
+              onProgress: (int progress) {
+                // 로딩 상태를 표시하고 싶다면 여기에 로직 추가
+              },
+              onPageStarted: (String url) {
+                print('페이지 로드 시작: $url');
+              },
+              onPageFinished: (String url) {
+                print('페이지 로드 완료: $url');
+              },
+              onWebResourceError: (WebResourceError error) {
+                print('웹뷰 오류: ${error.description}');
+              },
+              onNavigationRequest: (NavigationRequest request) async {
+                //senti://로 시작하는 URL이라면 Flutter 앱으로 전달
+                if (request.url.startsWith('senti://')) {
+                  //시스템이 이 딥링크를 처리할 수 있는 앱(우리의 Flutter 앱)을 찾아 실행
+                  if (await canLaunchUrl(Uri.parse(request.url))) {
+                    await launchUrl(
+                      Uri.parse(request.url),
+                      mode: LaunchMode.externalApplication,
+                    );
+                  }
+                  if (mounted) {
+                    Navigator.pop(context);
+                  }
+                  return NavigationDecision.prevent;
                 }
-                return NavigationDecision.navigate; //다른 URL로 이동 허용
+                return NavigationDecision.navigate;
               },
             ),
-          )*/
-          ..loadRequest(Uri.parse(widget.initialUrl)); //초기 URL 로드
+          )
+          ..loadRequest(Uri.parse(widget.initialUrl));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: WebViewWidget(controller: _controller));
+    return Scaffold(body: WebViewWidget(controller: webController));
   }
 }

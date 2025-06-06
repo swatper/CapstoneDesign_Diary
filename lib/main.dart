@@ -16,7 +16,6 @@ import 'package:capstone_diary/Views/challengewindow.dart'; //도전과제
 import 'package:capstone_diary/Views/profilewindow.dart';
 //일기쓰기 화면
 import 'package:capstone_diary/KGB/writewindow.dart';
-import 'package:capstone_diary/KGB/writewindowNext.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
