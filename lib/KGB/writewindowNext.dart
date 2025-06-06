@@ -106,8 +106,8 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
           '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',
       weather: widget.weatherIndex,
       isPublic: isPublic,
-      lat: 0.0,
-      lng: 0.0,
+      lat: diaryLat,
+      lng: diaryLng,
       title: widget.title,
       content: widget.diaryContent,
       emotionTagIds: selectedEmotions,
@@ -158,8 +158,8 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
           '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',
       weather: widget.weatherIndex,
       isPublic: isPublic,
-      lat: diaryLat, // 위치 정보는 임시로 0.0으로 설정
-      lng: diaryLng, // 위치 정보는 임시로 0.0으로 설정
+      lat: diaryLat,
+      lng: diaryLng,
       title: widget.title,
       content: widget.diaryContent,
       emotionTagIds: selectedEmotions,
