@@ -40,6 +40,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
     void logout() {
       //로그아웃 처리
       Datamanager().saveData("is_logged_in", false, false);
+      Datamanager().removeToken();
       widget.logOutCallback.call(false);
       showToastMessage("로그아웃 되었습니다.");
       Navigator.pop(context);

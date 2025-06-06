@@ -1,4 +1,7 @@
+import 'dart:async';
+import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:flutter/material.dart';
+import 'package:app_links/app_links.dart';
 import 'package:capstone_diary/views/webview.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
 import 'package:capstone_diary/Utils/datamanager.dart';
@@ -12,10 +15,55 @@ class LoginWindow extends StatefulWidget {
 }
 
 class _LoginWindowState extends State<LoginWindow> {
+  StreamSubscription? linkSubscription;
+
   @override
   void initState() {
     initLoginCheck();
+    initBackendCallbackListener();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // 위젯이 dispose될 때 스트림 구독 취소
+    linkSubscription?.cancel();
+    super.dispose();
+  }
+
+  //백엔드 콜백 리스너 초기화
+  Future<void> initBackendCallbackListener() async {
+    final appLinks = AppLinks(); // AppLinks 인스턴스 생성
+
+    // 2. 앱이 백그라운드에 있거나 실행 중인 상태에서 딥링크로 들어올 경우 처리
+    linkSubscription = appLinks.uriLinkStream.listen(
+      (Uri uri) {
+        // uni_links와 달리 AppLinks는 Uri 객체를 직접 반환합니다.
+        handleBackendCallbackLink(uri.toString()); // URI 객체를 String으로 변환하여 전달
+      },
+      onError: (err) {
+        print("링크 스트리밍 오류: $err");
+      },
+    );
+  }
+
+  void handleBackendCallbackLink(String link) {
+    Uri uri = Uri.parse(link);
+    //Senti://kakao_login?jwt=...
+    if (uri.scheme == 'Senti' && uri.host == 'kakao_login') {
+      String? jwt = uri.queryParameters['jwt'];
+      if (jwt != null && jwt.isNotEmpty) {
+        showToastMessage('백엔드로부터 JWT 수신: $jwt');
+        Datamanager().saveToken(jwt); // JWT 저장 (예시)
+        saveLoginState(true); // 로그인 성공 상태로 변경
+        widget.onLogin(true); // 부모 위젯에 로그인 성공 알림
+      } else {
+        showToastMessage('JWT가 파라미터에 없거나 비어있습니다.');
+        // 로그인 실패 처리 (필요하다면)
+        saveLoginState(false);
+        widget.onLogin(false);
+      }
+    }
   }
 
   void initLoginCheck() async {

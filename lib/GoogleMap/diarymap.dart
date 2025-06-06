@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/GoogleMap/diaryclusteritem.dart';
