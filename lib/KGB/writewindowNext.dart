@@ -66,7 +66,18 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
     '지루함',
   ];
   bool isPublic = false; // 공개 여부 상태 변수
+  //일기 위치 정보
   String diaryLocation = '부산 부산진구 가야대로 567 상가 5동';
+  double diaryLat = 0;
+  double diaryLng = 0;
+
+  void setDiaryLocation(String location, double lat, double lng) {
+    setState(() {
+      diaryLocation = location;
+      diaryLat = lat;
+      diaryLng = lng;
+    });
+  }
 
   @override
   void initState() {
@@ -123,7 +134,10 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.95,
             height: MediaQuery.of(context).size.height * 0.75,
-            child: DiaryMap(isFromWrite: true),
+            child: DiaryMap(
+              isFromWrite: true,
+              getLocationData: setDiaryLocation,
+            ),
           ),
         );
       },
@@ -144,8 +158,8 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
           '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',
       weather: widget.weatherIndex,
       isPublic: isPublic,
-      lat: 0.0, // 위치 정보는 임시로 0.0으로 설정
-      lng: 0.0, // 위치 정보는 임시로 0.0으로 설정
+      lat: diaryLat, // 위치 정보는 임시로 0.0으로 설정
+      lng: diaryLng, // 위치 정보는 임시로 0.0으로 설정
       title: widget.title,
       content: widget.diaryContent,
       emotionTagIds: selectedEmotions,
