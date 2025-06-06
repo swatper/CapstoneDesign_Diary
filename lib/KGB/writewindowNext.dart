@@ -101,6 +101,7 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
 
   Future<void> onClickedCompleteButton() async {
     final diary = DiaryModel(
+      isEdited: false,
       diaryId: widget.diaryId ?? 0, // null이면 빈 문자열로 처리
       date:
           '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',
@@ -153,6 +154,7 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
     final aiTagGenerator = AiTagGenerator();
 
     final diary = DiaryModel(
+      isEdited: false,
       diaryId: 0,
       date:
           '${widget.year}-${widget.month.toString().padLeft(2, '0')}-${widget.day.toString().padLeft(2, '0')}',

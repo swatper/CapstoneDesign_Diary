@@ -117,6 +117,7 @@ class _WriteWindow extends State<WriteWindow> {
             WriteWindow(
               setWriteWindowNext: widget.setWriteWindowNext,
               diaryModel: DiaryModel(
+                isEdited: false,
                 diaryId: widget.diaryId ?? 0,
                 date:
                     '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}',
