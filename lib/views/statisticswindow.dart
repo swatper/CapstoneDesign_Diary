@@ -1,3 +1,4 @@
+import 'package:capstone_diary/views/summarychart.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
@@ -89,7 +90,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
                       //감정 차트 tab
                       createChart("이번달 주요 감정"),
                       //요약 차트 tab
-                      createChart("이번달 주요 이벤트"),
+                      SummaryChart(),
                     ],
                   ),
                 ],
