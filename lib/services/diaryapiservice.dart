@@ -178,8 +178,14 @@ class DiaryApiService {
     );
 
     print('[DELETE] 요청 보낼 URL: $url');
-
-    final response = await http.delete(url);
+    final token = await _datamanager.getToken();
+    final response = await http.delete(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
 
     print('[DELETE] 응답 코드: ${response.statusCode}');
     print('[DELETE] 응답 본문: ${response.body}');
