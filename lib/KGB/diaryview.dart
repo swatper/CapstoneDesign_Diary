@@ -23,7 +23,9 @@ class DiaryView extends StatelessWidget {
   void onSelectedDelete() {
     print("삭제하기");
     DiaryManager().deleteDiaryById(diaryModel.diaryId);
-    goBackToArchive(ArchiveWindow(selectDiary: setWriteWindow));
+    goBackToArchive(
+      ArchiveWindow(key: UniqueKey(), selectDiary: setWriteWindow),
+    );
   }
 
   @override
