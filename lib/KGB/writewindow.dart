@@ -32,6 +32,7 @@ class _WriteWindow extends State<WriteWindow> {
   late int month;
   late int day;
   DateTime today = DateTime.now();
+  int? _diaryId;
   @override
   void initState() {
     super.initState();
@@ -49,6 +50,10 @@ class _WriteWindow extends State<WriteWindow> {
     year = parsedDate.year;
     month = parsedDate.month;
     day = parsedDate.day;
+    if (_diaryId != null) {
+    } else {
+      _diaryId = widget.diaryId;
+    }
   }
 
   void onClickedBackButton() {
@@ -100,7 +105,7 @@ class _WriteWindow extends State<WriteWindow> {
   }
 
   void onClickedNextButton() {
-    print("다이어리 ID: ${widget.diaryId}");
+    print("다이어리 ID1: ${widget.diaryId}");
     widget.setWriteWindowNext(
       WriteWindowNext(
         diaryModel: widget.diaryModel,
@@ -118,7 +123,7 @@ class _WriteWindow extends State<WriteWindow> {
               setWriteWindowNext: widget.setWriteWindowNext,
               diaryModel: DiaryModel(
                 isEdited: false,
-                diaryId: widget.diaryId ?? 0,
+                diaryId: _diaryId ?? 0,
                 date:
                     '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}',
                 weather: selectedWeatherIndex,

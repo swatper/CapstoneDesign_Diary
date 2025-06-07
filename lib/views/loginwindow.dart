@@ -81,6 +81,7 @@ class _LoginWindowState extends State<LoginWindow> {
   }
 
   void kakaoLogin() async {
+    print("로그인 누름");
     String kakaoLoginUrl =
         "https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/kakao/login";
     await Navigator.push(

@@ -46,12 +46,10 @@ class _HomeWindowState extends State<HomeWindow> {
     setState(() {
       isLoaded = false;
     });
-    String userId = '20213010'; // 사용자 ID 하드코딩 또는 로그인 값 사용
     String formattedDate =
         "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
     try {
       List<DiaryModel> diaries = await DiaryManager().fetchDiaryForDate(
-        userId,
         formattedDate,
       );
       print('[INIT] 서버에서 불러온 일기 개수: ${diaries.length}');

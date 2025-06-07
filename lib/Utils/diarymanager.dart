@@ -1,6 +1,6 @@
 import 'package:capstone_diary/DataModels/diarymodel.dart';
 import 'package:capstone_diary/Utils/diarymapper.dart';
-import 'package:capstone_diary/services/diaryapiservice';
+import 'package:capstone_diary/services/diaryapiservice.dart';
 
 class DiaryManager {
   static final DiaryManager _instance = DiaryManager._internal();
@@ -11,10 +11,8 @@ class DiaryManager {
   DiaryManager._internal();
 
   /// 전체 일기 리스트를 DiaryModel 리스트로 가져오기
-  Future<List<DiaryModel>> fetchAllDiaries(String userId) async {
-    print('[FETCH] 사용자 ID: $userId');
-
-    final jsonList = await _apiService.getAllDiary(userId);
+  Future<List<DiaryModel>> fetchAllDiaries() async {
+    final jsonList = await _apiService.getAllDiary();
     print('[FETCH] 받아온 원시 JSON 리스트: $jsonList');
 
     final diaries = jsonList.map((json) => DiaryMapper.fromJson(json)).toList();
@@ -24,10 +22,8 @@ class DiaryManager {
   }
 
   //특정 날짜 일기 가져오기
-  Future<List<DiaryModel>> fetchDiaryForDate(String userId, String date) async {
-    print('[FETCH] 사용자 ID: $userId');
-
-    final jsonList = await _apiService.getDiaryforDate(userId, date);
+  Future<List<DiaryModel>> fetchDiaryForDate(String date) async {
+    final jsonList = await _apiService.getDiaryforDate(date);
     print('[FETCH] 받아온 원시 JSON 리스트: $jsonList');
 
     final diaries = jsonList.map((json) => DiaryMapper.fromJson(json)).toList();
@@ -37,9 +33,8 @@ class DiaryManager {
   }
 
   /// 새로운 일기 업로드
-  Future<bool> uploadDiary(String userId, DiaryModel diary) async {
-    final json = DiaryMapper.toJson(userId, diary);
-    print('[UPLOAD] userId: $userId');
+  Future<bool> uploadDiary(DiaryModel diary) async {
+    final json = DiaryMapper.toJson(diary);
     print('[UPLOAD] 변환된 JSON: $json');
 
     final result = await _apiService.postNewDiray(json);
@@ -50,13 +45,13 @@ class DiaryManager {
   }
 
   // 일기 수정
-  Future<bool> updateDiary(String userId, DiaryModel diary) async {
+  Future<bool> updateDiary(DiaryModel diary) async {
     if (diary.diaryId == 0) {
       print('[ERROR] 일기 ID가 없습니다. 수정 불가');
       return false;
     }
 
-    final json = DiaryMapper.toJson(userId, diary);
+    final json = DiaryMapper.toJson(diary);
     print('[UPDATE] 수정할 일기 ID: ${diary.diaryId}');
     print('[UPDATE] 변환된 JSON: $json');
 
@@ -67,10 +62,10 @@ class DiaryManager {
   }
 
   /// 일기 ID로 단일 일기 가져오기
-  Future<DiaryModel> getDiaryById(String userId, int diaryId) async {
+  Future<DiaryModel> getDiaryById(int diaryId) async {
     print('[FETCH ONE] 요청한 일기 ID: $diaryId');
 
-    final json = await _apiService.getDiaryById(userId, diaryId);
+    final json = await _apiService.getDiaryById(diaryId);
     print('[FETCH ONE] 받아온 JSON: $json');
 
     final diary = DiaryMapper.fromJson(json);

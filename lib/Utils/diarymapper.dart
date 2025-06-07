@@ -32,9 +32,8 @@ class DiaryMapper {
   }
 
   // DiaryModel → JSON (userId는 매개변수로 따로 받음)
-  static Map<String, dynamic> toJson(String userId, DiaryModel diary) {
+  static Map<String, dynamic> toJson(DiaryModel diary) {
     return {
-      'userId': userId,
       'diaryDate': diary.date,
       'title': diary.title,
       'content': diary.content,

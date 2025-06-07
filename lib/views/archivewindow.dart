@@ -82,10 +82,9 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
   Future<void> _loadDiaries() async {
     setState(() {
       isLoaded = false; // 로딩 시작
-    });
-    String userId = '20213010'; // 사용자 ID 하드코딩 또는 로그인 값 사용
+    }); // 사용자 ID 하드코딩 또는 로그인 값 사용
     try {
-      List<DiaryModel> diaries = await DiaryManager().fetchAllDiaries(userId);
+      List<DiaryModel> diaries = await DiaryManager().fetchAllDiaries();
       print('[INIT] 서버에서 불러온 일기 개수: ${diaries.length}');
       setState(() {
         testsamples = diaries;
