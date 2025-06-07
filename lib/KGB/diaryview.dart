@@ -215,9 +215,7 @@ class DiaryView extends StatelessWidget {
                             (keyword) => SummaryTag(summary: keyword),
                           ),
                           ...diaryModel.emotionTagIds.map(
-                            (id) => EmotionTag(
-                              emotionIndex: id - 1, // 0-based index 맞춰서 -1
-                            ),
+                            (id) => EmotionTag(emotionIndex: id),
                           ),
                         ],
                       ),

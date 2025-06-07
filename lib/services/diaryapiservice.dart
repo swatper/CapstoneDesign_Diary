@@ -90,6 +90,34 @@ class DiaryApiService {
     }
   }
 
+  //필터링된 일기 JSON 리스트 가져오기 (GET)
+  Future<List<Map<String, dynamic>>> getDiaryWithFilter(
+    String option,
+    String value,
+  ) async {
+    final url = Uri.parse(
+      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/search?type=$option&keyword=$value',
+    );
+    final token = await _datamanager.getToken();
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final decoded = utf8.decode(response.bodyBytes);
+      print('[RESPONSE] UTF8 디코딩된 응답: $decoded');
+
+      final List<dynamic> jsonList = json.decode(decoded);
+      return jsonList.cast<Map<String, dynamic>>();
+    } else {
+      return [_getFallbackDiary()];
+    }
+  }
+
   /// 기존 일기 수정 요청 (PUT)
   Future<bool> updateDiary(int diaryId, Map<String, dynamic> diaryJson) async {
     final url = Uri.parse(

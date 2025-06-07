@@ -78,7 +78,7 @@ class _DiaryItemState2 extends State<DiaryItem2> {
                   // 감정 태그
                   ...widget.diaryModel.emotionTagIds.map((id) {
                     return EmotionTag(
-                      emotionIndex: id - 1, // 감정 리스트는 0부터 시작하니까 -1
+                      emotionIndex: id,
                       onDelete: null, // 삭제 기능 없으면 null
                     );
                   }),

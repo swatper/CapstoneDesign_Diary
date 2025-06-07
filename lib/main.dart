@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void gotoSrearchWithOption(String option, String value) {
+  void gotoSearchWithOption(String option, String value) {
     setState(() {
       currentScreen = ArchiveWindow(
         selectDiary: updateWriteWindow,
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Searchingwindow(onSearch: gotoSrearchWithOption),
+        builder: (context) => Searchingwindow(onSearch: gotoSearchWithOption),
       ),
     );
   }

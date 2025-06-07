@@ -51,9 +51,9 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
 
   void loadSearchingWindow() {
     if (widget.option != null && widget.value != null) {
-      //옵션과 값이 주어졌을 때, 해당 조건으로 일기 불러오기
-      _loadDiariesWithFilter(widget.option!, widget.value!);
       showToastMessage("옵션 값: ${widget.option}, ${widget.value}");
+      //옵션과 값이 주어졌을 때, 해당 조건으로 일기 불러오기
+      loadDiariesWithFilter(widget.option!, widget.value!);
     } else {
       //옵션과 값이 없을 때, 전체 일기 불러오기
       showToastMessage("옵션 없이 검색");
@@ -61,22 +61,11 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
     }
   }
 
-  Future<void> _loadDiariesWithFilter(String option, String value) async {
+  Future<void> loadDiariesWithFilter(String option, String value) async {
+    testsamples = await DiaryManager().fetchDiariesWithFilter(option, value);
     setState(() {
-      isLoaded = false; // 로딩 시작
+      isLoaded = true; // 로딩 시작
     });
-    /*
-    String userId = '20213010'; // 사용자 ID 하드코딩 또는 로그인 값 사용
-    try {
-      List<DiaryModel> diaries = await DiaryManager().fetchAllDiaries(userId);
-      print('[INIT] 서버에서 불러온 일기 개수: ${diaries.length}');
-      setState(() {
-        testsamples = diaries;
-        isLoaded = true;
-      });
-    } catch (e) {
-      print('[ERROR] 일기 불러오기 실패: $e');
-    }*/
   }
 
   Future<void> _loadDiaries() async {

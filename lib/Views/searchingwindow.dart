@@ -9,7 +9,7 @@ class Searchingwindow extends StatefulWidget {
 }
 
 class _SearchingwindowState extends State<Searchingwindow> {
-  List<bool> isSelected = [true, false, false];
+  List<bool> isSelected = [true, false, false, false];
   late TextEditingController contentController;
   String serchValue = "";
 
@@ -32,7 +32,9 @@ class _SearchingwindowState extends State<Searchingwindow> {
           ? "title"
           : isSelected[1]
           ? "content"
-          : "tag",
+          : isSelected[2]
+          ? "emotion"
+          : "summary",
       serchValue,
     );
     Navigator.pop(context);
@@ -41,7 +43,7 @@ class _SearchingwindowState extends State<Searchingwindow> {
   //검색 옵션 버튼
   Widget createOptionButton(String text, int index) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.21,
+      width: MediaQuery.of(context).size.width * 0.175,
       height: 35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -104,7 +106,7 @@ class _SearchingwindowState extends State<Searchingwindow> {
                 maxLines: 1,
                 onChanged: (value) {},
                 decoration: InputDecoration(
-                  hintText: "글 제목, 내용, 태그",
+                  hintText: "옵션 선택 후 검색어를 입력하세요",
                   border: InputBorder.none,
                   prefixIcon: IconButton(
                     icon: Icon(
@@ -134,7 +136,8 @@ class _SearchingwindowState extends State<Searchingwindow> {
                 children: [
                   createOptionButton("제목", 0),
                   createOptionButton("내용", 1),
-                  createOptionButton("태그", 2),
+                  createOptionButton("감정", 2),
+                  createOptionButton("요약", 3),
                 ],
               ),
             ),

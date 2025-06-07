@@ -32,6 +32,20 @@ class DiaryManager {
     return diaries;
   }
 
+  //필터링된 일기 가져오기
+  Future<List<DiaryModel>> fetchDiariesWithFilter(
+    String option,
+    String value,
+  ) async {
+    final jsonList = await _apiService.getDiaryWithFilter(option, value);
+    print('[FETCH] 받아온 원시 JSON 리스트: $jsonList');
+
+    final diaries = jsonList.map((json) => DiaryMapper.fromJson(json)).toList();
+    print('[FETCH] 변환된 DiaryModel 리스트: $diaries');
+
+    return diaries;
+  }
+
   /// 새로운 일기 업로드
   Future<bool> uploadDiary(DiaryModel diary) async {
     final json = DiaryMapper.toJson(diary);
