@@ -1,10 +1,11 @@
-import 'package:capstone_diary/Utils/datamanager.dart';
+import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:capstone_diary/views/summarychart.dart';
 import 'package:flutter/material.dart';
+import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:tab_container/tab_container.dart';
 import 'package:capstone_diary/Items/emotionraderchart.dart';
-import 'package:capstone_diary/services/diaryapiservice.dart';
+import 'package:capstone_diary/DataModels/emotiontag.dart';
 
 class StatisticsWindow extends StatefulWidget {
   final Function(bool) logOutCallback;
@@ -15,58 +16,48 @@ class StatisticsWindow extends StatefulWidget {
 }
 
 class _StatisticsWindowState extends State<StatisticsWindow> {
-  String currentMonth = "${DateTime.now().month}월";
-  String selectedDate = "${DateTime.now().month}-${DateTime.now().month}";
-  final Map<String, int> emotionData = {
+  Map<String, int> emotionData = {
     '기쁨': 10,
-    '행복': 0,
-    '설렘': 8,
-    '화남': 7,
-    '우울함': 6,
-    '슬픔': 5,
-    '지루함': 4,
-    '놀람': 3,
-    '불안': 2,
-    '부끄러움': 1,
+    '행복': 2,
+    '설렘': 3,
+    '화남': 4,
+    '우울함': 5,
+    '슬픔': 6,
+    '지루함': 7,
+    '놀람': 8,
+    '불안': 20,
+    '부끄러움': 10,
   };
+
+  Future<void> _loadAllEmotionData() async {
+    emotionData = await DiaryManager().getAllEmotion(); // 데이터 변경 후 entries 갱신
+    setState(() {}); // 화면 갱신
+  }
 
   @override
   void initState() {
     super.initState();
     //감정 통계 값 가져오기
-    getEmotionData(selectedDate);
+    _loadAllEmotionData();
+  }
+
+  Future<void> selectDate(DateTime date) async {
+    print("선택한 날짜: $date");
+
+    emotionData = await DiaryManager().getMonthlyEmotion(date);
+    setState(() {}); // 화면 갱신
   }
 
   void showMonthCalander() {
+    String selectedMonth;
     showMonthPicker(context: context, initialDate: DateTime.now()).then((
       DateTime? date,
     ) {
       if (date != null) {
-        setState(() {
-          selectedDate = "${date.year}년 ${date.month}월";
-          currentMonth = "${date.month}월";
-        });
-        getEmotionData(selectedDate);
+        selectDate(date);
+        selectedMonth = "${date.year}년 ${date.month}월";
+        showToastMessage("선택한 월: $selectedMonth");
       }
-    });
-  }
-
-  void getEmotionData(String date) async {
-    Map<String, int> emotionDataMap = await DiaryApiService().getMonthlyEmotion(
-      await Datamanager().getData('userId'),
-      date,
-    );
-    setState(() {
-      emotionData['기쁨'] = emotionDataMap['joy'] ?? 0;
-      emotionData['행복'] = emotionDataMap['happy'] ?? 0;
-      emotionData['설렘'] = emotionDataMap['excited'] ?? 0;
-      emotionData['화남'] = emotionDataMap['angry'] ?? 0;
-      emotionData['우울함'] = emotionDataMap['depressed'] ?? 0;
-      emotionData['슬픔'] = emotionDataMap['sad'] ?? 0;
-      emotionData['지루함'] = emotionDataMap['bored'] ?? 0;
-      emotionData['놀람'] = emotionDataMap['surprised'] ?? 0;
-      emotionData['불안'] = emotionDataMap['nervous'] ?? 0;
-      emotionData['부끄러움'] = emotionDataMap['shy'] ?? 0;
     });
   }
 
@@ -113,7 +104,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
                     tabs: [Tab(text: "감정"), Tab(text: "요약")],
                     children: [
                       //감정 차트 tab
-                      createChart("$currentMonth 주요 감정"),
+                      createChart("이번달 주요 감정"),
                       //요약 차트 tab
                       SummaryChart(),
                     ],
