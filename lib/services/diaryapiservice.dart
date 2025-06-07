@@ -212,14 +212,21 @@ class DiaryApiService {
   }
 
   /// 사용자별 전체 요약 데이터 가져오기 (GET)
-  Future<Map<String, int>> getAllSummary(String userId) async {
+  Future<Map<String, int>> getAllSummary() async {
     final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/summary/$userId',
+      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/stats/summary',
     );
 
     print('[GET - Summary] 요청 보낼 URL: $url');
 
-    final response = await http.get(url);
+    final token = await _datamanager.getToken();
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
 
     print('[GET - Summary] 응답 코드: ${response.statusCode}');
     print('[GET - Summary] 응답 본문: ${response.body}');
@@ -240,18 +247,20 @@ class DiaryApiService {
   }
 
   /// 사용자별 연/월 기준 요약 데이터 가져오기 (GET)
-  Future<Map<String, int>> getMonthlySummary(
-    String userId,
-    int year,
-    int month,
-  ) async {
+  Future<Map<String, int>> getMonthlySummary(int year, int month) async {
     final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/summary/$userId/$year/$month',
+      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/stats/summary/$year/$month',
     );
 
     print('[GET - Monthly Summary] 요청 보낼 URL: $url');
-
-    final response = await http.get(url);
+    final token = await _datamanager.getToken();
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
 
     print('[GET - Monthly Summary] 응답 코드: ${response.statusCode}');
     print('[GET - Monthly Summary] 응답 본문: ${response.body}');
@@ -268,6 +277,75 @@ class DiaryApiService {
       return keywordMap;
     } else {
       return {"임시": 1, "통신실패": 7, "에러러": 2, "요약태그": 3};
+    }
+  }
+
+  /// 사용자별 전체 감정정 데이터 가져오기 (GET)
+  Future<Map<String, int>> getAllEmotion() async {
+    final url = Uri.parse(
+      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/stats/emotion',
+    );
+
+    print('[GET - emotion] 요청 보낼 URL: $url');
+
+    final token = await _datamanager.getToken();
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    print('[GET - emotion] 응답 코드: ${response.statusCode}');
+    print('[GET - emotion] 응답 본문: ${response.body}');
+
+    if (response.statusCode == 200) {
+      final decoded = utf8.decode(response.bodyBytes);
+      final Map<String, dynamic> rawMap = json.decode(decoded);
+
+      // dynamic → int 캐스팅
+      final Map<String, int> keywordMap = rawMap.map(
+        (key, value) => MapEntry(key, value as int),
+      );
+
+      return keywordMap;
+    } else {
+      return {};
+    }
+  }
+
+  /// 사용자별 연/월 기준 감정 데이터 가져오기 (GET)
+  Future<Map<String, int>> getMonthlyEmotion(int year, int month) async {
+    final url = Uri.parse(
+      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/stats/emotion/$year/$month',
+    );
+
+    print('[GET - Monthly Summary] 요청 보낼 URL: $url');
+    final token = await _datamanager.getToken();
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    print('[GET - Monthly emotion] 응답 코드: ${response.statusCode}');
+    print('[GET - Monthly emotion] 응답 본문: ${response.body}');
+
+    if (response.statusCode == 200) {
+      final decoded = utf8.decode(response.bodyBytes);
+      final Map<String, dynamic> rawMap = json.decode(decoded);
+
+      // dynamic → int 캐스팅
+      final Map<String, int> keywordMap = rawMap.map(
+        (key, value) => MapEntry(key, value as int),
+      );
+
+      return keywordMap;
+    } else {
+      return {};
     }
   }
 }

@@ -98,11 +98,9 @@ class DiaryManager {
   }
 
   /// 사용자별 전체체 요약 데이터 가져오기
-  Future<Map<String, int>> getAllSummary(String userId) async {
-    print('[FETCH KEYWORDS] 사용자 ID: $userId');
-
+  Future<Map<String, int>> getAllSummary() async {
     try {
-      final keywordSummary = await _apiService.getAllSummary(userId);
+      final keywordSummary = await _apiService.getAllSummary();
       print('[FETCH KEYWORDS] 받아온 키워드 요약: $keywordSummary');
       return keywordSummary;
     } catch (e) {
@@ -112,24 +110,45 @@ class DiaryManager {
   }
 
   /// 특정 연/월에 대한 요약 데이터 가져오기
-  Future<Map<String, int>> getMonthlySummary(
-    String userId,
-    DateTime date,
-  ) async {
+  Future<Map<String, int>> getMonthlySummary(DateTime date) async {
     final year = date.year;
     final month = date.month;
-    print('[FETCH MONTHLY KEYWORDS] 사용자 ID: $userId / 연도: $year / 월: $month');
+    print('[FETCH MONTHLY KEYWORDS] 연도: $year / 월: $month');
 
     try {
-      final keywordSummary = await _apiService.getMonthlySummary(
-        userId,
-        year,
-        month,
-      );
+      final keywordSummary = await _apiService.getMonthlySummary(year, month);
       print('[FETCH MONTHLY KEYWORDS] 받아온 키워드 요약: $keywordSummary');
       return keywordSummary;
     } catch (e) {
       print('[ERROR] 월별 키워드 요약 데이터 가져오기 실패: $e');
+      return {}; // 빈 Map 반환
+    }
+  }
+
+  /// 사용자별 전체 요약 데이터 가져오기
+  Future<Map<String, int>> getAllEmotion() async {
+    try {
+      final keywordEmotion = await _apiService.getAllEmotion();
+      print('[FETCH KEYWORDS] 받아온 감정 태그: $keywordEmotion');
+      return keywordEmotion;
+    } catch (e) {
+      print('[ERROR] 키워드 요약 데이터 가져오기 실패: $e');
+      return {}; // 빈 Map 반환
+    }
+  }
+
+  /// 특정 연/월에 대한 감정정 데이터 가져오기
+  Future<Map<String, int>> getMonthlyEmotion(DateTime date) async {
+    final year = date.year;
+    final month = date.month;
+    print('[FETCH MONTHLY KEYWORDS] 연도: $year / 월: $month');
+
+    try {
+      final keywordSummary = await _apiService.getMonthlyEmotion(year, month);
+      print('[FETCH MONTHLY KEYWORDS] 받아온 키워드 감정정: $keywordSummary');
+      return keywordSummary;
+    } catch (e) {
+      print('[ERROR] 월별 감정 데이터 가져오기 실패: $e');
       return {}; // 빈 Map 반환
     }
   }

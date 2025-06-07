@@ -16,12 +16,16 @@ class _SummaryChartState extends State<SummaryChart> {
     print("클릭한 단어: $word");
   }
 
-  void selectDate(DateTime date) {
+  Future<void> selectDate(DateTime date) async {
     print("선택한 날짜: $date");
+
+    keywordCounts = await DiaryManager().getMonthlySummary(date);
+    entries = _generateWordEntries(); // 데이터 변경 후 entries 갱신
+    setState(() {}); // 화면 갱신
   }
 
   Future<void> _loadAllSummaryData() async {
-    keywordCounts = await DiaryManager().getAllSummary("20213010"); //userId
+    keywordCounts = await DiaryManager().getAllSummary();
     entries = _generateWordEntries(); // 데이터 변경 후 entries 갱신
     setState(() {}); // 화면 갱신
   }

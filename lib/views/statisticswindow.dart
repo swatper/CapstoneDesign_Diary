@@ -1,3 +1,4 @@
+import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:capstone_diary/views/summarychart.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
@@ -15,8 +16,8 @@ class StatisticsWindow extends StatefulWidget {
 }
 
 class _StatisticsWindowState extends State<StatisticsWindow> {
-  final Map<String, int> emotionData = {
-    '기쁨': 1,
+  Map<String, int> emotionData = {
+    '기쁨': 10,
     '행복': 2,
     '설렘': 3,
     '화남': 4,
@@ -24,14 +25,27 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
     '슬픔': 6,
     '지루함': 7,
     '놀람': 8,
-    '불안': 9,
+    '불안': 20,
     '부끄러움': 10,
   };
+
+  Future<void> _loadAllEmotionData() async {
+    emotionData = await DiaryManager().getAllEmotion(); // 데이터 변경 후 entries 갱신
+    setState(() {}); // 화면 갱신
+  }
 
   @override
   void initState() {
     super.initState();
     //감정 통계 값 가져오기
+    _loadAllEmotionData();
+  }
+
+  Future<void> selectDate(DateTime date) async {
+    print("선택한 날짜: $date");
+
+    emotionData = await DiaryManager().getMonthlyEmotion(date);
+    setState(() {}); // 화면 갱신
   }
 
   void showMonthCalander() {
@@ -40,6 +54,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
       DateTime? date,
     ) {
       if (date != null) {
+        selectDate(date);
         selectedMonth = "${date.year}년 ${date.month}월";
         showToastMessage("선택한 월: $selectedMonth");
       }
