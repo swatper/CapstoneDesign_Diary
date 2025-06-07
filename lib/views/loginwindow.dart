@@ -56,7 +56,7 @@ class _LoginWindowState extends State<LoginWindow> {
       if (jwt != null && jwt.isNotEmpty) {
         showToastMessage('백엔드로부터 JWT 수신: $jwt \n 닉네임: $username');
         Datamanager().saveToken(jwt);
-        Datamanager().saveData("username", username, false);
+        Datamanager().saveData("user_Name", username, false);
         saveLoginState(true);
         widget.onLogin(true);
       } else {

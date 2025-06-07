@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
+import 'package:capstone_diary/Utils/datamanager.dart';
 
 class ProfileWindow extends StatefulWidget {
   final Function(int) backButtonEvent;
@@ -15,6 +16,7 @@ class ProfileWindow extends StatefulWidget {
 class _ProfileWindowState extends State<ProfileWindow> {
   bool isEditMode = false;
   String nickname = "닉네임";
+  late TextEditingController nickNameContentController;
   Widget defaultProfileImage = AssetManager.instance.getProfileImage(
     "defaultpro.png",
     130,
@@ -43,10 +45,40 @@ class _ProfileWindowState extends State<ProfileWindow> {
     });
   }
 
-  void saveProfile() {
+  void showSaveProfileDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("프로필 저장"),
+          content: Text("프로필을 저장하시겠습니까?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("취소"),
+            ),
+            TextButton(
+              onPressed: () {
+                saveProfile();
+                Navigator.of(context).pop();
+              },
+              child: Text("저장"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void saveProfile() async {
     setState(() {
+      nickname = nickNameContentController.text;
       isEditMode = false;
     });
+    await Datamanager().removeData("user_Name");
+    await Datamanager().saveData("user_Name", nickname, true);
   }
 
   void changeProfileImage() {
@@ -95,16 +127,16 @@ class _ProfileWindowState extends State<ProfileWindow> {
     }
   }*/
 
-  void saveNewNickname(String newNickname) {
-    setState(() {
-      nickname = newNickname;
-    });
+  void getNickname() async {
+    nickname = await Datamanager().getData("user_Name");
+    setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    //프로필 정보 가져오기
+    nickNameContentController = TextEditingController();
+    getNickname();
   }
 
   @override
@@ -135,7 +167,7 @@ class _ProfileWindowState extends State<ProfileWindow> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: isEditMode ? saveProfile : editProfile,
+                  onPressed: isEditMode ? showSaveProfileDialog : editProfile,
                   icon:
                       isEditMode
                           ? Icon(Icons.save, color: Colors.grey)
@@ -180,6 +212,7 @@ class _ProfileWindowState extends State<ProfileWindow> {
                           height: 40,
                           width: 200,
                           child: TextField(
+                            controller: nickNameContentController,
                             readOnly: !isEditMode,
                             decoration: InputDecoration(
                               hintText: nickname,
@@ -196,7 +229,6 @@ class _ProfileWindowState extends State<ProfileWindow> {
                                 vertical: 10,
                               ),
                             ),
-                            onChanged: saveNewNickname,
                           ),
                         ),
                       ],

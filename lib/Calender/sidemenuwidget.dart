@@ -16,10 +16,16 @@ class SideMenuWidget extends StatefulWidget {
 }
 
 class _SideMenuWidgetState extends State<SideMenuWidget> {
+  String userName = "???";
   @override
   void initState() {
     super.initState();
-    //앱 시작 시 도전 과제 달성도 가져오기
+    setUserName();
+  }
+
+  void setUserName() async {
+    userName = await Datamanager().getData("user_Name");
+    setState(() {});
   }
 
   @override
@@ -37,9 +43,16 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
       Navigator.pop(context);
     }
 
+    @override
+    void didUpdateWidget(SideMenuWidget oldWidget) {
+      super.didUpdateWidget(oldWidget);
+      setUserName();
+    }
+
     void logout() {
       //로그아웃 처리
       Datamanager().saveData("is_logged_in", false, false);
+      Datamanager().removeData("userName");
       Datamanager().removeToken();
       widget.logOutCallback.call(false);
       showToastMessage("로그아웃 되었습니다.");
@@ -110,11 +123,17 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "tester",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 22,
+                            SizedBox(
+                              width:
+                                  MediaQuery.of(context).size.width * 0.7 * 0.5,
+                              child: Text(
+                                userName,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
                             ) /*
                             Text(
