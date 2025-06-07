@@ -12,6 +12,7 @@ class SummaryChart extends StatefulWidget {
 }
 
 class _SummaryChartState extends State<SummaryChart> {
+  String currentMonth = "${DateTime.now().month}월";
   void selectWord(String word) {
     print("클릭한 단어: $word");
   }
@@ -102,7 +103,7 @@ class _SummaryChartState extends State<SummaryChart> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "이번달 주요 이벤트",
+                "$currentMonth 주요 이벤트",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               IconButton(

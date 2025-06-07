@@ -87,7 +87,7 @@ class DiaryApiService {
       return jsonList.cast<Map<String, dynamic>>();
     } else {
       print('[ERROR] 실패한 응답 코드: ${response.statusCode}');
-      throw Exception('일기 데이터를 불러오지 못했습니다.');
+      return [_getFallbackDiary()];
     }
   }
 
@@ -268,6 +268,39 @@ class DiaryApiService {
       return keywordMap;
     } else {
       return {"임시": 1, "통신실패": 7, "에러러": 2, "요약태그": 3};
+    }
+  }
+
+  ///사용자별 월 기준 감정 데이터 가져오기 (GET)
+  Future<Map<String, int>> getMonthlyEmotion(String userId, String date) async {
+    final url = Uri.parse(
+      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/emotion/$userId/$date',
+    );
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final decoded = utf8.decode(response.bodyBytes);
+      final Map<String, dynamic> rawMap = json.decode(decoded);
+
+      // dynamic → int 캐스팅
+      final Map<String, int> emotionTagMap = rawMap.map(
+        (key, value) => MapEntry(key, value as int),
+      );
+
+      return emotionTagMap;
+    } else {
+      return {
+        'joy': 1,
+        'happy': 2,
+        'excited': 3,
+        'angry': 4,
+        'depressed': 5,
+        'sad': 6,
+        'bored': 7,
+        'surprised': 8,
+        'nervous': 9,
+        'shy': 10,
+      };
     }
   }
 }

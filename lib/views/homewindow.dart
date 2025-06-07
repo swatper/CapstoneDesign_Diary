@@ -104,7 +104,30 @@ class _HomeWindowState extends State<HomeWindow> {
               ),
               SizedBox(height: 20),
               //일기장 목록
-              isLoaded ? updateDiaryList(testsamples) : loadingWidget,
+              isLoaded
+                  ? testsamples.isEmpty
+                      ? Column(
+                        children: [
+                          Text(
+                            "등록된 일기가 없습니다.",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            "일기를 작성해보세요!",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      )
+                      : updateDiaryList(testsamples)
+                  : loadingWidget,
             ],
           ),
         ),

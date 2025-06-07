@@ -1,4 +1,5 @@
 //감정 통계용 데이터 모델
+//직접 파싱해서 안 씀 2025/06/07.
 class EmotionTag {
   final int joy; //기쁨
   final int happy; //행복
