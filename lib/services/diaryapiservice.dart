@@ -86,8 +86,7 @@ class DiaryApiService {
       final List<dynamic> jsonList = json.decode(decoded);
       return jsonList.cast<Map<String, dynamic>>();
     } else {
-      print('[ERROR] 실패한 응답 코드: ${response.statusCode}');
-      throw Exception('일기 데이터를 불러오지 못했습니다.');
+      return [_getFallbackDiary()];
     }
   }
 

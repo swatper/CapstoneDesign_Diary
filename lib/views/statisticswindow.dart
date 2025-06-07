@@ -16,17 +16,18 @@ class StatisticsWindow extends StatefulWidget {
 }
 
 class _StatisticsWindowState extends State<StatisticsWindow> {
+  String currentMonth = "${DateTime.now().month}월";
   Map<String, int> emotionData = {
-    '기쁨': 10,
-    '행복': 2,
-    '설렘': 3,
-    '화남': 4,
-    '우울함': 5,
-    '슬픔': 6,
-    '지루함': 7,
-    '놀람': 8,
-    '불안': 20,
-    '부끄러움': 10,
+    '기쁨': 0,
+    '행복': 0,
+    '설렘': 0,
+    '화남': 0,
+    '우울함': 0,
+    '슬픔': 0,
+    '지루함': 0,
+    '놀람': 0,
+    '불안': 0,
+    '부끄러움': 0,
   };
 
   Future<void> _loadAllEmotionData() async {
@@ -49,14 +50,14 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
   }
 
   void showMonthCalander() {
-    String selectedMonth;
     showMonthPicker(context: context, initialDate: DateTime.now()).then((
       DateTime? date,
     ) {
       if (date != null) {
         selectDate(date);
-        selectedMonth = "${date.year}년 ${date.month}월";
-        showToastMessage("선택한 월: $selectedMonth");
+        setState(() {
+          currentMonth = "${date.month}월"; // 선택한 월 업데이트
+        });
       }
     });
   }
@@ -104,7 +105,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
                     tabs: [Tab(text: "감정"), Tab(text: "요약")],
                     children: [
                       //감정 차트 tab
-                      createChart("이번달 주요 감정"),
+                      createChart("$currentMonth 주요 감정"),
                       //요약 차트 tab
                       SummaryChart(),
                     ],

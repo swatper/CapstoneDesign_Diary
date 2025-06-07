@@ -19,7 +19,7 @@ class _SummaryChartState extends State<SummaryChart> {
 
   Future<void> selectDate(DateTime date) async {
     print("선택한 날짜: $date");
-
+    currentMonth = "${date.month}월"; // 현재 월 업데이트
     keywordCounts = await DiaryManager().getMonthlySummary(date);
     entries = _generateWordEntries(); // 데이터 변경 후 entries 갱신
     setState(() {}); // 화면 갱신
@@ -50,14 +50,11 @@ class _SummaryChartState extends State<SummaryChart> {
   }
 
   void showMonthCalander() {
-    String selectedMonth;
     showMonthPicker(context: context, initialDate: DateTime.now()).then((
       DateTime? date,
     ) {
       if (date != null) {
         selectDate(date);
-        selectedMonth = "${date.year}년 ${date.month}월";
-        showToastMessage("선택한 월: $selectedMonth");
       }
     });
   }

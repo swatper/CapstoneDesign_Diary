@@ -144,9 +144,9 @@ class DiaryManager {
     print('[FETCH MONTHLY KEYWORDS] 연도: $year / 월: $month');
 
     try {
-      final keywordSummary = await _apiService.getMonthlyEmotion(year, month);
-      print('[FETCH MONTHLY KEYWORDS] 받아온 키워드 감정정: $keywordSummary');
-      return keywordSummary;
+      final keywordEmotion = await _apiService.getMonthlyEmotion(year, month);
+      print('[FETCH MONTHLY KEYWORDS] 받아온 키워드 감정정: $keywordEmotion');
+      return keywordEmotion;
     } catch (e) {
       print('[ERROR] 월별 감정 데이터 가져오기 실패: $e');
       return {}; // 빈 Map 반환
