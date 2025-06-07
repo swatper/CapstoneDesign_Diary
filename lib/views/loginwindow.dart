@@ -82,7 +82,7 @@ class _LoginWindowState extends State<LoginWindow> {
 
   void kakaoLogin() async {
     String kakaoLoginUrl =
-        "https://joint-cheetah-helpful.ngrok-free.app/SentiDiary";
+        "https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/kakao/login";
     await Navigator.push(
       context,
       MaterialPageRoute(
