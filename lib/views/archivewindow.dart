@@ -33,6 +33,7 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
   bool isLoaded = false;
   Center loadingWidget = const Center(child: CircularProgressIndicator());
 
+  int diaryCount = 0; //일기 개수
   @override
   void initState() {
     super.initState();

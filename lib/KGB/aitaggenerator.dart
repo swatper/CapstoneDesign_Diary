@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class AiTagGenerator {
   // 내부에서 API 키를 관리
-  static const String _openAiApiKey = 'key...'; // 여기에 실제 API 키를 넣으세요
+  // .env 파일에서 환경 변수 로드
+  static final String _openAiApiKey =
+      dotenv.env['OPENAI_API_KEY'] ?? ''; // API 키
 
   Future<Map<String, dynamic>> generateTags(DiaryModel diary) async {
+    print('불러온 API 키: $_openAiApiKey');
     const endpoint = 'https://api.openai.com/v1/chat/completions';
 
     final headers = {
@@ -22,7 +26,7 @@ class AiTagGenerator {
 내용: ${diary.content}
 
 이 일기의 감정 태그(emotions)와 요약 태그(summaries)를 각각 3개 이내로 JSON 형태로 만들어줘.
-
+요약 태그의 길이는 10자 이내로 하고,
 감정 태그는 아래 목록에서 골라 번호로 응답해줘 (숫자 리스트로만 반환):
 1. 기쁨
 2. 행복
