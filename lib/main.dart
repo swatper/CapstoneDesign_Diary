@@ -170,7 +170,10 @@ class _HomeScreenState extends State<HomeScreen> {
         selectDiary: updateWriteWindow,
         logOutCallback: updateLoginStatus,
       ),
-      StatisticsWindow(logOutCallback: updateLoginStatus),
+      StatisticsWindow(
+        logOutCallback: updateLoginStatus,
+        onSearch: gotoSearchWithOption,
+      ),
       ArchiveWindow(
         selectDiary: updateWriteWindow,
         logOutCallback: updateLoginStatus,

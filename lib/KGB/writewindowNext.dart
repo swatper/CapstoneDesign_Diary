@@ -555,9 +555,11 @@ class _WriteeWindowNextState extends State<WriteWindowNext> {
           title: Text("요약 태그를 입력하세요"),
           content: TextField(
             controller: controller,
+            maxLength: 10, // 최대 글자 수 제한
             decoration: InputDecoration(
               hintText: '예: 여행, 공부, 친구와의 대화 등',
               border: OutlineInputBorder(),
+              counterText: "", // 글자 수 표시 숨기기 (선택사항)
             ),
             autofocus: true,
           ),
