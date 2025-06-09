@@ -124,7 +124,7 @@ flutter:
     - assets/images/etc/kakao_login.png
     - assets/DiraySample.json
 
-    - assets/config/.env
+    #- assets/config/.env
 
 
   # The following line ensures that the Material Icons font is

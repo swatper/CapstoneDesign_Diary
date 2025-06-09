@@ -25,7 +25,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  await dotenv.load(fileName: 'assets/config/.env'); // api키가 적혀있는 .env 파일 로드
+  //await dotenv.load(fileName: 'assets/config/.env'); // api키가 적혀있는 .env 파일 로드
   runApp(const MyApp());
 }
 
