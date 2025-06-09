@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
@@ -17,14 +18,21 @@ class SideMenuWidget extends StatefulWidget {
 
 class _SideMenuWidgetState extends State<SideMenuWidget> {
   String userName = "???";
+  String customProfilePath = "";
   @override
   void initState() {
     super.initState();
+    checkProfile();
     setUserName();
   }
 
   void setUserName() async {
     userName = await Datamanager().getData("user_Name");
+    setState(() {});
+  }
+
+  void checkProfile() async {
+    customProfilePath = await Datamanager().getProfileImagePath();
     setState(() {});
   }
 
@@ -143,11 +151,20 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                         ),
                         Row(
                           children: [
-                            AssetManager.instance.getProfileImage(
-                              'defaultpro.png',
-                              52,
-                              52,
-                            ),
+                            customProfilePath == ""
+                                ? AssetManager.instance.getProfileImage(
+                                  'defaultpro.png',
+                                  52,
+                                  52,
+                                )
+                                : ClipOval(
+                                  child: Image.file(
+                                    File(customProfilePath),
+                                    width: 52,
+                                    height: 52,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                             AssetManager.instance.getChallengeImage(
                               'default.png',
                               52,
