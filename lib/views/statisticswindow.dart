@@ -37,7 +37,7 @@ class _StatisticsWindowState extends State<StatisticsWindow> {
   void initState() {
     super.initState();
     //감정 통계 값 가져오기
-    _loadAllEmotionData();
+    selectDate(DateTime.now());
   }
 
   Future<void> selectDate(DateTime date) async {

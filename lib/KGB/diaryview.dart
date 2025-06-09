@@ -4,10 +4,11 @@ import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:capstone_diary/Views/archivewindow.dart';
 import 'package:capstone_diary/KGB/weatherButton.dart';
 import 'package:capstone_diary/KGB/writewindow.dart';
-import 'package:flutter/material.dart';
 import 'package:capstone_diary/DataModels/diarymodel.dart';
+import 'package:capstone_diary/GoogleMap/locationconverter.dart';
+import 'package:flutter/material.dart';
 
-class DiaryView extends StatelessWidget {
+class DiaryView extends StatefulWidget {
   final DiaryModel diaryModel;
   final void Function(Widget) setWriteWindow;
   final Function(Widget) goBackToArchive;
@@ -18,46 +19,67 @@ class DiaryView extends StatelessWidget {
     required this.goBackToArchive,
   });
 
+  @override
+  State<DiaryView> createState() => _DiaryViewState();
+}
+
+class _DiaryViewState extends State<DiaryView> {
   get onClickedBackButton => null;
+  String curAddress = "부산 어디구 강호동";
 
   void onSelectedDelete() {
     print("삭제하기");
-    DiaryManager().deleteDiaryById(diaryModel.diaryId);
-    goBackToArchive(
-      ArchiveWindow(key: UniqueKey(), selectDiary: setWriteWindow),
+    DiaryManager().deleteDiaryById(widget.diaryModel.diaryId);
+    widget.goBackToArchive(
+      ArchiveWindow(key: UniqueKey(), selectDiary: widget.setWriteWindow),
     );
+  }
+
+  void setDiaryLocationInfo() async {
+    curAddress = await LocationConverter.instance.getLocationInfo(
+      widget.diaryModel.lat,
+      widget.diaryModel.lng,
+    );
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setDiaryLocationInfo();
   }
 
   @override
   Widget build(BuildContext context) {
-    DateTime parsedDate = DateTime.tryParse(diaryModel.date) ?? DateTime.now();
+    DateTime parsedDate =
+        DateTime.tryParse(widget.diaryModel.date) ?? DateTime.now();
     void onSelectedEdit() {
-      setWriteWindow(
+      widget.setWriteWindow(
         WriteWindow(
-          diaryId: diaryModel.diaryId,
+          diaryId: widget.diaryModel.diaryId,
           isEditMode: true,
-          diaryModel: diaryModel,
+          diaryModel: widget.diaryModel,
           goBackToHome: () async {
             DiaryModel editedDiary = await DiaryManager().getDiaryById(
-              diaryModel.diaryId,
+              widget.diaryModel.diaryId,
             );
-            setWriteWindow(
+            widget.setWriteWindow(
               DiaryView(
                 diaryModel: editedDiary,
-                setWriteWindow: setWriteWindow,
-                goBackToArchive: goBackToArchive,
+                setWriteWindow: widget.setWriteWindow,
+                goBackToArchive: widget.goBackToArchive,
               ),
             );
           },
           setWriteWindowNext: (Widget nextPage) {
-            setWriteWindow(nextPage); // WriteWindowNext로 이동
+            widget.setWriteWindow(nextPage); // WriteWindowNext로 이동
           },
         ),
       );
     }
 
     void onClickedBackButton() {
-      goBackToArchive(ArchiveWindow(selectDiary: setWriteWindow));
+      widget.goBackToArchive(ArchiveWindow(selectDiary: widget.setWriteWindow));
     }
 
     return Scaffold(
@@ -168,7 +190,7 @@ class DiaryView extends StatelessWidget {
                   ),
                   const Spacer(),
                   WeatherButton(
-                    weatherIndex: diaryModel.weather,
+                    weatherIndex: widget.diaryModel.weather,
                     isButtonActive: false,
                   ),
                 ],
@@ -183,7 +205,7 @@ class DiaryView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      diaryModel.title,
+                      widget.diaryModel.title,
                       style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
@@ -204,7 +226,7 @@ class DiaryView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        diaryModel.content,
+                        widget.diaryModel.content,
                         style: const TextStyle(fontSize: 16, height: 1.6),
                       ),
                       const SizedBox(height: 20),
@@ -213,13 +235,29 @@ class DiaryView extends StatelessWidget {
                         spacing: 8,
                         runSpacing: 4,
                         children: [
-                          ...diaryModel.summaryKeywords.map(
+                          ...widget.diaryModel.summaryKeywords.map(
                             (keyword) => SummaryTag(summary: keyword),
                           ),
-                          ...diaryModel.emotionTagIds.map(
+                          ...widget.diaryModel.emotionTagIds.map(
                             (id) => EmotionTag(emotionIndex: id),
                           ),
                         ],
+                      ),
+                      const Divider(color: Colors.black, thickness: 1),
+                      Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 255, 248, 229),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: Text(
+                              curAddress,
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

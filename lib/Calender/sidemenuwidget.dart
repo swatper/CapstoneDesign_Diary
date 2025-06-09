@@ -43,19 +43,18 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
       Navigator.pop(context);
     }
 
-    @override
-    void didUpdateWidget(SideMenuWidget oldWidget) {
-      super.didUpdateWidget(oldWidget);
-      setUserName();
-    }
-
     void logout() {
       //로그아웃 처리
-      Datamanager().saveData("is_logged_in", false, false);
-      Datamanager().removeData("userName");
-      Datamanager().removeToken();
+      Datamanager().clearAllUserData();
       widget.logOutCallback.call(false);
       showToastMessage("로그아웃 되었습니다.");
+      Navigator.pop(context);
+    }
+
+    void deleteAccount() {
+      //회원 탈퇴 페이지 이동
+
+      //Datamanager().clearAllUserData();
       Navigator.pop(context);
     }
 
@@ -249,7 +248,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => selectSideMenu(3),
+                          onPressed: deleteAccount,
                           icon: Icon(Icons.chevron_right_sharp),
                         ),
                       ],

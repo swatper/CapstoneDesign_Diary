@@ -1,4 +1,5 @@
 import 'package:capstone_diary/Utils/datamanager.dart';
+import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -378,7 +379,19 @@ class DiaryApiService {
 
       return keywordMap;
     } else {
-      return {};
+      showToastMessage("통계 결과 가져오기 실패");
+      return {
+        '기쁨': 1,
+        '행복': 2,
+        '설렘': 3,
+        '화남': 4,
+        '우울함': 5,
+        '슬픔': 6,
+        '지루함': 7,
+        '놀람': 8,
+        '불안': 9,
+        '부끄러움': 10,
+      };
     }
   }
 }

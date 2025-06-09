@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void updateSideMenuSelectedIndex(int index) {
     setState(() {
-      if (index > 0) {
+      if (index > 0 && index != 3) {
         showToastMessage("준비 중입니다.");
         return;
       }

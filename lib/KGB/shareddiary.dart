@@ -59,7 +59,7 @@ class _SharedDiaryState extends State<SharedDiary> {
         height: MediaQuery.of(context).size.height - kBottomNavigationBarHeight,
         width: MediaQuery.of(context).size.width,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child:
               isLoaded
                   ? _buildDiaryContent(diaryModel) // 일기 내용 전체

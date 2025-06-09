@@ -30,4 +30,18 @@ class Datamanager {
   Future<String?> getToken() async {
     return await secStorage.read(key: 'user_token');
   }
+
+  Future<void> clearAllUserData() async {
+    try {
+      //SharedPreferences의 모든 데이터 삭제
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+
+      //FlutterSecureStorage의 모든 데이터 삭제
+      await secStorage.deleteAll();
+    } catch (e) {
+      //데이터 삭제 실패할 경우
+      print('데이터 삭제 중 오류 발생: $e');
+    }
+  }
 }
