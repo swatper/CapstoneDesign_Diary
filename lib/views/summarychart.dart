@@ -1,11 +1,14 @@
 import 'dart:math';
 import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
+import 'package:capstone_diary/views/archivewindow.dart';
+import 'package:capstone_diary/views/searchingwindow.dart';
 import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class SummaryChart extends StatefulWidget {
-  const SummaryChart({super.key});
+  final void Function(String option, String value)? onSearch;
+  const SummaryChart({super.key, this.onSearch});
 
   @override
   State<SummaryChart> createState() => _SummaryChartState();
@@ -14,7 +17,8 @@ class SummaryChart extends StatefulWidget {
 class _SummaryChartState extends State<SummaryChart> {
   String currentMonth = "${DateTime.now().month}월";
   void selectWord(String word) {
-    print("클릭한 단어: $word");
+    print("클릭한 단어11: $word");
+    widget.onSearch!("summary", word);
   }
 
   Future<void> selectDate(DateTime date) async {
@@ -157,14 +161,6 @@ class _SummaryChartState extends State<SummaryChart> {
             ],
           ),
         ),
-        SizedBox(height: 20),
-
-        // 클릭된 단어 표시
-        if (selectedWord != null)
-          Text(
-            '선택된 단어: $selectedWord',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
       ],
     );
   }

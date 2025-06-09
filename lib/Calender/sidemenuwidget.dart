@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:capstone_diary/DataModels/diarymodel.dart';
+import 'package:capstone_diary/Utils/diarymanager.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
@@ -17,6 +19,7 @@ class SideMenuWidget extends StatefulWidget {
 }
 
 class _SideMenuWidgetState extends State<SideMenuWidget> {
+  int diaryCount = 0; //일기 개수
   String userName = "???";
   String customProfilePath = "";
   @override
@@ -24,6 +27,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
     super.initState();
     checkProfile();
     setUserName();
+    setDiaryCount();
   }
 
   void setUserName() async {
@@ -33,6 +37,17 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
   void checkProfile() async {
     customProfilePath = await Datamanager().getProfileImagePath();
+    setState(() {});
+  }
+
+  void setDiaryCount() async {
+    //일기 개수 가져오기
+    try {
+      List<DiaryModel> diaries = await DiaryManager().fetchAllDiaries();
+      diaryCount = diaries.length;
+    } catch (e) {
+      print('[ERROR] 일기 불러오기 실패: $e');
+    }
     setState(() {});
   }
 
@@ -174,6 +189,26 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                         ),
                       ],
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "전체 일기 수",
+                          style: TextStyle(
+                            color: infoColor1,
+                            fontSize: infoSize,
+                            fontWeight: fontWeightSet,
+                          ),
+                        ),
+                        Text(
+                          "$diaryCount 개",
+                          style: TextStyle(
+                            color: infoColor2,
+                            fontSize: infoSize,
+                          ),
+                        ),
+                      ],
+                    ),
                     //아래 부분 정리
                     Divider(color: Color(0xff919572), thickness: lineThickness),
                     Text(
@@ -290,6 +325,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                         ),
                       ],
                     ),
+
                     Expanded(child: SizedBox()),
                     Divider(color: Color(0xff919572), thickness: lineThickness),
                     //기타 정보

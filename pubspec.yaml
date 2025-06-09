@@ -55,7 +55,10 @@ dependencies:
   permission_handler: ^12.0.0+1
   path: ^1.9.1
   path_provider: ^2.1.5
-  
+
+  #api 키 관련
+  flutter_dotenv: ^5.2.1
+
   #Google Map
   google_maps_flutter: ^2.12.1
   google_maps_cluster_manager:
@@ -120,6 +123,8 @@ flutter:
 
     - assets/images/etc/kakao_login.png
     - assets/DiraySample.json
+
+    - assets/config/.env
 
 
   # The following line ensures that the Material Icons font is

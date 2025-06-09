@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 
 class Searchingwindow extends StatefulWidget {
   final Function(String, String)? onSearch;
-  const Searchingwindow({super.key, this.onSearch});
+  const Searchingwindow({
+    super.key,
+    this.onSearch,
+    this.initialKeyword,
+    this.initialSearchOption,
+  });
+  final String? initialKeyword; // 추가
+  final String? initialSearchOption;
 
   @override
   State<Searchingwindow> createState() => _SearchingwindowState();
@@ -17,6 +24,26 @@ class _SearchingwindowState extends State<Searchingwindow> {
   void initState() {
     super.initState();
     contentController = TextEditingController();
+    contentController = TextEditingController(
+      text: widget.initialKeyword ?? "",
+    );
+    // 초기 선택 옵션 설정
+    switch (widget.initialSearchOption) {
+      case "title":
+        isSelected = [true, false, false, false];
+        break;
+      case "content":
+        isSelected = [false, true, false, false];
+        break;
+      case "emotion":
+        isSelected = [false, false, true, false];
+        break;
+      case "summary":
+        isSelected = [false, false, false, true];
+        break;
+      default:
+        isSelected = [true, false, false, false];
+    }
   }
 
   //뒤로가기 버튼
