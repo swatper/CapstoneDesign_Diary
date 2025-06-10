@@ -74,11 +74,40 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
       Navigator.pop(context);
     }
 
-    void deleteAccount() {
-      //회원 탈퇴 페이지 이동
+    void deleteAccountProcess() async {
+      if (await DiaryManager().deleteAccount()) {
+        widget.logOutCallback.call(false);
+        showToastMessage("회원탈퇴가 정상적으로 처리되었습니다.");
+        Datamanager().clearAllUserData();
+        Navigator.pop(context);
+      } else {
+        showToastMessage("회원탈퇴 오류");
+      }
+    }
 
-      //Datamanager().clearAllUserData();
-      Navigator.pop(context);
+    void deleteAccount() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("회원탈퇴"),
+            content: Text("정말 회원탈퇴 하시겠습니까?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("취소"),
+              ),
+              TextButton(
+                onPressed: () {
+                  deleteAccountProcess();
+                  Navigator.pop(context);
+                },
+                child: Text("회원탈퇴"),
+              ),
+            ],
+          );
+        },
+      );
     }
 
     void showLogoutDialog() {

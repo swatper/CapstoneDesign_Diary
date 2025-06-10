@@ -394,4 +394,23 @@ class DiaryApiService {
       };
     }
   }
+
+  Future<bool> requestDeleteAccount() async {
+    final url = Uri.parse(
+      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/user',
+    );
+    final token = await _datamanager.getToken();
+    final response = await http.delete(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

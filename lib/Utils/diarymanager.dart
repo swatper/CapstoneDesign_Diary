@@ -166,4 +166,9 @@ class DiaryManager {
       return {}; // 빈 Map 반환
     }
   }
+
+  //회원 탈퇴 요청 및 확인
+  Future<bool> deleteAccount() async {
+    return await _apiService.requestDeleteAccount();
+  }
 }
