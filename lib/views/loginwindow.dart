@@ -129,29 +129,29 @@ class _LoginWindowState extends State<LoginWindow> {
                     ),
                   ),
                   SizedBox(height: 15),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: guestLogin,
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.amber,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(width: 25),
-                          Text(
-                            "게스트 로그인",
-                            style: TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                          SizedBox(),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: TextButton(
+                  //     onPressed: guestLogin,
+                  //     style: TextButton.styleFrom(
+                  //       backgroundColor: Colors.amber,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(0),
+                  //       ),
+                  //     ),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         SizedBox(width: 25),
+                  //         Text(
+                  // "게스트 로그인",
+                  //           style: TextStyle(fontSize: 20, color: Colors.black),
+                  //         ),
+                  //         SizedBox(),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
