@@ -7,7 +7,7 @@ class DiaryApiService {
   final String baseUrl;
   final Datamanager _datamanager = Datamanager();
   static final DiaryApiService _instance = DiaryApiService._internal(
-    baseUrl: 'http://localhost:8088/SentiDiary/',
+    baseUrl: 'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api',
   );
 
   factory DiaryApiService() => _instance;
@@ -16,9 +16,7 @@ class DiaryApiService {
 
   /// 새 일기  작성 JSON 업로드 (POST)
   Future<bool> postNewDiray(Map<String, dynamic> diaryJson) async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary',
-    );
+    final url = Uri.parse('$baseUrl/diary');
 
     print('[POST] 요청 보낼 URL: $url');
     print('[POST] 요청 데이터: ${json.encode(diaryJson)}');
@@ -42,9 +40,7 @@ class DiaryApiService {
 
   /// 전체 일기 JSON 리스트 가져오기 (GET) //최신순
   Future<List<Map<String, dynamic>>> getAllDiary() async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/my',
-    );
+    final url = Uri.parse('$baseUrl/diary/my');
 
     final token = await _datamanager.getToken();
     final response = await http.get(
@@ -68,9 +64,7 @@ class DiaryApiService {
 
   //특정 날짜 일기 JSON 리스트 가져오기 (GET)
   Future<List<Map<String, dynamic>>> getDiaryforDate(String date) async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/my/date/$date',
-    );
+    final url = Uri.parse('$baseUrl/diary/my/date/$date');
     final token = await _datamanager.getToken();
     final response = await http.get(
       url,
@@ -96,9 +90,7 @@ class DiaryApiService {
     String option,
     String value,
   ) async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/search?type=$option&keyword=$value',
-    );
+    final url = Uri.parse('$baseUrl/diary/search?type=$option&keyword=$value');
     final token = await _datamanager.getToken();
     final response = await http.get(
       url,
@@ -121,9 +113,7 @@ class DiaryApiService {
 
   /// 기존 일기 수정 요청 (PUT)
   Future<bool> updateDiary(int diaryId, Map<String, dynamic> diaryJson) async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/$diaryId',
-    );
+    final url = Uri.parse('$baseUrl/diary/$diaryId');
 
     print('[PUT] 요청 보낼 URL: $url');
     print('[PUT] 요청 데이터: ${json.encode(diaryJson)}');
@@ -146,9 +136,7 @@ class DiaryApiService {
 
   /// 특정 일기 1개 가져오기 (GET)
   Future<Map<String, dynamic>> getDiaryById(int diaryId) async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/my/diaries/$diaryId',
-    );
+    final url = Uri.parse('$baseUrl/diary/my/diaries/$diaryId');
 
     print('[GET] 요청 보낼 URL: $url');
     final token = await _datamanager.getToken();
@@ -174,9 +162,7 @@ class DiaryApiService {
 
   /// 특정 일기 삭제 요청 (DELETE)
   Future<bool> deleteDiary(int diaryId) async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/$diaryId',
-    );
+    final url = Uri.parse('$baseUrl/diary/$diaryId');
 
     print('[DELETE] 요청 보낼 URL: $url');
     final token = await _datamanager.getToken();
@@ -196,9 +182,7 @@ class DiaryApiService {
 
   /// 랜덤 공개 일기 1개 가져오기 (GET)
   Future<Map<String, dynamic>> getRandomPublicDiary() async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/random',
-    );
+    final url = Uri.parse('$baseUrl/diary/random');
 
     print('[GET - Random] 요청 보낼 URL: $url');
     final token = await _datamanager.getToken();
@@ -247,9 +231,7 @@ class DiaryApiService {
 
   /// 사용자별 전체 요약 데이터 가져오기 (GET)
   Future<Map<String, int>> getAllSummary() async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/stats/summary',
-    );
+    final url = Uri.parse('$baseUrl/diary/stats/summary');
 
     print('[GET - Summary] 요청 보낼 URL: $url');
 
@@ -282,9 +264,7 @@ class DiaryApiService {
 
   /// 사용자별 연/월 기준 요약 데이터 가져오기 (GET)
   Future<Map<String, int>> getMonthlySummary(int year, int month) async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/stats/summary/$year/$month',
-    );
+    final url = Uri.parse('$baseUrl/diary/stats/summary/$year/$month');
 
     print('[GET - Monthly Summary] 요청 보낼 URL: $url');
     final token = await _datamanager.getToken();
@@ -316,9 +296,7 @@ class DiaryApiService {
 
   /// 사용자별 전체 감정정 데이터 가져오기 (GET)
   Future<Map<String, int>> getAllEmotion() async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/stats/emotion',
-    );
+    final url = Uri.parse('$baseUrl/diary/stats/emotion');
 
     print('[GET - emotion] 요청 보낼 URL: $url');
 
@@ -351,9 +329,7 @@ class DiaryApiService {
 
   /// 사용자별 연/월 기준 감정 데이터 가져오기 (GET)
   Future<Map<String, int>> getMonthlyEmotion(int year, int month) async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/diary/stats/emotion/$year/$month',
-    );
+    final url = Uri.parse('$baseUrl/diary/stats/emotion/$year/$month');
 
     print('[GET - Monthly Summary] 요청 보낼 URL: $url');
     final token = await _datamanager.getToken();
@@ -396,9 +372,7 @@ class DiaryApiService {
   }
 
   Future<bool> requestDeleteAccount() async {
-    final url = Uri.parse(
-      'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api/user',
-    );
+    final url = Uri.parse('$baseUrl/user');
     final token = await _datamanager.getToken();
     final response = await http.delete(
       url,
