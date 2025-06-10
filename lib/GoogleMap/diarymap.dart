@@ -8,8 +8,8 @@ import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart'
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_google_maps_webservices/places.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const String googlePlacesApiKey = "구글API키";
 typedef SetLocationCallback =
     void Function(String location, double lat, double lng);
 
@@ -29,6 +29,8 @@ class DiaryMap extends StatefulWidget {
 }
 
 class _DiaryMapState extends State<DiaryMap> {
+  static final String googlePlacesApiKey = dotenv.env['GOOGLE_API_KEY'] ?? '';
+
   late bool mode = widget.isFromWrite; //위젯이 쓰기 모드인지 여부
   late GoogleMapController mapController;
   //일기용 데이터
@@ -141,8 +143,6 @@ class _DiaryMapState extends State<DiaryMap> {
           placePredictions.addAll(response.predictions); //새로운 예측 결과 추가
         });
       } else {
-        // 오류 발생 시 토스트 메시지 표시
-        showToastMessage("검색 자동 완성 오류: ${response.errorMessage}");
         setState(() {
           placePredictions.clear(); // 오류 시 예측 리스트 비우기
         });
@@ -208,9 +208,9 @@ class _DiaryMapState extends State<DiaryMap> {
 
         //Toast 메시지로 주소 값 확인
         curAddress = addressDescription; //현재 주소 업데이트
-        showToastMessage(
+        /*showToastMessage(
           "선택된 장소: $addressDescription\n좌표: ${lat.toStringAsFixed(4)}, ${lng.toStringAsFixed(4)}",
-        );
+        );*/
       } else {
         showToastMessage(
           "장소 상세 정보 로딩 오류: ${detail.errorMessage ?? '알 수 없는 오류'}",

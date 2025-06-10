@@ -4,7 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class AiTagGenerator {
-  static final String _openAiApiKey = 'APIKEY'; // 여기에 실제 API 키를 넣으세요
+  static final String _openAiApiKey =
+      dotenv.env['OPENAI_API_KEY'] ?? ''; // 여기에 실제 API 키를 넣으세요
 
   Future<Map<String, dynamic>> generateTags(DiaryModel diary) async {
     print('불러온 API 키: $_openAiApiKey');
