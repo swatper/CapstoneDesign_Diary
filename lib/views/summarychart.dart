@@ -70,7 +70,7 @@ class _SummaryChartState extends State<SummaryChart> {
     final minValue = values.reduce(min);
     final maxValue = values.reduce(max);
 
-    const double minFontSize = 8;
+    const double minFontSize = 12;
     const double maxFontSize = 72;
 
     List<_WordEntry> list =

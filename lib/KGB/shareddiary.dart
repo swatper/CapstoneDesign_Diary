@@ -96,7 +96,7 @@ class _SharedDiaryState extends State<SharedDiary> {
               ),
             ),
             child: const Text(
-              '불러오기',
+              '들춰보기',
               style: TextStyle(color: Colors.black, fontSize: 14),
             ),
           ),
@@ -288,7 +288,7 @@ class _SharedDiaryState extends State<SharedDiary> {
                                       ),
                                     ),
                                     child: const Text(
-                                      '불러\n오기',
+                                      '들춰\n보기',
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
