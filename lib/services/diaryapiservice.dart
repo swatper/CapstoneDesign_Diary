@@ -1,5 +1,7 @@
 import 'package:capstone_diary/Utils/datamanager.dart';
 import 'package:capstone_diary/Utils/toastmessage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -7,7 +9,7 @@ class DiaryApiService {
   final String baseUrl;
   final Datamanager _datamanager = Datamanager();
   static final DiaryApiService _instance = DiaryApiService._internal(
-    baseUrl: 'https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/api',
+    baseUrl: dotenv.env['BASE_URL'] ?? '',
   );
 
   factory DiaryApiService() => _instance;

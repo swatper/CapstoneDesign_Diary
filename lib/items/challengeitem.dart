@@ -51,7 +51,7 @@ class ChallengeItem extends StatelessWidget {
                         child: LinearProgressIndicator(
                           value: progress,
                           backgroundColor: Colors.grey[300],
-                          color: Color(0xffA7ECF9),
+                          color: Color.fromRGBO(67, 232, 95, 1),
                           minHeight: 8,
                         ),
                       ),

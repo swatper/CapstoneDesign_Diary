@@ -52,12 +52,12 @@ class _ArchiveWindowwState extends State<ArchiveWindow> {
 
   void loadSearchingWindow() {
     if (widget.option != null && widget.value != null) {
-      showToastMessage("옵션 값: ${widget.option}, ${widget.value}");
+      //showToastMessage("옵션 값: ${widget.option}, ${widget.value}");
       //옵션과 값이 주어졌을 때, 해당 조건으로 일기 불러오기
       loadDiariesWithFilter(widget.option!, widget.value!);
     } else {
       //옵션과 값이 없을 때, 전체 일기 불러오기
-      showToastMessage("옵션 없이 검색");
+      //showToastMessage("옵션 없이 검색");
       _loadDiaries();
     }
   }

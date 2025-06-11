@@ -314,11 +314,11 @@ class _ProfileWindowState extends State<ProfileWindow> {
                     ),
                   ),
                   Divider(color: Color(0xff919572), thickness: 2),
+                  /*
                   //이메일
                   infomationSet("이메일", "abcd@gmail.com"),
                   Divider(color: Color(0xff919572), thickness: 2),
                   //비밀번호
-                  /*
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 15, 8, 15),
                     child: Row(

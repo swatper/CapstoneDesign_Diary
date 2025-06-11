@@ -5,6 +5,7 @@ import 'package:app_links/app_links.dart';
 import 'package:capstone_diary/views/webview.dart';
 import 'package:capstone_diary/Utils/assetmanager.dart';
 import 'package:capstone_diary/Utils/datamanager.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginWindow extends StatefulWidget {
   final Function(bool) onLogin;
@@ -16,6 +17,7 @@ class LoginWindow extends StatefulWidget {
 
 class _LoginWindowState extends State<LoginWindow> {
   StreamSubscription? linkSubscription;
+  static final String baseurl = dotenv.env['BASE_URL'] ?? '';
 
   @override
   void initState() {
@@ -54,7 +56,7 @@ class _LoginWindowState extends State<LoginWindow> {
       String? jwt = uri.queryParameters['token'];
       String? username = uri.queryParameters['nickname'];
       if (jwt != null && jwt.isNotEmpty) {
-        showToastMessage('백엔드로부터 JWT 수신: $jwt \n 닉네임: $username');
+        //showToastMessage('백엔드로부터 JWT 수신: $jwt \n 닉네임: $username');
         Datamanager().saveToken(jwt);
         Datamanager().saveData("user_Name", username, false);
         saveLoginState(true);
@@ -82,8 +84,7 @@ class _LoginWindowState extends State<LoginWindow> {
 
   void kakaoLogin() async {
     print("로그인 누름");
-    String kakaoLoginUrl =
-        "https://joint-cheetah-helpful.ngrok-free.app/SentiDiary/kakao/login";
+    String kakaoLoginUrl = "$baseurl/kakao/login";
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -129,6 +130,7 @@ class _LoginWindowState extends State<LoginWindow> {
                     ),
                   ),
                   SizedBox(height: 15),
+                  /*
                   SizedBox(
                     width: double.infinity,
                     child: TextButton(
@@ -151,7 +153,7 @@ class _LoginWindowState extends State<LoginWindow> {
                         ],
                       ),
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),

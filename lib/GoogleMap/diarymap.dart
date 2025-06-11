@@ -70,14 +70,12 @@ class _DiaryMapState extends State<DiaryMap> {
       Position position = await Geolocator.getCurrentPosition(
         locationSettings: locationSettings,
       );
-      showToastMessage("현재 위치: ${position.latitude}, ${position.longitude}");
-      /*setState(() {
-        curLat = position.latitude;
-        curLng = position.longitude;
-        curPos = LatLng(curLat, curLng);
-      });*/
+      //showToastMessage("현재 위치: ${position.latitude}, ${position.longitude}");
+      curCamPos = LatLng(position.latitude, position.longitude);
+      setState(() {});
+      moveCamera(curCamPos);
     } catch (e) {
-      showToastMessage("현재 위치를 가져오는 중 오류 발생: $e");
+      //showToastMessage("현재 위치를 가져오는 중 오류 발생: $e");
     }
   }
 
@@ -149,7 +147,7 @@ class _DiaryMapState extends State<DiaryMap> {
       }
     } catch (e) {
       // 네트워크 오류 등 예외 발생 시 처리
-      showToastMessage("검색 중 오류 발생: $e");
+      //showToastMessage("검색 중 오류 발생: $e");
       setState(() {
         placePredictions.clear();
       });
@@ -159,8 +157,12 @@ class _DiaryMapState extends State<DiaryMap> {
   //카메라 이동
   void moveCamera(LatLng position) {
     if (!mounted) return;
-    if (curZoom < 17) {
-      curZoom = 17; //줌 레벨을 17로 설정
+    if (!mode) {
+      curZoom = 15;
+    } else {
+      if (curZoom < 17) {
+        curZoom = 17; //줌 레벨을 17로 설정
+      }
     }
     mapController.animateCamera(CameraUpdate.newLatLngZoom(position, curZoom));
   }
@@ -235,7 +237,7 @@ class _DiaryMapState extends State<DiaryMap> {
   void initState() {
     super.initState();
     //현재 위치 값 가져오기
-    //setCurrentLocation();
+    setCurrentLocation();
 
     //클러스터 생성 및 초기화 (DirayModel -> DiaryClusterItem)
     List<DiaryClusterItem> clusterItems = [];

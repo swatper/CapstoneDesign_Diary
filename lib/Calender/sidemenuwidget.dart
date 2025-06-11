@@ -252,7 +252,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "닉네임 재설정",
+                          "프로필 수정",
                           style: TextStyle(
                             color: infoColor1,
                             fontSize: infoSize,
